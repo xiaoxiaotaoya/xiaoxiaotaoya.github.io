@@ -79,14 +79,17 @@
 
 
 
+<meta name="description" content="功能正在完善">
 <meta property="og:type" content="article">
 <meta property="og:title" content="image">
 <meta property="og:url" content="http://yoursite.com/2018/06/09/image/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="功能正在完善">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-06-09T12:34:00.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="image">
+<meta name="twitter:description" content="功能正在完善">
 
 
 
@@ -122,7 +125,7 @@
 
 
 
-  <title>image | Hexo</title>
+  <title>image | 小小涛呀</title>
   
 
 
@@ -152,7 +155,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">小小涛呀</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -268,7 +271,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="小小涛呀">
     </span>
 
     
@@ -301,16 +304,6 @@
           
 
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/09/image/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/09/image/" itemprop="commentCount"></span>
-                </a>
-              </span>
             
           
 
@@ -346,6 +339,35 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Donate comment here</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatreward.png" alt="XiaoXiaoTao 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipayreward.png" alt="XiaoXiaoTao 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
@@ -360,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/06/09/GitHub/" rel="next" title="棉花除杂">
-                <i class="fa fa-chevron-left"></i> 棉花除杂
+              <a href="/2018/06/09/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
               </a>
             
           </div>
@@ -398,9 +420,6 @@
           
 
   
-    <div class="comments" id="comments">
-    </div>
-  
 
 
 
@@ -429,7 +448,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">功能正在完善</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -439,7 +458,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -649,28 +668,6 @@
 
 
 
-
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-  
-  <script type="text/javascript">
-    var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(item=>{
-      return GUEST.indexOf(item)>-1;
-    });
-    new Valine({
-        el: '#comments' ,
-        verify: false,
-        notify: false,
-        appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
-        appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
-        placeholder: 'ヾﾉ≧∀≦)o来啊，快活啊!',
-        avatar:'mm',
-        guest_info:guest,
-        pageSize:'10' || 10,
-    });
-  </script>
 
 
 
