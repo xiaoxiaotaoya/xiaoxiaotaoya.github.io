@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[windows使用git时出现：warning: LF will be replaced by CRLF]]></title>
+    <url>%2F2018%2F06%2F11%2Fwindows%E4%BD%BF%E7%94%A8git%E6%97%B6%E5%87%BA%E7%8E%B0%EF%BC%9Awarning-LF-will-be-replaced-by-CRLF%2F</url>
+    <content type="text"><![CDATA[windows中的换行符为 CRLF， 而在linux下的换行符为LF，所以在执行add . 时出现提示，解决办法： 删除.git$ rm -rf .git // 删除.git $ git config --global core.autocrlf false // 禁用自动转换 重新安装$ git init // 重新安装 git $ git add . // 注意有 .]]></content>
+      <categories>
+        <category>hexo 教程</category>
+      </categories>
+      <tags>
+        <tag>hexo 出现问题、错误</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[电影推荐]]></title>
     <url>%2F2018%2F06%2F11%2F%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%2F</url>
     <content type="text"></content>
