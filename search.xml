@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[image]]></title>
-    <url>%2F2018%2F06%2F09%2Fimage%2F</url>
-    <content type="text"><![CDATA[lFejILFH发链接HFL今年FHJF和]]></content>
+    <title><![CDATA[电影推荐]]></title>
+    <url>%2F2018%2F06%2F11%2F%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>杂货铺</category>
+      </categories>
       <tags>
-        <tag>hexo</tag>
+        <tag>电影推荐</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[测试篇章]]></title>
-    <url>%2F2018%2F06%2F09%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. 快速开始文字说明 链接1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server 加载图片 More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+    <title><![CDATA[C 语言]]></title>
+    <url>%2F2018%2F06%2F11%2FC-%E8%AF%AD%E8%A8%80%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>C 语言</category>
+      </categories>
+      <tags>
+        <tag>C / C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hexo 教程(一)]]></title>
+    <url>%2F2018%2F06%2F11%2Fhexo-%E6%95%99%E7%A8%8B%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>hexo 教程</category>
+      </categories>
       <tags>
         <tag>hexo</tag>
       </tags>
