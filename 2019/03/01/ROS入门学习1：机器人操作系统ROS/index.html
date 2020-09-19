@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;ROS是机器人操作系统（Robot Operating System）的英文缩写。ROS系统是起源于2007年斯坦福大学人工智能实验室的项目与机器人技术公司Willow Garage的个人机器人项目（Personal Robots Program）之间的合作，2008年之后就由Willow Garage来进行推动。从2010年3月2日发布的第一版ROS Box Turtle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS入门学习1：机器人操作系统ROS">
+<meta property="og:url" content="https://xxty847.github.io/2019/03/01/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9FROS/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;ROS是机器人操作系统（Robot Operating System）的英文缩写。ROS系统是起源于2007年斯坦福大学人工智能实验室的项目与机器人技术公司Willow Garage的个人机器人项目（Personal Robots Program）之间的合作，2008年之后就由Willow Garage来进行推动。从2010年3月2日发布的第一版ROS Box Turtle">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/1/melodic_with_bg.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/1/kinetic.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/1/20190601131328631.png">
+<meta property="article:published_time" content="2019-03-01T08:39:58.000Z">
+<meta property="article:modified_time" content="2020-03-10T12:34:08.875Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="ROS入门学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/1/melodic_with_bg.png">
+
+<link rel="canonical" href="https://xxty847.github.io/2019/03/01/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9FROS/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>ROS入门学习1：机器人操作系统ROS | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2019/03/01/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9FROS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ROS入门学习1：机器人操作系统ROS
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-01 16:39:58" itemprop="dateCreated datePublished" datetime="2019-03-01T16:39:58+08:00">2019-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-10 20:34:08" itemprop="dateModified" datetime="2020-03-10T20:34:08+08:00">2020-03-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS入门学习</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/01/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9FROS/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/03/01/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9FROS/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://www.ros.org/">ROS</a>是机器人操作系统（Robot Operating System）的英文缩写。ROS系统是起源于2007年斯坦福大学人工智能实验室的项目与机器人技术公司Willow Garage的个人机器人项目（Personal Robots Program）之间的合作，2008年之后就由Willow Garage来进行推动。从2010年3月2日发布的第一版ROS Box Turtle至今（截止到2019年8月）已有12个版本。</p>
+<p>&emsp;&emsp;推荐两个长期维护的<a target="_blank" rel="noopener" href="http://wiki.ros.org/Distributions">ROS版本</a>：</p>
+<table>
+<thead>
+<tr>
+<th align="center">ROS版本</th>
+<th align="center">发布日期</th>
+<th align="center">海报</th>
+<th align="center">停止支持时间</th>
+<th align="center">对应Ubuntu系统</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="http://wiki.ros.org/melodic">ROS Melodic Morenia</a></td>
+<td align="center">May 23rd, 2018</td>
+<td align="center"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/1/melodic_with_bg.png" width="100" hegiht="100"></td>
+<td align="center">May, 2023(Bionic EOL)</td>
+<td align="center">Ubuntu 18.04 (Bionic)</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="http://wiki.ros.org/kinetic">ROS Kinetic Kame</a></td>
+<td align="center">May 23rd, 2017</td>
+<td align="center"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/1/kinetic.png" width="100" hegiht="100"></td>
+<td align="center">April, 2021(Xenial EOL)</td>
+<td align="center">Ubuntu 16.04 (Xenial)</td>
+</tr>
+</tbody></table>
+<a id="more"></a>
+
+<h2 id="RoboWare-Studio"><a href="#RoboWare-Studio" class="headerlink" title="RoboWare Studio"></a>RoboWare Studio</h2><p>&emsp;&emsp;ROS编辑器有多种，这里推荐RoboWare Studio编辑器，对ROS支持较好。<a target="_blank" rel="noopener" href="http://www.roboware.me/">Roboware官网</a>可能进不去，可选择Github下载地址：<a target="_blank" rel="noopener" href="https://github.com/TonyRobotics/RoboWare/tree/master/Studio">https://github.com/TonyRobotics/RoboWare/tree/master/Studio</a></p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/1/20190601131328631.png"></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ul>
+<li>为了支持Python调试功能，需要安装pylint：</li>
+</ul>
+<pre><code>$ sudo apt-get install python-pip
+$ sudo python -m pip install pylint</code></pre>
+<ul>
+<li>为了获得更好的代码阅读体验，自动格式化整理代码，需要安装clang-format：</li>
+</ul>
+<pre><code>$ sudo apt-get install clang-format-3.8</code></pre>
+<ul>
+<li>选择<a target="_blank" rel="noopener" href="https://github.com/TonyRobotics/RoboWare/tree/master/Studio](https://github.com/TonyRobotics/RoboWare/tree/master/Studio">RoboWare Studio版本</a>，这里以 <code>roboware-studio_1.1.0-1514335284_amd64.deb</code> 为例。</li>
+</ul>
+<pre><code>$ cd ~/下载/
+$ sudo dpkg -i roboware-studio_1.1.0-1514335284_amd64.deb</code></pre>
+<h2 id="ROS学习资料"><a href="#ROS学习资料" class="headerlink" title="ROS学习资料"></a>ROS学习资料</h2><p>ROS资料相对较少，这里整理一些ROS学习资料，供参考。</p>
+<h3 id="学习网站"><a href="#学习网站" class="headerlink" title="学习网站"></a>学习网站</h3><ul>
+<li>ROS 官方教程：<a target="_blank" rel="noopener" href="http://wiki.ros.org/cn">http://wiki.ros.org/cn</a></li>
+<li>古月居：<a target="_blank" rel="noopener" href="http://www.guyuehome.com/">http://www.guyuehome.com/</a> </li>
+<li>易科机器人实验室：<a target="_blank" rel="noopener" href="http://blog.exbot.net/">http://blog.exbot.net/</a></li>
+<li>创客智造：<a target="_blank" rel="noopener" href="https://www.ncnynl.com/">https://www.ncnynl.com/</a></li>
+<li>ROS小课堂：<a target="_blank" rel="noopener" href="http://www.corvin.cn/">http://www.corvin.cn/</a></li>
+</ul>
+<h3 id="机器人项目"><a href="#机器人项目" class="headerlink" title="机器人项目"></a>机器人项目</h3><ul>
+<li>Pi Robot：<a target="_blank" rel="noopener" href="http://www.pirobot.org/">http://www.pirobot.org</a></li>
+<li>Turtlebot：<a target="_blank" rel="noopener" href="https://www.turtlebot.com/">https://www.turtlebot.com/</a></li>
+<li>Turtlebot ROS wiki：<a target="_blank" rel="noopener" href="http://wiki.ros.org/Robots/TurtleBot">http://wiki.ros.org/Robots/TurtleBot</a></li>
+<li>Turtlebot3学习：<a target="_blank" rel="noopener" href="http://emanual.robotis.com/docs/en/platform/turtlebot3/overview/">http://emanual.robotis.com/docs/en/platform/turtlebot3/overview/</a></li>
+</ul>
+
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> ROS入门学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/02/13/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9A%E6%B7%BB%E5%8A%A0%E5%8F%8B%E9%93%BE%E9%A1%B5%E9%9D%A2/" rel="next" title="hexo博客：next主题添加友链页面">
+                  <i class="fa fa-chevron-left"></i> hexo博客：next主题添加友链页面
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/03/02/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A02%EF%BC%9AROS%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" rel="prev" title="ROS入门学习2：ROS安装教程">
+                  ROS入门学习2：ROS安装教程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RoboWare-Studio"><span class="nav-number">1.</span> <span class="nav-text">RoboWare Studio</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-number">2.</span> <span class="nav-text">ROS学习资料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%BD%91%E7%AB%99"><span class="nav-number">2.1.</span> <span class="nav-text">学习网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E4%BA%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.2.</span> <span class="nav-text">机器人项目</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

@@ -1,213 +1,1661 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>XXTY'BLOG - 时光荏苒，珍惜当下</title><meta name="description" content="努力、努力、再努力"><meta name="author" content="xiaoxiaotaoya"><meta name="copyright" content="xiaoxiaotaoya"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta property="og:type" content="website"><meta property="og:title" content="XXTY'BLOG"><meta property="og:url" content="http://example.com/"><meta property="og:site_name" content="XXTY'BLOG"><meta property="og:description" content="努力、努力、再努力"><meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"><meta property="article:published_time" content="2020-09-19T06:06:19.266Z"><meta property="article:modified_time" content="2020-09-19T06:06:19.266Z"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
-  root: '/',
-  hexoversion: '5.1.1',
-  algolia: undefined,
-  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
-  translate: undefined,
-  noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
-  copy: {
-    success: '复制成功',
-    error: '复制错误',
-    noSupport: '浏览器不支持'
-  },
-  bookmark: {
-    message_prev: '按',
-    message_next: '键将本页加入书签'
-  },
-  runtime: '天',
-  date_suffix: {"one_hour":"刚刚","hours":"小时前","day":"天前"},
-  copyright: undefined,
-  ClickShowText: undefined,
-  medium_zoom: false,
-  fancybox: true,
-  Snackbar: undefined,
-  justifiedGallery: {
-    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
-    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
-  },
-  baiduPush: false,
-  isPhotoFigcaption: true,
-  islazyload: false,
-  isanchor: false
-};
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
 
-var saveToLocal = {
-  set: function setWithExpiry(key, value, ttl) {
-    const now = new Date()
-    const expiryDay = ttl * 86400000
-    const item = {
-      value: value,
-      expiry: now.getTime() + expiryDay,
-    }
-    localStorage.setItem(key, JSON.stringify(item))
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
 
-  get: function getWithExpiry(key) {
-    const itemStr = localStorage.getItem(key)
+  <meta name="description" content="坚持 坚持 再坚持">
+<meta property="og:type" content="website">
+<meta property="og:title" content="小小涛呀">
+<meta property="og:url" content="https://xxty847.github.io/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="坚持 坚持 再坚持">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta name="twitter:card" content="summary">
 
-    if (!itemStr) {
-      return undefined
-    }
-    const item = JSON.parse(itemStr)
-    const now = new Date()
+<link rel="canonical" href="https://xxty847.github.io/">
 
-    if (now.getTime() > item.expiry) {
-      localStorage.removeItem(key)
-      return undefined
-    }
-    return item.value
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
   }
-}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
-  isPost: false,
-  isHome: true,
-  isHighlightShrink: true,
-  isSidebar: false,
-  postUpdate: '2020-09-19 14:06:19'
-}</script><noscript><style type="text/css">
-#nav {
-  opacity: 1
-}
-.justified-gallery img {
-  opacity: 1
-}
-</style></noscript><script>var activateDarkMode = function () {
-  document.documentElement.setAttribute('data-theme', 'dark')
-  if (document.querySelector('meta[name="theme-color"]') !== null) {
-    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
-  }
-}
-var activateLightMode = function () {
-  document.documentElement.setAttribute('data-theme', 'light')
-  if (document.querySelector('meta[name="theme-color"]') !== null) {
-    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
-  }
-}
 
-var autoChangeMode = 'false'
-var t = saveToLocal.get('theme')
-if (autoChangeMode === '1') {
-  var isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
-  var isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
-  var isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
-  var hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
 
-  if (t === undefined) {
-    if (isLightMode) activateLightMode()
-    else if (isDarkMode) activateDarkMode()
-    else if (isNotSpecified || hasNoSupport) {
-      var now = new Date()
-      var hour = now.getHours()
-      var isNight = hour <= 6 || hour >= 18
-      isNight ? activateDarkMode() : activateLightMode()
-    }
-    window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
-      if (saveToLocal.get('theme') === undefined) {
-        e.matches ? activateDarkMode() : activateLightMode()
-      }
-    })
-  } else if (t === 'light') activateLightMode()
-  else activateDarkMode()
-} else if (autoChangeMode === '2') {
-  now = new Date()
-  hour = now.getHours()
-  isNight = hour <= 6 || hour >= 18
-  if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
-  else if (t === 'light') activateLightMode()
-  else activateDarkMode()
-} else {
-  if (t === 'dark') activateDarkMode()
-  else if (t === 'light') activateLightMode()
-}</script><meta name="generator" content="Hexo 5.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">5</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">2</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 简介</span></a></div></div></div></div><div id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/%E8%83%8C%E6%99%AF/bg-001.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">XXTY'BLOG</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友人帐</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 简介</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="site-info"><h1 id="site_title">XXTY'BLOG</h1><div id="site_subtitle"><span id="subtitle"></span></div><div id="site_social_icons"><a class="social-icon" href="https://github.com/xiaoxiaotaoya" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1712331226@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div id="scroll_down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout_page" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/09/13/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01-ROS%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" title="ROS入门学习1-ROS简介与安装">     <img class="post_bg" src="https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/2-%E4%BB%BF%E7%9C%9F/xacro/rviz_odom1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ROS入门学习1-ROS简介与安装"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/09/13/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01-ROS%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" title="ROS入门学习1-ROS简介与安装">ROS入门学习1-ROS简介与安装</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-13T09:40:39.332Z" title="发表于 2020-09-13 17:40:39">2020-09-13</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/">ROS机器人仿真</a></span></div><div class="content">
-ROS入门学习1-ROS简介与安装
-ROS入门学习2-ROS架构与通信机制
-ROS入门学习3-常用命令与工具介绍
-ROS入门学习4-创建工作空间与功能包
-ROS入门学习5-理解话题中 Publier 与 Subscriber 
-ROS入门学习6-理解服务中 Server 与 Client 
-ROS入门学习7-理解动作中 Server 与 Client 
-ROS入门学习8-多机通信配置
-ROS入门学习9-坐标树的维护
-ROS入门学习9-坐标变幻（广播与监听）
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
 
 
-ROS机器人仿真1-URDF格式
-ROS机器人仿真2-XACRO格式
-ROS机器人仿真3-在Gazebo环境下显示与移动
-ROS机器人仿真4-配置激光雷达和深度相机插件
-ROS机器人仿真5-测试Gmapping建图效果
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
 
 
-SLAM与自主导航学习1-常用的SLAM算法和路径规划算法
-SLAM与自主导航学习2-gmapping功能包安装与演示
-SLAM与自主导航学习3-cartographer功能包安装与演示
-SLAM与自主导航学习4-hector功能包安装与演示
-SLAM与自主导航学习5-navigation功能包安装与演示
- ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F2-XACRO%E6%A0%BC%E5%BC%8F/" title="ROS机器人仿真2-XACRO格式">     <img class="post_bg" src="https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/2-%E4%BB%BF%E7%9C%9F/xacro/rviz_odom1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ROS机器人仿真2-XACRO格式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F2-XACRO%E6%A0%BC%E5%BC%8F/" title="ROS机器人仿真2-XACRO格式">ROS机器人仿真2-XACRO格式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-09T13:57:59.437Z" title="发表于 2020-09-09 21:57:59">2020-09-09</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/">ROS机器人仿真</a></span></div><div class="content">随着机器人模块的增加，urdf格式文件代码工作量急剧增大且后期维护较为困难。为此，Xacro(XML Macros)格式有助于压缩文件大小，增加文件可读性和可维护性。本章主要通过XACRO创建一个简单的机器人模型。
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-运行环境：
-
-虚拟机 VMware15.1
-Ubuntu 16.04
-ROS kinect
-
-
-1. 创建机器人仿真功能包 robot_simulation$ catkin_create_pkg robot_simulation roscpp rospy std_msgs urdf   gazebo_plugins gazebo_ros gazebo_ros_control
-(如已创建，可跳过)
-1.1 创建XACRO机器人模型
-新建robot_simulation/xacro/trobot_base.urdf.xacro文件，内容如下：
-
-trobot_base.urdf.xacro12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152 ...</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F1-URDF%E6%A0%BC%E5%BC%8F/" title="ROS机器人仿真1-URDF格式">     <img class="post_bg" src="https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/2-%E4%BB%BF%E7%9C%9F/urdf/urdf_rviz1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ROS机器人仿真1-URDF格式"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F1-URDF%E6%A0%BC%E5%BC%8F/" title="ROS机器人仿真1-URDF格式">ROS机器人仿真1-URDF格式</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-09T13:57:59.436Z" title="发表于 2020-09-09 21:57:59">2020-09-09</time></span><span class="article-meta"><span class="article-meta__separator">|</span><i class="fas fa-inbox article-meta__icon"></i><a class="article-meta__categories" href="/categories/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/">ROS机器人仿真</a></span></div><div class="content">&emsp;&emsp;ROS中自带一些仿真软件，可以快速提高开发效率。例如，简单的二维机器人仿真器STDR/stage; 强大的三维仿真环境Gazebo; 基于可视化工具的Rviz的机器人仿真Arbotix; 第三方仿真软件V-rep、Matlab-ros等等。&emsp;&emsp;机器人模型创建有很多方法，如手动编写urdf或xacro格式描述机器人; 通过SkethUp或Solidworks（需要插件sw2urdfSetup.exe）等三维仿真软件导出机器人模型。当然，也要配置相应坐标、材料等参数。&emsp;&emsp;本章主要通过URDF创建一个简单的机器人模型。
-
-运行环境：
-
-虚拟机 VMware15.1
-Ubuntu 16.04
-ROS kinect
-
-
-1. 创建机器人仿真功能包 robot_simulation$ catkin_create_pkg robot_simulation roscpp rospy std_msgs urdf   gazebo_plugins gazebo_ros gazebo_ros_control
-1.1 创建URDF机器人模型&em ...</div></div></div><div class="recent-post-item"><div class="post_cover right_radius"><a href="/2020/09/02/%E5%8F%A4%E6%96%87%E7%AB%A0-%E6%95%85%E4%BA%8B%E9%9B%861/" title="古文章-故事集1">     <img class="post_bg" src="https://i.loli.net/2020/05/01/IuWi8QbHvzjlOPw.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="古文章-故事集1"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/09/02/%E5%8F%A4%E6%96%87%E7%AB%A0-%E6%95%85%E4%BA%8B%E9%9B%861/" title="古文章-故事集1">古文章-故事集1</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-09-02T14:28:42.000Z" title="发表于 2020-09-02 22:28:42">2020-09-02</time></span></div><div class="content">记录一些有趣的故事集</div></div></div><div class="recent-post-item"><div class="post_cover left_radius"><a href="/2020/09/01/hello-world/" title="Hello World">     <img class="post_bg" src="https://i.loli.net/2020/05/01/IuWi8QbHvzjlOPw.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"></a></div><div class="recent-post-info"><a class="article-title" href="/2020/09/01/hello-world/" title="Hello World">Hello World</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2020-08-31T16:00:00.000Z" title="发表于 2020-09-01 00:00:00">2020-09-01</time></span></div><div class="content">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new &quot;My New Post&quot;
-
-More info: Writing
-Run server1$ hexo server
-
-More info: Server
-Generate static files1$ hexo generate
-
-More info: Generating
-Deploy to remote sites1$ hexo deploy
-
-More info: Deployment
-</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span></div></nav></div><div class="aside_content" id="aside_content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">xiaoxiaotaoya</div><div class="author-info__description">努力、努力、再努力</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length_num">5</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length_num">2</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length_num">1</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/xiaoxiaotaoya" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:1712331226@qq.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div></div><div class="sticky_layout"><div class="card-widget card-categories"><div class="card-content"><div class="item-headline"><i class="fas fa-folder-open"></i><span>分类</span></div><ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/"><span class="card-category-list-name">ROS机器人仿真</span><span class="card-category-list-count">3</span></a></li>
+          <div class="content">
             
-            </ul></div></div><div class="card-widget card-tags"><div class="card-content"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/3D%E5%BB%BA%E6%A8%A1%E4%B8%8E%E4%BB%BF%E7%9C%9F/" style="font-size: 1.1em; color: #999">3D建模与仿真</a> <a href="/tags/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA/" style="font-size: 1.1em; color: #999">ROS机器人</a></div></div></div><div class="card-widget card-archives"><div class="card-content"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2020/09/"><span class="card-archive-list-date">九月 2020</span><span class="card-archive-list-count">5</span></a></li></ul></div></div><div class="card-widget card-webinfo"><div class="card-content"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">5</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2020-08-31T16:00:00.000Z"></div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2020-09-19T06:06:19.142Z"></div></div></div></div></div></div></div></main><footer id="footer" data-type="color"><div id="footer-wrap"><div class="copyright">&copy;2020 By xiaoxiaotaoya</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
- <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="/js/search/local-search.js"></script><script>var endLoading = function () {
-  document.body.style.overflow = 'auto';
-  document.getElementById('loading-box').classList.add("loaded")
-}
-window.addEventListener('load',endLoading)</script><div class="js-pjax"><script>function subtitleType () {
-  if (true) { 
-    var typed = new Typed("#subtitle", {
-      strings: "Never put off till tomorrow what you can do today".split(","),
-      startDelay: 300,
-      typeSpeed: 150,
-      loop: true,
-      backSpeed: 50
-    })
-  } else {
-    document.getElementById("subtitle").innerHTML = 'Never put off till tomorrow what you can do today'
-  }
-}
 
-if (true) {
-  if (typeof Typed === 'function') subtitleType()
-  else $.getScript('https://cdn.jsdelivr.net/npm/typed.js/lib/typed.min.js', subtitleType)
-} else {
-  subtitleType()
-}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script src="/js/third-party/activate-power-mode.js"></script><script>POWERMODE.colorful = true;
-POWERMODE.shake = true;
-document.body.addEventListener('input', POWERMODE);
-</script><script src="/js/third-party/click_heart.js" async="async"></script></div></body></html>
+  <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/09/13/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01-ROS%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/13/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01-ROS%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">ROS入门学习1-ROS简介与安装</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-13 17:40:39 / 修改时间：18:17:07" itemprop="dateCreated datePublished" datetime="2020-09-13T17:40:39+08:00">2020-09-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS机器人仿真</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/13/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01-ROS%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/13/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A01-ROS%E7%AE%80%E4%BB%8B%E4%B8%8E%E5%AE%89%E8%A3%85/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>ROS入门学习1-ROS简介与安装</li>
+<li>ROS入门学习2-ROS架构与通信机制</li>
+<li>ROS入门学习3-常用命令与工具介绍</li>
+<li>ROS入门学习4-创建工作空间与功能包</li>
+<li>ROS入门学习5-理解话题中 Publier 与 Subscriber </li>
+<li>ROS入门学习6-理解服务中 Server 与 Client </li>
+<li>ROS入门学习7-理解动作中 Server 与 Client </li>
+<li>ROS入门学习8-多机通信配置</li>
+<li>ROS入门学习9-坐标树的维护</li>
+<li>ROS入门学习9-坐标变幻（广播与监听）</li>
+</ul>
+<ul>
+<li>ROS机器人仿真1-URDF格式</li>
+<li>ROS机器人仿真2-XACRO格式</li>
+<li>ROS机器人仿真3-在Gazebo环境下显示与移动</li>
+<li>ROS机器人仿真4-配置激光雷达和深度相机插件</li>
+<li>ROS机器人仿真5-测试Gmapping建图效果</li>
+</ul>
+<ul>
+<li>SLAM与自主导航学习1-常用的SLAM算法和路径规划算法</li>
+<li>SLAM与自主导航学习2-gmapping功能包安装与演示</li>
+<li>SLAM与自主导航学习3-cartographer功能包安装与演示</li>
+<li>SLAM与自主导航学习4-hector功能包安装与演示</li>
+<li>SLAM与自主导航学习5-navigation功能包安装与演示</li>
+</ul>
+<ul>
+<li>源码解读1-gmapping算法释疑</li>
+<li>源码解读2-move_base算法释疑</li>
+<li>源码解读3-amcl算法释疑</li>
+</ul>
+<ul>
+<li>trobot学习1-配置与清单</li>
+<li>trobot学习2-多机通信配置</li>
+<li>trobot学习3-下位机驱动程序</li>
+<li>trobot学习4-上位机驱动程序</li>
+<li>trobot学习5-PID调速与速度校准</li>
+<li>trobot学习7-里程计数据查看</li>
+<li>trobot学习8-激光雷达RPLIDAR A1驱动</li>
+<li>trobot学习9-深度相机Kinect V1驱动</li>
+</ul>
+<ul>
+<li>项目经验与总结1-线程的简单使用</li>
+<li>项目经验与总结2-机器人常见底盘运动学分析</li>
+<li>项目经验与总结3-数据库SQLite3的简单使用</li>
+<li>项目经验与总结4-时间与定时操作</li>
+<li>项目经验与总结5-文件操作</li>
+</ul>
+<ul>
+<li>Opencv学习1-图像的平移、缩放与投影</li>
+</ul>
+
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F2-XACRO%E6%A0%BC%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F2-XACRO%E6%A0%BC%E5%BC%8F/" class="post-title-link" itemprop="url">ROS机器人仿真2-XACRO格式</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-09 21:57:59" itemprop="dateCreated datePublished" datetime="2020-09-09T21:57:59+08:00">2020-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-08 21:53:13" itemprop="dateModified" datetime="2020-09-08T21:53:13+08:00">2020-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS机器人仿真</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F2-XACRO%E6%A0%BC%E5%BC%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F2-XACRO%E6%A0%BC%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>随着机器人模块的增加，urdf格式文件代码工作量急剧增大且后期维护较为困难。为此，Xacro(XML Macros)格式有助于压缩文件大小，增加文件可读性和可维护性。<br>本章主要通过XACRO创建一个简单的机器人模型。</p>
+<blockquote>
+<p><strong>运行环境：</strong></p>
+<ul>
+<li>虚拟机 VMware15.1</li>
+<li>Ubuntu 16.04</li>
+<li>ROS kinect</li>
+</ul>
+</blockquote>
+<h2 id="1-创建机器人仿真功能包-robot-simulation"><a href="#1-创建机器人仿真功能包-robot-simulation" class="headerlink" title="1. 创建机器人仿真功能包 robot_simulation"></a>1. 创建机器人仿真功能包 robot_simulation</h2><pre><code>$ catkin_create_pkg robot_simulation roscpp rospy std_msgs urdf   gazebo_plugins gazebo_ros gazebo_ros_control</code></pre>
+<p>(如已创建，可跳过)</p>
+<h3 id="1-1-创建XACRO机器人模型"><a href="#1-1-创建XACRO机器人模型" class="headerlink" title="1.1 创建XACRO机器人模型"></a>1.1 创建XACRO机器人模型</h3><ul>
+<li>新建<code>robot_simulation/xacro/trobot_base.urdf.xacro</code>文件，内容如下：</li>
+</ul>
+<figure class="highlight xml"><figcaption><span>trobot_base.urdf.xacro</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">robot</span> <span class="attr">name</span>=<span class="string">&quot;trobot&quot;</span> <span class="attr">xmlns:xacro</span>=<span class="string">&quot;http://www.ros.org/wiki/xacro&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Defining the colors used in this robot --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;Black&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 0 0 1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;White&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1 1 1 1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;Blue&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 0 1 1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;Red&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1 0 0 1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Macro for inertia matrix --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:macro</span> <span class="attr">name</span>=<span class="string">&quot;sphere_inertial_matrix&quot;</span> <span class="attr">params</span>=<span class="string">&quot;m r&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;m&#125;&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;$&#123;2*m*r*r/5&#125;&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">iyy</span>=<span class="string">&quot;$&#123;2*m*r*r/5&#125;&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0&quot;</span> </span></span><br><span class="line"><span class="tag">                <span class="attr">izz</span>=<span class="string">&quot;$&#123;2*m*r*r/5&#125;&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">xacro:macro</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:macro</span> <span class="attr">name</span>=<span class="string">&quot;cylinder_inertial_matrix&quot;</span> <span class="attr">params</span>=<span class="string">&quot;m r h&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;m&#125;&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;$&#123;m*(3*r*r+h*h)/12&#125;&quot;</span> <span class="attr">ixy</span> = <span class="string">&quot;0&quot;</span> <span class="attr">ixz</span> = <span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">iyy</span>=<span class="string">&quot;$&#123;m*(3*r*r+h*h)/12&#125;&quot;</span> <span class="attr">iyz</span> = <span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">izz</span>=<span class="string">&quot;$&#123;m*r*r/2&#125;&quot;</span> /&gt;</span> </span><br><span class="line">        <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">xacro:macro</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:macro</span> <span class="attr">name</span>=<span class="string">&quot;box_inertial_matrix&quot;</span> <span class="attr">params</span>=<span class="string">&quot;m w h d&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;$&#123;m&#125;&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">inertia</span> <span class="attr">ixx</span>=<span class="string">&quot;$&#123;m*(h*h+d*d)/12&#125;&quot;</span> <span class="attr">ixy</span> = <span class="string">&quot;0&quot;</span> <span class="attr">ixz</span> = <span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">iyy</span>=<span class="string">&quot;$&#123;m*(w*w+d*d)/12&#125;&quot;</span> <span class="attr">iyz</span> = <span class="string">&quot;0&quot;</span></span></span><br><span class="line"><span class="tag">                <span class="attr">izz</span>=<span class="string">&quot;$&#123;m*(w*w+h*h)/12&#125;&quot;</span> /&gt;</span> </span><br><span class="line">        <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">xacro:macro</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- PROPERTY LIST --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--All units in m-kg-s-radians unit system --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;M_PI&quot;</span> <span class="attr">value</span>=<span class="string">&quot;3.1415926535897931&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Main body length, width, height and mass --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;basebox_length&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.3&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;basebox_width&quot;</span>  <span class="attr">value</span>=<span class="string">&quot;0.28&quot;</span> /&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;basebox_height&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.05&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;basebox_mass&quot;</span>   <span class="attr">value</span>=<span class="string">&quot;0.5&quot;</span> /&gt;</span> </span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Wheel radius, height and mass --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;wheel_radius&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.03&quot;</span> /&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;wheel_height&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.017&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;wheel_mass&quot;</span>   <span class="attr">value</span>=<span class="string">&quot;0.3&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;motor_x&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.10&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:property</span> <span class="attr">name</span>=<span class="string">&quot;motor_y&quot;</span> <span class="attr">value</span>=<span class="string">&quot;0.145&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- Macro for wheel joint --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:macro</span> <span class="attr">name</span>=<span class="string">&quot;wheel&quot;</span> <span class="attr">params</span>=<span class="string">&quot;lr translateX translateY motor_direction&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- lr: left, right --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;wheel_$&#123;lr&#125;_link&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;$&#123;M_PI/2&#125; 0  0 &quot;</span> /&gt;</span> </span><br><span class="line">                <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;$&#123;wheel_height&#125;&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;$&#123;wheel_radius&#125;&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;Black&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;$&#123;M_PI/2&#125; 0 0 &quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;$&#123;wheel_height&#125;&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;$&#123;wheel_radius&#125;&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">cylinder_inertial_matrix</span>  <span class="attr">m</span>=<span class="string">&quot;$&#123;wheel_mass&#125;&quot;</span> <span class="attr">r</span>=<span class="string">&quot;$&#123;wheel_radius&#125;&quot;</span> <span class="attr">h</span>=<span class="string">&quot;$&#123;wheel_height&#125;&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">gazebo</span> <span class="attr">reference</span>=<span class="string">&quot;wheel_$&#123;lr&#125;_link&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span>&gt;</span>Gazebo/Black<span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;base_to_wheel_$&#123;lr&#125;_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;wheel_$&#123;lr&#125;_link&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;$&#123;translateX * motor_x&#125; $&#123;translateY * motor_y&#125; 0&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0 $&#123;motor_direction&#125; 0&quot;</span> /&gt;</span> </span><br><span class="line">            <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 1 0&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0  0&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- Transmission is important to link the joints and the controller --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">transmission</span> <span class="attr">name</span>=<span class="string">&quot;wheel_$&#123;lr&#125;_joint_trans&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">type</span>&gt;</span>transmission_interface/SimpleTransmission<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;base_to_wheel_$&#123;lr&#125;_joint&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">actuator</span> <span class="attr">name</span>=<span class="string">&quot;wheel_$&#123;lr&#125;_joint_motor&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>VelocityJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">mechanicalReduction</span>&gt;</span>1<span class="tag">&lt;/<span class="name">mechanicalReduction</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">actuator</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">transmission</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">xacro:macro</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- BASE-FOOTPRINT --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- base_footprint is a fictitious link(frame) that is on the ground right below base_link origin --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">xacro:macro</span> <span class="attr">name</span>=<span class="string">&quot;trobot_body&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;base_footprint&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">box</span> <span class="attr">size</span>=<span class="string">&quot;0.001 0.001 0.001&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;base_footprint_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;fixed&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 $&#123;wheel_radius&#125;&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_footprint&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- BASE-LINK --&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--Actual body/chassis of the robot--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;base_link&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">box_inertial_matrix</span>  <span class="attr">m</span>=<span class="string">&quot;$&#123;basebox_mass&#125;&quot;</span> <span class="attr">d</span>=<span class="string">&quot;$&#123;basebox_length&#125;&quot;</span> <span class="attr">w</span>=<span class="string">&quot;$&#123;basebox_width&#125;&quot;</span> <span class="attr">h</span>=<span class="string">&quot;$&#123;basebox_height&#125;&quot;</span> /&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot; 0 0 0&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">box</span> <span class="attr">size</span>=<span class="string">&quot;$&#123;basebox_length&#125; $&#123;basebox_width&#125; $&#123;basebox_height&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;blue&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 .5 .8 1&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">box</span> <span class="attr">size</span>=<span class="string">&quot;$&#123;basebox_length&#125; $&#123;basebox_width&#125; $&#123;basebox_height&#125;&quot;</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">collision</span>&gt;</span>   </span><br><span class="line">        <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">gazebo</span> <span class="attr">reference</span>=<span class="string">&quot;base_link&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span>&gt;</span>Gazebo/Blue<span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- Wheel Definitions --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">wheel</span> <span class="attr">lr</span>=<span class="string">&quot;right_front&quot;</span>  <span class="attr">translateX</span>=<span class="string">&quot;1&quot;</span> <span class="attr">translateY</span>=<span class="string">&quot;-1&quot;</span> <span class="attr">motor_direction</span>=<span class="string">&quot;0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">wheel</span> <span class="attr">lr</span>=<span class="string">&quot;left_front&quot;</span>   <span class="attr">translateX</span>=<span class="string">&quot;1&quot;</span> <span class="attr">translateY</span>=<span class="string">&quot;1&quot;</span> <span class="attr">motor_direction</span>=<span class="string">&quot;-1.5707&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">wheel</span> <span class="attr">lr</span>=<span class="string">&quot;right_back&quot;</span>   <span class="attr">translateX</span>=<span class="string">&quot;-1&quot;</span> <span class="attr">translateY</span>=<span class="string">&quot;-1&quot;</span> <span class="attr">motor_direction</span>=<span class="string">&quot;0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">wheel</span> <span class="attr">lr</span>=<span class="string">&quot;left_back&quot;</span>    <span class="attr">translateX</span>=<span class="string">&quot;-1&quot;</span> <span class="attr">translateY</span>=<span class="string">&quot;1&quot;</span> <span class="attr">motor_direction</span>=<span class="string">&quot;-1.5707&quot;</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- controller --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;skid_steer_drive_controller&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_skid_steer_drive.so&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">alwaysOn</span>&gt;</span>true<span class="tag">&lt;/<span class="name">alwaysOn</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">updateRate</span>&gt;</span>100.0<span class="tag">&lt;/<span class="name">updateRate</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">leftFrontJoint</span>&gt;</span>base_to_wheel_left_front_joint<span class="tag">&lt;/<span class="name">leftFrontJoint</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">rightFrontJoint</span>&gt;</span>base_to_wheel_right_front_joint<span class="tag">&lt;/<span class="name">rightFrontJoint</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">leftRearJoint</span>&gt;</span>base_to_wheel_left_back_joint<span class="tag">&lt;/<span class="name">leftRearJoint</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">rightRearJoint</span>&gt;</span>base_to_wheel_right_back_joint<span class="tag">&lt;/<span class="name">rightRearJoint</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">wheelSeparation</span>&gt;</span>$&#123;motor_y*2&#125;<span class="tag">&lt;/<span class="name">wheelSeparation</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">wheelDiameter</span>&gt;</span>$&#123;2*wheel_radius&#125;<span class="tag">&lt;/<span class="name">wheelDiameter</span>&gt;</span>              </span><br><span class="line">                <span class="tag">&lt;<span class="name">robotBaseFrame</span>&gt;</span>base_footprint<span class="tag">&lt;/<span class="name">robotBaseFrame</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">torque</span>&gt;</span>20<span class="tag">&lt;/<span class="name">torque</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">commandTopic</span>&gt;</span>cmd_vel<span class="tag">&lt;/<span class="name">commandTopic</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">odometryTopic</span>&gt;</span>odom<span class="tag">&lt;/<span class="name">odometryTopic</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">odometryFrame</span>&gt;</span>odom<span class="tag">&lt;/<span class="name">odometryFrame</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">broadcastTF</span>&gt;</span>1<span class="tag">&lt;/<span class="name">broadcastTF</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;/<span class="name">xacro:macro</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">robot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新建<code>robot_simulation/xacro/trobot.xacro</code>文件，内容如下：</li>
+</ul>
+<figure class="highlight xml"><figcaption><span>trobot.xacro</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot;?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">robot</span> <span class="attr">name</span>=<span class="string">&quot;trobot&quot;</span> <span class="attr">xmlns:xacro</span>=<span class="string">&quot;http://www.ros.org/wiki/xacro&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">xacro:include</span> <span class="attr">filename</span>=<span class="string">&quot;$(find robot_simulation)/xacro/trobot_base.urdf.xacro&quot;</span> /&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- Body of mrobot, with plates, standoffs --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">trobot_body</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">robot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="1-2-创建launch文件"><a href="#1-2-创建launch文件" class="headerlink" title="1.2 创建launch文件"></a>1.2 创建launch文件</h3><ul>
+<li>新建<code>robot_simulation/launch/trobot_display_xacro.launch</code>文件，内容如下：</li>
+</ul>
+<figure class="highlight xml"><figcaption><span>trobot_display_xacro.launch</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;model&quot;</span> <span class="attr">default</span>=<span class="string">&quot;$(find xacro)/xacro --inorder &#x27;$(find robot_simulation)/xacro/trobot.xacro&#x27;&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">command</span>=<span class="string">&quot;$(arg model)&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 运行joint_state_publisher_gui节点，发布机器人的关节状态  --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_state_publisher_gui&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;joint_state_publisher_gui&quot;</span> <span class="attr">type</span>=<span class="string">&quot;joint_state_publisher_gui&quot;</span> /&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 运行robot_state_publisher节点，发布tf,将机器人的连杆关节之间的关系，通过TF的形式，整理成三维姿态发布出去  --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;state_publisher&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">type</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">args</span>=<span class="string">&quot;-d $(find robot_simulation)/rviz/trobot_xacro.rviz&quot;</span> /&gt;</span></span><br><span class="line">	</span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="2-Rviz中显示"><a href="#2-Rviz中显示" class="headerlink" title="2. Rviz中显示"></a>2. Rviz中显示</h2><h3 id="2-1-显示机器人模型"><a href="#2-1-显示机器人模型" class="headerlink" title="2.1 显示机器人模型"></a>2.1 显示机器人模型</h3><p>编译功能包（略），并运行launch文件</p>
+<pre><code>$ roslaunch robot_simulation trobot_display_urdf.launch </code></pre>
+<center>
+<img src="https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/2-%E4%BB%BF%E7%9C%9F/xacro/rviz_tf.PNG" height="600"></center>
+
+
+
+<h3 id="2-2-Arbotix仿真"><a href="#2-2-Arbotix仿真" class="headerlink" title="2.2 Arbotix仿真"></a>2.2 Arbotix仿真</h3><ul>
+<li>新建<code>robot_simulation/config/trobot_arbotix.yaml</code>文件，内容如下：</li>
+</ul>
+<figure class="highlight xml"><figcaption><span>trobot_arbotix.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">port: /dev/ttyUSB0</span><br><span class="line">baud: 115200</span><br><span class="line">rate: 20</span><br><span class="line">sync_write: True</span><br><span class="line">sync_read: True</span><br><span class="line">read_rate: 20</span><br><span class="line">write_rate: 20</span><br><span class="line"></span><br><span class="line">controllers: &#123;</span><br><span class="line">   #  Pololu motors: 1856 cpr = 0.3888105m travel = 4773 ticks per meter (empirical: 4100)</span><br><span class="line">   base_controller: &#123;type: diff_controller, base_frame_id: base_link, base_width: 0.26, ticks_meter: 4100, Kp: 12, Kd: 12, Ki: 0, Ko: 50, accel_limit: 1.0 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>新建<code>robot_simulation/launch/trobot_display_xacro_arbotix.launch</code>文件，内容如下：</li>
+</ul>
+<figure class="highlight xml"><figcaption><span>trobot_display_xacro_arbotix.launch</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;/use_sim_time&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span> /&gt;</span>  </span><br><span class="line">    <span class="comment">&lt;!-- Load the URDF/Xacro model of our robot --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;urdf_file&quot;</span> <span class="attr">default</span>=<span class="string">&quot;$(find xacro)/xacro.py &#x27;$(find robot_simulation)/xacro/trobot.xacro&#x27;&quot;</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;gui&quot;</span> <span class="attr">default</span>=<span class="string">&quot;false&quot;</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">command</span>=<span class="string">&quot;$(arg urdf_file)&quot;</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;use_gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg gui)&quot;</span>/&gt;</span> </span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;arbotix&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;arbotix_python&quot;</span> <span class="attr">type</span>=<span class="string">&quot;arbotix_driver&quot;</span> <span class="attr">output</span>=<span class="string">&quot;screen&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">file</span>=<span class="string">&quot;$(find robot_simulation)/config/trobot_arbotix.yaml&quot;</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> /&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;sim&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span> </span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;joint_state_publisher&quot;</span> /&gt;</span>   </span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;state_publisher&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;publish_frequency&quot;</span> <span class="attr">type</span>=<span class="string">&quot;double&quot;</span> <span class="attr">value</span>=<span class="string">&quot;20.0&quot;</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">&lt;!-- We need a static transforms for the wheels --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;tf&quot;</span> <span class="attr">type</span>=<span class="string">&quot;static_transform_publisher&quot;</span> <span class="attr">name</span>=<span class="string">&quot;odom_left_wheel_broadcaster&quot;</span> <span class="attr">args</span>=<span class="string">&quot;0 0 0 0 0 0 /base_link /left_front_link 100&quot;</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">pkg</span>=<span class="string">&quot;tf&quot;</span> <span class="attr">type</span>=<span class="string">&quot;static_transform_publisher&quot;</span> <span class="attr">name</span>=<span class="string">&quot;odom_right_wheel_broadcaster&quot;</span> <span class="attr">args</span>=<span class="string">&quot;0 0 0 0 0 0 /base_link /right_front_link 100&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">type</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">args</span>=<span class="string">&quot;-d $(find robot_simulation)/rviz/trobot_xacro_arbotix.rviz&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>编译功能包（略），并运行launch文件</p>
+<pre><code>$ roslaunch robot_simion trobot_display_xacro_arbotix.launch 
+$ rostopic pub -r 10 /cmd_vel geometry_msgs/Twist &#39;&#123;linear: &#123;x: 0.1, y: 0, z: 0&#125;, angular: &#123;x: 0, y: 0, z: 0.5&#125;&#125;&#39;</code></pre>
+<center>
+<img src="https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/2-%E4%BB%BF%E7%9C%9F/xacro/rviz_odom.PNG" height="600"></center>
+
+<p><strong>查看话题：</strong></p>
+<pre><code>tao@ubuntu:~$ rostopic list
+/clicked_point
+/cmd_vel
+/diagnostics
+/initialpose
+/joint_states
+/move_base_simple/goal
+/odom
+/rosout
+/rosout_agg
+/tf
+/tf_static</code></pre>
+
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F1-URDF%E6%A0%BC%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F1-URDF%E6%A0%BC%E5%BC%8F/" class="post-title-link" itemprop="url">ROS机器人仿真1-URDF格式</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-09 21:57:59" itemprop="dateCreated datePublished" datetime="2020-09-09T21:57:59+08:00">2020-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-06 22:23:33" itemprop="dateModified" datetime="2020-09-06T22:23:33+08:00">2020-09-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS机器人仿真</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F1-URDF%E6%A0%BC%E5%BC%8F/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/09/ROS%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F1-URDF%E6%A0%BC%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&emsp;&emsp;ROS中自带一些仿真软件，可以快速提高开发效率。例如，简单的二维机器人仿真器STDR/stage; 强大的三维仿真环境Gazebo; 基于可视化工具的Rviz的机器人仿真Arbotix; 第三方仿真软件V-rep、Matlab-ros等等。<br>&emsp;&emsp;机器人模型创建有很多方法，如手动编写urdf或xacro格式描述机器人; 通过SkethUp或Solidworks（需要插件<a target="_blank" rel="noopener" href="https://github.com/ros/solidworks_urdf_exporter/releases">sw2urdfSetup.exe</a><br>）等三维仿真软件导出机器人模型。当然，也要配置相应坐标、材料等参数。<br>&emsp;&emsp;本章主要通过URDF创建一个简单的机器人模型。</p>
+<blockquote>
+<p><strong>运行环境：</strong></p>
+<ul>
+<li>虚拟机 VMware15.1</li>
+<li>Ubuntu 16.04</li>
+<li>ROS kinect</li>
+</ul>
+</blockquote>
+<h2 id="1-创建机器人仿真功能包-robot-simulation"><a href="#1-创建机器人仿真功能包-robot-simulation" class="headerlink" title="1. 创建机器人仿真功能包 robot_simulation"></a>1. 创建机器人仿真功能包 robot_simulation</h2><pre><code>$ catkin_create_pkg robot_simulation roscpp rospy std_msgs urdf   gazebo_plugins gazebo_ros gazebo_ros_control</code></pre>
+<h3 id="1-1-创建URDF机器人模型"><a href="#1-1-创建URDF机器人模型" class="headerlink" title="1.1 创建URDF机器人模型"></a>1.1 创建URDF机器人模型</h3><p>&emsp;&emsp;机器人模型如下：</p>
+<p><img src="https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/2-%E4%BB%BF%E7%9C%9F/urdf/robot_model.png"></p>
+<p>&emsp;&emsp;新建<code>robot_simulation/urdf/trobot.urdf</code>文件，内容如下：</p>
+<figure class="highlight xml"><figcaption><span>trobot.urdf</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">robot</span> <span class="attr">name</span>=<span class="string">&quot;trobot&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;base_link&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">box</span> <span class="attr">size</span>=<span class="string">&quot;0.25 .16 .05&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 1.57075&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;blue&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 .5 .8 1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;right_front_wheel&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;.02&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.025&quot;</span>/&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 0 0 1&quot;</span>/&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;right_front_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;right_front_wheel&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 1.57075 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0.08 0.1 -0.03&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;100&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">joint_properties</span> <span class="attr">damping</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">friction</span>=<span class="string">&quot;0.0&quot;</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;right_back_wheel&quot;</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;.02&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.025&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 0 0 1&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">material</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;right_back_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;right_back_wheel&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 1.57075 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;0.08 -0.1 -0.03&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;100&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">joint_properties</span> <span class="attr">damping</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">friction</span>=<span class="string">&quot;0.0&quot;</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;left_front_wheel&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;.02&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.025&quot;</span>/&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 0 0 1&quot;</span>/&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;left_front_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;left_front_wheel&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 1.57075 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;-0.08 0.1 -0.03&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;100&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">joint_properties</span> <span class="attr">damping</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">friction</span>=<span class="string">&quot;0.0&quot;</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;left_back_wheel&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">cylinder</span> <span class="attr">length</span>=<span class="string">&quot;.02&quot;</span> <span class="attr">radius</span>=<span class="string">&quot;0.025&quot;</span>/&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;black&quot;</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;0 0 0 1&quot;</span>/&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;left_back_wheel_joint&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;left_back_wheel&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">rpy</span>=<span class="string">&quot;0 1.57075 0&quot;</span> <span class="attr">xyz</span>=<span class="string">&quot;-0.08 -0.1 -0.03&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">limit</span> <span class="attr">effort</span>=<span class="string">&quot;100&quot;</span> <span class="attr">velocity</span>=<span class="string">&quot;100&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">joint_properties</span> <span class="attr">damping</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">friction</span>=<span class="string">&quot;0.0&quot;</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;head&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">visual</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">                <span class="tag">&lt;<span class="name">box</span> <span class="attr">size</span>=<span class="string">&quot;.02 .03 .03&quot;</span>/&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;white&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">color</span> <span class="attr">rgba</span>=<span class="string">&quot;1 1 1 1&quot;</span>/&gt;</span>  </span><br><span class="line">            <span class="tag">&lt;/<span class="name">material</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">visual</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">link</span>&gt;</span>  </span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;tobox&quot;</span> <span class="attr">type</span>=<span class="string">&quot;fixed&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;head&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0.08 0.025&quot;</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">robot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-urdf解释"><a href="#1-2-urdf解释" class="headerlink" title="1.2 urdf解释"></a>1.2 urdf解释</h3><p>&emsp;&emsp;从上述代码可以看到机器人需要配置尺寸、关节等属性。 一般, 机器人都是由<a target="_blank" rel="noopener" href="http://wiki.ros.org/urdf/XML/link">link</a>和<a target="_blank" rel="noopener" href="http://wiki.ros.org/urdf/XML/joint">joint</a>进行描述。两者关系可参考官网教程，如下图所示：</p>
+<img src="https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/2-%E4%BB%BF%E7%9C%9F/urdf/link.jpg" width="400">
+
+<p>&emsp;&emsp;上图共有4个link和三个joint,link之间通过joint连接。link和joint属性不同，如下定义一个名为base_link的link：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;link name&#x3D;&quot;base_link&quot;&gt;</span><br><span class="line">    &lt;visual&gt;</span><br><span class="line">        &lt;geometry&gt;</span><br><span class="line">            &lt;box size&#x3D;&quot;0.25 .16 .05&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;geometry&gt;</span><br><span class="line">        &lt;origin rpy&#x3D;&quot;0 0 1.57075&quot; xyz&#x3D;&quot;0 0 0&quot;&#x2F;&gt;</span><br><span class="line">        &lt;material name&#x3D;&quot;blue&quot;&gt;</span><br><span class="line">            &lt;color rgba&#x3D;&quot;0 .5 .8 1&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;material&gt;</span><br><span class="line">    &lt;&#x2F;visual&gt;</span><br><span class="line">&lt;&#x2F;link&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明：</strong></p>
+<ul>
+<li><code>&lt;visual&gt;</code>    描述一个link的外观，大小，颜色，材质纹理等;<ul>
+<li><code>&lt;geometry&gt;</code> 定义该link的几何模型，包含该几何模型的尺寸，单位：米；<ul>
+<li><code>&lt;box&gt;</code> 长方体 size：长 宽 高 原点在中心位置；</li>
+<li><code>&lt;cylinder&gt;</code>  圆柱体 length：长 radius：半径 原点在中心位置；</li>
+<li><code>&lt;sphere&gt;</code>  球体，radius：半径  原点在中心位置；</li>
+</ul>
+</li>
+<li><code>&lt;material&gt;</code>  定义颜色和透明度（RGBA），取值区间 [0,1] ；</li>
+<li><code>&lt;origin&gt;</code> 用来描述模块的位置；<ul>
+<li><code>xyz</code> 表示固定轴的坐标，单位：米；</li>
+<li><code>rpy</code> 表示固定轴的横滚角，俯仰角和偏航角，单位：弧度；</li>
+</ul>
+</li>
+<li><code>&lt;inertial&gt;</code> 定义惯性；</li>
+<li><code>&lt;collision&gt;</code> 描述碰撞检测属性；</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;同样，如下定义一个名为left_back_wheel_joint的joint,主要用于连接父link:base_link和子link:left_back_wheel。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;joint name&#x3D;&quot;left_back_wheel_joint&quot; type&#x3D;&quot;continuous&quot;&gt;  </span><br><span class="line">    &lt;axis xyz&#x3D;&quot;0 0 1&quot;&#x2F;&gt;  </span><br><span class="line">    &lt;parent link&#x3D;&quot;base_link&quot;&#x2F;&gt;  </span><br><span class="line">    &lt;child link&#x3D;&quot;left_back_wheel&quot;&#x2F;&gt;  </span><br><span class="line">    &lt;origin rpy&#x3D;&quot;0 1.57075 0&quot; xyz&#x3D;&quot;-0.08 -0.1 -0.03&quot;&#x2F;&gt;  </span><br><span class="line">    &lt;limit effort&#x3D;&quot;100&quot; velocity&#x3D;&quot;100&quot;&#x2F;&gt;  </span><br><span class="line">    &lt;joint_properties damping&#x3D;&quot;0.0&quot; friction&#x3D;&quot;0.0&quot;&#x2F;&gt;  </span><br><span class="line">&lt;&#x2F;joint&gt;  </span><br></pre></td></tr></table></figure>
+
+<p><strong>说明：</strong></p>
+<ul>
+<li><code>type</code> joint类型（revolute、continuous、prismatic、fixed、floating、planar）<ul>
+<li><code>continuous</code> 绕轴旋转的连续铰链接头，没有上限和下限。</li>
+<li><code>fixed</code> 所有自由度均被锁定，无法移动。</li>
+</ul>
+</li>
+<li><code>&lt;axis&gt;</code> 旋转关节（revolute、continuous）的旋转轴，棱柱形关节（prismatic）的平移轴，平面关节（planar）的表面法线。</li>
+<li><code>&lt;limit&gt;</code> 安全限制（仅对于旋转和棱柱形关节需要） effort：作用力  velocity：速度</li>
+</ul>
+<h3 id="1-3-查看坐标系"><a href="#1-3-查看坐标系" class="headerlink" title="1.3 查看坐标系"></a>1.3 查看坐标系</h3><p>&emsp;&emsp;可使用命令</p>
+<pre><code>$ check_urdf trobot.urdf  检查语法配置是否有误
+$ urdf_to_graphiz trobot.urdf    图形化工具
+
+tao@ubuntu:~/robot_simulation/src/robot_simulation/urdf$ check_urdf trobot.urdf 
+robot name is: trobot
+---------- Successfully Parsed XML ---------------
+root Link: base_link has 5 child(ren)
+    child(1):  left_back_wheel
+    child(2):  left_front_wheel
+    child(3):  right_back_wheel
+    child(4):  right_front_wheel
+    child(5):  head
+tao@ubuntu:~/robot_simulation/src/robot_simulation/urdf$ urdf_to_graphiz trobot.urdf 
+Created file trobot.gv
+Created file trobot.pdf</code></pre>
+<center>
+<img src="https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/2-%E4%BB%BF%E7%9C%9F/urdf/urdf_tf.PNG" height="300">
+trobot.pdf</center>
+
+<h2 id="2-Rviz显示"><a href="#2-Rviz显示" class="headerlink" title="2. Rviz显示"></a>2. Rviz显示</h2><p>&emsp;&emsp;新建<code>robot_simulation/launch/trobot_display_urdf.launch</code>文件，内容如下：</p>
+<figure class="highlight xml"><figcaption><span>trobot_display_urdf.launch</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;model&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;gui&quot;</span> <span class="attr">default</span>=<span class="string">&quot;True&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;robot_description&quot;</span> <span class="attr">textfile</span>=<span class="string">&quot;$(find robot_simulation)/urdf/trobot.urdf&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;use_gui&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg gui)&quot;</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;joint_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;joint_state_publisher&quot;</span> &gt;</span><span class="tag">&lt;/<span class="name">node</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;robot_state_publisher&quot;</span> <span class="attr">type</span>=<span class="string">&quot;state_publisher&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">type</span>=<span class="string">&quot;rviz&quot;</span> <span class="attr">args</span>=<span class="string">&quot;-d $(find robot_simulation)/rviz/trobot_urdf.rviz&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>编译功能包（略），并运行launch文件</p>
+<pre><code>$ roslaunch robot_simulation trobot_display_urdf.launch </code></pre>
+<center>
+<img src="https://xiaoxiaotaoya-1257031621.cos.ap-nanjing.myqcloud.com/2-%E4%BB%BF%E7%9C%9F/urdf/urdf_rviz.PNG" height="600"></center>
+
+<blockquote>
+<p>注：RVIZ中坐标轴 红色为x轴，绿色为y轴，蓝色为z轴</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://wiki.ros.org/urdf/XML">http://wiki.ros.org/urdf/XML</a></li>
+</ul>
+
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/09/02/%E5%8F%A4%E6%96%87%E7%AB%A0-%E6%95%85%E4%BA%8B%E9%9B%861/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/02/%E5%8F%A4%E6%96%87%E7%AB%A0-%E6%95%85%E4%BA%8B%E9%9B%861/" class="post-title-link" itemprop="url">古文章-故事集1</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-02 22:28:42" itemprop="dateCreated datePublished" datetime="2020-09-02T22:28:42+08:00">2020-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-09 22:27:15" itemprop="dateModified" datetime="2020-09-09T22:27:15+08:00">2020-09-09</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/02/%E5%8F%A4%E6%96%87%E7%AB%A0-%E6%95%85%E4%BA%8B%E9%9B%861/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/02/%E5%8F%A4%E6%96%87%E7%AB%A0-%E6%95%85%E4%BA%8B%E9%9B%861/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          记录一些有趣的故事集
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/09/02/%E5%8F%A4%E6%96%87%E7%AB%A0-%E6%95%85%E4%BA%8B%E9%9B%861/">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/05/24/%E5%AE%9E%E4%B9%A0%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%934%EF%BC%9ALINUX%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84C++%E7%BA%BF%E7%A8%8B%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/24/%E5%AE%9E%E4%B9%A0%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%934%EF%BC%9ALINUX%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84C++%E7%BA%BF%E7%A8%8B%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">实习项目经验总结4：LINUX系统下的C++线程使用</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-24 21:39:21 / 修改时间：23:07:08" itemprop="dateCreated datePublished" datetime="2020-05-24T21:39:21+08:00">2020-05-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%9E%E4%B9%A0%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">实习项目</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/24/%E5%AE%9E%E4%B9%A0%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%934%EF%BC%9ALINUX%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84C++%E7%BA%BF%E7%A8%8B%E4%BD%BF%E7%94%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/24/%E5%AE%9E%E4%B9%A0%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%934%EF%BC%9ALINUX%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84C++%E7%BA%BF%E7%A8%8B%E4%BD%BF%E7%94%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&emsp;&emsp;记录LINUX系统下的C++线程使用，不涉及保密项目。</p>
+<p>&emsp;&emsp;c++ 11 之后有了标准的线程库：<code>std::thread</code>。但在LINUX下<code>pthread</code>使用的多一点,因此本文主要学习<code>pthread</code>的一些用法。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pubs.opengroup.org/onlinepubs/7908799/xsh/pthread.h.html">&lt;pthread.h&gt;</a></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/24/%E5%AE%9E%E4%B9%A0%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%934%EF%BC%9ALINUX%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84C++%E7%BA%BF%E7%A8%8B%E4%BD%BF%E7%94%A8/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/05/16/Opencv%E5%AD%A6%E4%B9%A02%EF%BC%9A%E5%9B%BE%E5%83%8F%E8%AF%BB%E5%8F%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/16/Opencv%E5%AD%A6%E4%B9%A02%EF%BC%9A%E5%9B%BE%E5%83%8F%E8%AF%BB%E5%8F%96/" class="post-title-link" itemprop="url">Opencv学习2：指定图像读取</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-16 22:23:05" itemprop="dateCreated datePublished" datetime="2020-05-16T22:23:05+08:00">2020-05-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-17 12:52:42" itemprop="dateModified" datetime="2020-05-17T12:52:42+08:00">2020-05-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Opencv%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">Opencv学习</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/16/Opencv%E5%AD%A6%E4%B9%A02%EF%BC%9A%E5%9B%BE%E5%83%8F%E8%AF%BB%E5%8F%96/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/16/Opencv%E5%AD%A6%E4%B9%A02%EF%BC%9A%E5%9B%BE%E5%83%8F%E8%AF%BB%E5%8F%96/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&emsp;&emsp;此次图像读取学习，所有程序都是在opencv_learning功能包下编译完成的。</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/opencv%E5%AD%A6%E4%B9%A0/%E8%AF%BB%E5%8F%96%E6%8C%87%E5%AE%9A%E5%9B%BE%E7%89%87/1.jpg?imageView2/1/w/600/h/400" width="600" hegiht="460">
+</center>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/16/Opencv%E5%AD%A6%E4%B9%A02%EF%BC%9A%E5%9B%BE%E5%83%8F%E8%AF%BB%E5%8F%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/05/15/Opencv%E5%AD%A6%E4%B9%A01%EF%BC%9AUbuntu%E4%B8%8B%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/15/Opencv%E5%AD%A6%E4%B9%A01%EF%BC%9AUbuntu%E4%B8%8B%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">Opencv学习1：Ubuntu下安装与配置</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-15 22:09:27" itemprop="dateCreated datePublished" datetime="2020-05-15T22:09:27+08:00">2020-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-16 22:22:44" itemprop="dateModified" datetime="2020-05-16T22:22:44+08:00">2020-05-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Opencv%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">Opencv学习</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/15/Opencv%E5%AD%A6%E4%B9%A01%EF%BC%9AUbuntu%E4%B8%8B%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/15/Opencv%E5%AD%A6%E4%B9%A01%EF%BC%9AUbuntu%E4%B8%8B%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/" class="post-title-link" itemprop="url">土管项目总结7：IDEA和Tomcat配置手机服务端</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-15 22:09:27" itemprop="dateCreated datePublished" datetime="2020-05-15T22:09:27+08:00">2020-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-16 15:41:48" itemprop="dateModified" datetime="2020-05-16T15:41:48+08:00">2020-05-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">土管项目</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/">IDEA</a> 全称 IntelliJ IDEA，是java编程语言开发的集成环境。<a target="_blank" rel="noopener" href="http://tomcat.apache.org/">Tomcat</a>服务器是一个免费的开放源代码的Web应用服务器，属于轻量级应用服务器。</p>
+<p>&emsp;&emsp;手机服务端的配置，需要IDEA软件将服务端项目编译出war包，然后放到服务器中通过Tomcat部署，这样手机端才能连接服务器上的数据库。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%936%EF%BC%9A%E6%89%93%E5%8C%85APK/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%936%EF%BC%9A%E6%89%93%E5%8C%85APK/" class="post-title-link" itemprop="url">土管项目总结6：Eclipse 实现手机端APK打包</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-15 21:22:22" itemprop="dateCreated datePublished" datetime="2020-05-15T21:22:22+08:00">2020-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-16 00:11:42" itemprop="dateModified" datetime="2020-05-16T00:11:42+08:00">2020-05-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">土管项目</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%936%EF%BC%9A%E6%89%93%E5%8C%85APK/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%936%EF%BC%9A%E6%89%93%E5%8C%85APK/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>&emsp;&emsp;上一步已经完成Android相关的环境配置，此次使用<a target="_blank" rel="noopener" href="https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-java-ee-developers">Eclipse IDE for Java EE Developers</a> 2020‑03版本实现手机端的APK打包。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%936%EF%BC%9A%E6%89%93%E5%8C%85APK/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%935%EF%BC%9A%E9%85%8D%E7%BD%AEAndroid%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%935%EF%BC%9A%E9%85%8D%E7%BD%AEAndroid%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">土管项目总结5：配置Android开发环境</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-05-15 20:22:22 / 修改时间：23:57:29" itemprop="dateCreated datePublished" datetime="2020-05-15T20:22:22+08:00">2020-05-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">土管项目</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%935%EF%BC%9A%E9%85%8D%E7%BD%AEAndroid%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%935%EF%BC%9A%E9%85%8D%E7%BD%AEAndroid%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://developer.android.google.cn/">Android</a>开发环境常用的有：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.android.google.cn/studio">Android Studio</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-java-ee-developers">Eclipse IDE for Java EE Developers</a></li>
+</ul>
+<p>&emsp;&emsp;我使用的是<a target="_blank" rel="noopener" href="https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-java-ee-developers">Eclipse IDE for Java EE Developers</a> 2020‑03版本，由于它的<code>Android SDK Manager</code>无法访问<code>dl-ssl.google.com</code>去下载Android SDK 和Android Tool。网上查了很多教程都，但都已经失效，没办法，最后发现可以移植<a target="_blank" rel="noopener" href="https://developer.android.google.cn/studio">Android Studio</a>中下载的Android SDK 和Android Tool，解决这一问题。所以，我两个软件都安装了。如果你会<a target="_blank" rel="noopener" href="https://developer.android.google.cn/studio">Android Studio</a>打包APK，就不需要移植操作了，直接使用<a target="_blank" rel="noopener" href="https://developer.android.google.cn/studio">Android Studio</a>即可。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%935%EF%BC%9A%E9%85%8D%E7%BD%AEAndroid%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+	
+    <div>
+		
+	</div>
+  
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

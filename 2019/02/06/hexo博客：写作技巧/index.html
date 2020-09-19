@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="主要参考 Hexo 搭建个人博客系列：写作技巧篇 常用技巧  阅读更多： &lt;!-- more--&gt; 空格： 1个空格字符&amp;nbsp; &amp;emsp; 1个中文宽度&amp;emsp; 换&amp;nbsp;行： &lt;&#x2F;br&gt; 插入图片： &lt;img src&#x3D;&quot; &quot; width&#x3D;&quot;600&quot; hegiht&#x3D;&quot;400&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo博客：写作技巧">
+<meta property="og:url" content="https://xxty847.github.io/2019/02/06/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9A%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="主要参考 Hexo 搭建个人博客系列：写作技巧篇 常用技巧  阅读更多： &lt;!-- more--&gt; 空格： 1个空格字符&amp;nbsp; &amp;emsp; 1个中文宽度&amp;emsp; 换&amp;nbsp;行： &lt;&#x2F;br&gt; 插入图片： &lt;img src&#x3D;&quot; &quot; width&#x3D;&quot;600&quot; hegiht&#x3D;&quot;400&quot;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/1.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/2.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/3.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/4.jpg">
+<meta property="article:published_time" content="2019-02-06T12:38:29.000Z">
+<meta property="article:modified_time" content="2020-03-10T14:37:27.550Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="hexo博客">
+<meta property="article:tag" content="写作技巧">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/1.jpg">
+
+<link rel="canonical" href="https://xxty847.github.io/2019/02/06/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9A%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>hexo博客：写作技巧 | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2019/02/06/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9A%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hexo博客：写作技巧
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-02-06 20:38:29" itemprop="dateCreated datePublished" datetime="2019-02-06T20:38:29+08:00">2019-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-10 22:37:27" itemprop="dateModified" datetime="2020-03-10T22:37:27+08:00">2020-03-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo%E5%8D%9A%E5%AE%A2/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo博客</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo%E5%8D%9A%E5%AE%A2/next%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96/" itemprop="url" rel="index">
+                    <span itemprop="name">next主题优化</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/02/06/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9A%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/02/06/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9A%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>主要参考 <a target="_blank" rel="noopener" href="http://yearito.cn/posts/hexo-writing-skills.html">Hexo 搭建个人博客系列：写作技巧篇</a></p>
+<p><strong>常用技巧</strong></p>
+<ul>
+<li>阅读更多： <code>&lt;!-- more--&gt;</code></li>
+<li>空格： 1个空格字符<code>&amp;nbsp;</code> &emsp; 1个中文宽度<code>&amp;emsp;</code></li>
+<li>换&nbsp;行： <code>&lt;/br&gt;</code></li>
+<li>插入图片： <code>&lt;img src=&quot; &quot; width=&quot;600&quot; hegiht=&quot;400&quot; &gt;</code></li>
+<li>居中： <code>&lt;center&gt; &lt;/center&gt;</code> </li>
+</ul>
+<a id="more"></a>
+
+<h2 id="文本居中标签"><a href="#文本居中标签" class="headerlink" title="文本居中标签"></a>文本居中标签</h2><p>参考 <a target="_blank" rel="noopener" href="https://theme-next.iissnan.com/tag-plugins.html">内置标签 文本居中的引用</a> </p>
+<p>文本居中标签有以下三种写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- HTML方式: 直接在 Markdown 文件中编写 HTML 来调用 --&gt;</span><br><span class="line">&lt;!-- 其中 class&#x3D;&quot;blockquote-center&quot; 是必须的 --&gt;</span><br><span class="line">&lt;blockquote class&#x3D;&quot;blockquote-center&quot;&gt;时光荏苒，珍惜当下&lt;&#x2F;blockquote&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 标签方式 --&gt;</span><br><span class="line">&#123;% centerquote %&#125;时光荏苒，珍惜当下&#123;% endcenterquote %&#125;</span><br><span class="line"></span><br><span class="line">&lt;!-- 标签别名 --&gt;</span><br><span class="line">&#123;% cq %&#125;时光荏苒，珍惜当下&#123;% endcq %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>举例：</strong></p>
+<pre><code>&lt;blockquote class=&quot;blockquote-center&quot;&gt;时光荏苒，珍惜当下&lt;/blockquote&gt;</code></pre>
+<p><strong>效果：</strong></p>
+<blockquote class="blockquote-center">时光荏苒，珍惜当下</blockquote>
+
+
+<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><p>书写方式：</p>
+<pre><code>// ``` [language] [title] [url] [link text]
+// code snippet
+// ```</code></pre>
+<p>其中，各参数意义如下：</p>
+<ul>
+<li>langugae：语言名称，引导渲染引擎正确解析并高亮显示关键字</li>
+<li>title：代码块标题，将会显示在左上角</li>
+<li>url：链接地址，如果没有指定 link text 则会在右上角显示 link</li>
+<li>link text：链接名称，指定 url 后有效，将会显示在右上角</li>
+</ul>
+<p>如果不想填写 title，可以在 language 和 url 之间添加至少三个空格。</p>
+<h2 id="note-标签"><a href="#note-标签" class="headerlink" title="note 标签"></a>note 标签</h2><h3 id="修改主题配置文件"><a href="#修改主题配置文件" class="headerlink" title="修改主题配置文件"></a>修改主题配置文件</h3><ul>
+<li>打开主题配置文件<code>config.yml</code>, 修改 note 标签 。</li>
+</ul>
+<figure class="highlight yml"><figcaption><span>config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># note 标签</span></span><br><span class="line"><span class="comment"># Note tag (bs-callout)</span></span><br><span class="line"><span class="attr">note:</span></span><br><span class="line">  <span class="comment"># Note tag style values:</span></span><br><span class="line">  <span class="comment">#  - simple    bs-callout old alert style. Default.</span></span><br><span class="line">  <span class="comment">#  - modern    bs-callout new (v2-v3) alert style.</span></span><br><span class="line">  <span class="comment">#  - flat      flat callout style with background, like on Mozilla or StackOverflow.</span></span><br><span class="line">  <span class="comment">#  - disabled  disable all CSS styles import of note tag.</span></span><br><span class="line">  <span class="attr">style:</span> <span class="string">flat</span></span><br><span class="line">  <span class="attr">icons:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">border_radius:</span> <span class="number">3</span></span><br><span class="line">  <span class="comment"># Offset lighter of background in % for modern and flat styles (modern: -12 | 12; flat: -18 | 6).</span></span><br><span class="line">  <span class="comment"># Offset also applied to label tag variables. This option can work with disabled note tag.</span></span><br><span class="line">  <span class="attr">light_bg_offset:</span> <span class="number">20</span><span class="string">%</span>  <span class="comment"># 默认背景减淡效果，以百分比计算</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h3><p>通过 note 标签可以为段落添加背景色，语法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% note [class] %&#125;</span><br><span class="line">文本内容 (支持行内标签)</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>支持的 class 种类包括 <code>default</code> <code>primary</code> <code>success</code> <code>info</code> <code>warning</code> <code>danger</code>，也可以不指定 class。</p>
+<p><strong>举例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;% note default %&#125;</span><br><span class="line">路是自己走出来的；机会是自己创造出来的。人不能创造时机，但是它可以抓住那些已经出现的时机。累了，才放慢脚步。错了，才想到最后。苦了，才知道满足。伤了，才明白坚强。</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note primary %&#125;</span><br><span class="line">尝试后可能会放弃，但千万不能放弃尝试。</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note success %&#125;</span><br><span class="line">每天给自己一个希望，试着不为明天而烦恼，不为昨天而叹息，只为今天更美好！人生没有对错，只有选择后的坚持，不后悔，走下去，就是对的。走着走着，花就开了。</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note info %&#125;</span><br><span class="line">如果把我们能做到的都做了，最终连我们自己都会被吓到。</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note warning %&#125;</span><br><span class="line"> 今日的事情，尽心、尽意、尽力去做了，无论成绩如何，都应该高高兴兴地上床恬睡。</span><br><span class="line">&#123;% endnote %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% note danger %&#125;</span><br><span class="line">生活其实很简单，过了今天就是明天。</span><br><span class="line">&#123;% endnote %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong>（按顺序，加上小图标）</p>
+<div class="note default">
+            <p>路是自己走出来的；机会是自己创造出来的。人不能创造时机，但是它可以抓住那些已经出现的时机。累了，才放慢脚步。错了，才想到最后。苦了，才知道满足。伤了，才明白坚强。</p>
+          </div>
+
+<div class="note primary">
+            <p>尝试后可能会放弃，但千万不能放弃尝试。</p>
+          </div>
+
+<div class="note success">
+            <p>每天给自己一个希望，试着不为明天而烦恼，不为昨天而叹息，只为今天更美好！人生没有对错，只有选择后的坚持，不后悔，走下去，就是对的。走着走着，花就开了。</p>
+          </div>
+
+<div class="note info">
+            <p>如果把我们能做到的都做了，最终连我们自己都会被吓到。</p>
+          </div>
+
+<div class="note warning">
+            <p>今日的事情，尽心、尽意、尽力去做了，无论成绩如何，都应该高高兴兴地上床恬睡。</p>
+          </div>
+
+<div class="note danger">
+            <p>生活其实很简单，过了今天就是明天。</p>
+          </div>
+
+<h2 id="button-按钮"><a href="#button-按钮" class="headerlink" title="button 按钮"></a>button 按钮</h2><p>通过 button 标签可以快速添加带有主题样式的按钮，语法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% button &#x2F;path&#x2F;to&#x2F;url&#x2F;, text, icon [class], title %&#125;</span><br><span class="line">也可简写为：</span><br><span class="line">&#123;% btn &#x2F;path&#x2F;to&#x2F;url&#x2F;, text, icon [class], title %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>举例：</strong></p>
+<pre><code>&#123;% btn #, 文本 %&#125;
+&#123;% btn #, 文本 & 标题, 标题 %&#125;
+&#123;% btn #, 文本 & 图标, home %&#125;
+&#123;% btn #, 文本 & 大图标 (固定宽度), home fa-fw fa-lg %&#125;</code></pre>
+<p><strong>效果：</strong></p>
+<a class="btn" href="#">文本</a>
+<a class="btn" href="#"><i class="fa fa-标题"></i>文本 & 标题</a>
+<a class="btn" href="#"><i class="fa fa-home"></i>文本 & 图标</a>
+<a class="btn" href="#"><i class="fa fa-home fa-fw fa-lg"></i>文本 & 大图标 (固定宽度)</a>
+
+
+<h2 id="tab-标签"><a href="#tab-标签" class="headerlink" title="tab 标签"></a>tab 标签</h2><p>tab 标签用于快速创建 tab 选项卡，语法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;% tabs [Unique name], [index] %&#125;</span><br><span class="line">  &lt;!-- tab [Tab caption]@[icon] --&gt;</span><br><span class="line">  标签页内容（支持行内标签）</span><br><span class="line">  &lt;!-- endtab --&gt;</span><br><span class="line">&#123;% endtabs %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，各参数意义如下：</p>
+<ul>
+<li>Unique name: 全局唯一的 Tab 名称，将作为各个标签页的 id 属性前缀</li>
+<li>index: 当前激活的标签页索引，如果未定义则默认选中显示第一个标签页，如果设为 - 1 则默认隐藏所有标签页</li>
+<li>Tab caption: 当前标签页的标题，如果不指定则会以 Unique name 加上索引作为标题</li>
+<li>icon: 在标签页标题中添加 Font awesome 图标</li>
+</ul>
+<p><strong>举例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;% tabs Tab标签列表 %&#125;</span><br><span class="line">  &lt;!-- tab 王祖贤1 --&gt;</span><br><span class="line">    标签页1文本内容</span><br><span class="line">	&lt;img src&#x3D;&quot;https:&#x2F;&#x2F;hexo-1257031621.cos.ap-chengdu.myqcloud.com&#x2F;%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE&#x2F;hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7&#x2F;1.jpg&quot; width&#x3D;&quot;600&quot; hegiht&#x3D;&quot;400&quot; &gt;</span><br><span class="line">  &lt;!-- endtab --&gt;</span><br><span class="line">  &lt;!-- tab 王祖贤2 --&gt;</span><br><span class="line">    标签页2文本内容</span><br><span class="line">	&lt;img src&#x3D;&quot;https:&#x2F;&#x2F;hexo-1257031621.cos.ap-chengdu.myqcloud.com&#x2F;%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE&#x2F;hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7&#x2F;2.jpg&quot; width&#x3D;&quot;600&quot; hegiht&#x3D;&quot;400&quot; &gt;</span><br><span class="line">  &lt;!-- endtab --&gt;</span><br><span class="line">  &lt;!-- tab 王祖贤3 --&gt;</span><br><span class="line">    标签页3文本内容</span><br><span class="line">	&lt;img src&#x3D;&quot;https:&#x2F;&#x2F;hexo-1257031621.cos.ap-chengdu.myqcloud.com&#x2F;%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE&#x2F;hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7&#x2F;3.jpg&quot; width&#x3D;&quot;600&quot; hegiht&#x3D;&quot;400&quot; &gt;</span><br><span class="line">  &lt;!-- endtab --&gt;</span><br><span class="line">  &lt;!-- tab 王祖贤4 --&gt;</span><br><span class="line">    标签页4文本内容</span><br><span class="line">	&lt;img src&#x3D;&quot;https:&#x2F;&#x2F;hexo-1257031621.cos.ap-chengdu.myqcloud.com&#x2F;%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE&#x2F;hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7&#x2F;4.jpg&quot; width&#x3D;&quot;600&quot; hegiht&#x3D;&quot;400&quot; &gt;</span><br><span class="line">  &lt;!-- endtab --&gt;</span><br><span class="line">&#123;% endtabs %&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果：</strong></p>
+<div class="tabs" id="tab标签列表"><ul class="nav-tabs"><li class="tab active"><a href="#tab标签列表-1">王祖贤1</a></li><li class="tab"><a href="#tab标签列表-2">王祖贤2</a></li><li class="tab"><a href="#tab标签列表-3">王祖贤3</a></li><li class="tab"><a href="#tab标签列表-4">王祖贤4</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab标签列表-1"><p>   标签页1文本内容<br><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/1.jpg" width="600" hegiht="400" ></p></div><div class="tab-pane" id="tab标签列表-2"><p>   标签页2文本内容<br><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/2.jpg" width="600" hegiht="400" ></p></div><div class="tab-pane" id="tab标签列表-3"><p>   标签页3文本内容<br><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/3.jpg" width="600" hegiht="400" ></p></div><div class="tab-pane" id="tab标签列表-4"><p>   标签页4文本内容<br><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/hexo%20blog%20%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/4.jpg" width="600" hegiht="400" ></p></div></div></div>
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/hexo%E5%8D%9A%E5%AE%A2/" rel="tag"><i class="fa fa-tag"></i> hexo博客</a>
+              <a href="/tags/%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/" rel="tag"><i class="fa fa-tag"></i> 写作技巧</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/02/06/hexo+github%20%E5%85%8D%E8%B4%B9%E6%90%AD%E5%BB%BA%E5%B1%9E%E4%BA%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/" rel="next" title="Hexo+github 免费搭建属于自己的博客">
+                  <i class="fa fa-chevron-left"></i> Hexo+github 免费搭建属于自己的博客
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/02/08/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9Anext%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96/" rel="prev" title="hexo博客：next主题优化">
+                  hexo博客：next主题优化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%B1%85%E4%B8%AD%E6%A0%87%E7%AD%BE"><span class="nav-number">1.</span> <span class="nav-text">文本居中标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="nav-number">2.</span> <span class="nav-text">代码块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#note-%E6%A0%87%E7%AD%BE"><span class="nav-number">3.</span> <span class="nav-text">note 标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">修改主题配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">3.2.</span> <span class="nav-text">效果展示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#button-%E6%8C%89%E9%92%AE"><span class="nav-number">4.</span> <span class="nav-text">button 按钮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tab-%E6%A0%87%E7%AD%BE"><span class="nav-number">5.</span> <span class="nav-text">tab 标签</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

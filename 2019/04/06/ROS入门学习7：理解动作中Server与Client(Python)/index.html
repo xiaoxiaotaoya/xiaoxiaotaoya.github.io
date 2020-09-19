@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;动作（Action）是ROS中一种同步通信模式，与服务非常相似，服务具有与请求和响应分别对应的目标（goal）和结果（result），除此之外动作中还多了反馈（feedback）。与服务不同，动作通常用于指导复杂的机器人任务，例如发送一个目标值之后，还可以在任意时刻发送取消目标的命令。ROS中已经包含actionlib功能包，用于实现动作通信机制。  客户端（Client)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS入门学习7：理解动作中Server与Client(Python)">
+<meta property="og:url" content="https://xxty847.github.io/2019/04/06/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A07%EF%BC%9A%E7%90%86%E8%A7%A3%E5%8A%A8%E4%BD%9C%E4%B8%ADServer%E4%B8%8EClient(Python)/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;动作（Action）是ROS中一种同步通信模式，与服务非常相似，服务具有与请求和响应分别对应的目标（goal）和结果（result），除此之外动作中还多了反馈（feedback）。与服务不同，动作通常用于指导复杂的机器人任务，例如发送一个目标值之后，还可以在任意时刻发送取消目标的命令。ROS中已经包含actionlib功能包，用于实现动作通信机制。  客户端（Client)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6/%E5%8A%A8%E4%BD%9C.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/%E5%8A%A8%E4%BD%9C/%E5%8A%A8%E4%BD%9C%E6%9C%8D%E5%8A%A1%E5%99%A8.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/%E5%8A%A8%E4%BD%9C/%E5%8A%A8%E4%BD%9C%E5%AE%A2%E6%88%B7%E7%AB%AF.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/%E5%8A%A8%E4%BD%9C/%E5%8A%A8%E4%BD%9C%E8%8A%82%E7%82%B9%E5%85%B3%E7%B3%BB.PNG">
+<meta property="article:published_time" content="2019-04-06T11:33:03.000Z">
+<meta property="article:modified_time" content="2020-03-10T12:39:25.617Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="ROS入门学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6/%E5%8A%A8%E4%BD%9C.PNG">
+
+<link rel="canonical" href="https://xxty847.github.io/2019/04/06/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A07%EF%BC%9A%E7%90%86%E8%A7%A3%E5%8A%A8%E4%BD%9C%E4%B8%ADServer%E4%B8%8EClient(Python)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>ROS入门学习7：理解动作中Server与Client(Python) | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2019/04/06/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A07%EF%BC%9A%E7%90%86%E8%A7%A3%E5%8A%A8%E4%BD%9C%E4%B8%ADServer%E4%B8%8EClient(Python)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ROS入门学习7：理解动作中Server与Client(Python)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-06 19:33:03" itemprop="dateCreated datePublished" datetime="2019-04-06T19:33:03+08:00">2019-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-10 20:39:25" itemprop="dateModified" datetime="2020-03-10T20:39:25+08:00">2020-03-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">ROS入门学习</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/04/06/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A07%EF%BC%9A%E7%90%86%E8%A7%A3%E5%8A%A8%E4%BD%9C%E4%B8%ADServer%E4%B8%8EClient(Python)/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/04/06/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A07%EF%BC%9A%E7%90%86%E8%A7%A3%E5%8A%A8%E4%BD%9C%E4%B8%ADServer%E4%B8%8EClient(Python)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;<a target="_blank" rel="noopener" href="http://wiki.ros.org/actionlib">动作</a>（Action）是ROS中一种同步通信模式，与服务非常相似，服务具有与请求和响应分别对应的目标（goal）和结果（result），除此之外动作中还多了反馈（feedback）。与服务不同，动作通常用于指导复杂的机器人任务，例如发送一个目标值之后，还可以在任意时刻发送取消目标的命令。ROS中已经包含<code>actionlib</code>功能包，用于实现动作通信机制。</p>
+<ul>
+<li>客户端（Client)：用于请求发布任务目标（goal）或取消任务（cancel）。</li>
+<li>服务器（Server）：用于通知客户端当前状态（status）、周期性反馈任务运行进度（feedback）以及发送任务执行结果（result）。结果只发送一次。</li>
+<li>关系：Client-Server 多对一</li>
+</ul>
+<p>&emsp;&emsp;例如，当客户端将家庭服务器设置为服务器时，服务器会时时地通知客户端洗碗、洗衣和清洁等进度，最后将结果值发送给客户端。</p>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6/%E5%8A%A8%E4%BD%9C.PNG" width="600" hegiht="600">
+（图）动作通信模式
+</center>
+
+<p>&emsp;&emsp;消息传输方案本身与异步方式的话题（topic）相同。反馈在动作客户端（action client）和动作服务器（action server）之间执行异步双向消息通信，其中动作客户端设置动作目标（goal），而动作服务器根据目标执行指定的工作，并将动作反馈和动作结果发送给动作客户端。</p>
+<a id="more"></a>
+
+<h2 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h2><p>本例程放在<code>ros_learning</code>功能包<code>script</code>文件夹下，新建<code>ros_learning</code>功能包(如果已经创建，可以跳过)：</p>
+<pre><code>$ cs
+$ catkin_create_pkg ros_learning std_msgs rospy roscpp
+$ cm</code></pre>
+<h3 id="新建自定义动作"><a href="#新建自定义动作" class="headerlink" title="新建自定义动作"></a>新建自定义动作</h3><p>自定义动作消息数据格式一般为<code>action</code>文件，如此次需要创建<code>DoDishes.action</code>文件，一般放在功能包目录下<code>action</code>文件夹下。</p>
+<p>路径：<code>catkin_ws/src/ros_learning/action/DoDishes.action</code></p>
+<figure class="highlight python"><figcaption><span>DoDishes.action</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义目标</span></span><br><span class="line">uint32 dish_goal </span><br><span class="line">---</span><br><span class="line"><span class="comment"># 定义结果</span></span><br><span class="line">uint32 dish_result</span><br><span class="line">---</span><br><span class="line"><span class="comment"># 定义反馈消息</span></span><br><span class="line">uint32 dish_progress</span><br></pre></td></tr></table></figure>
+
+<p>注：数据域中的内容，目标、结果和反馈消息数据格式之间需要使用<code>---</code>分割。</p>
+<h3 id="修改package-xml和CMakeLists-txt"><a href="#修改package-xml和CMakeLists-txt" class="headerlink" title="修改package.xml和CMakeLists.txt"></a>修改package.xml和CMakeLists.txt</h3><ul>
+<li>修改package.xml文件，添加以下内容</li>
+</ul>
+<figure class="highlight xml"><figcaption><span>package.xml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>actionlib_msgs<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>actionlib<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build_export_depend</span>&gt;</span>actionlib_msgs<span class="tag">&lt;/<span class="name">build_export_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build_export_depend</span>&gt;</span>actionlib<span class="tag">&lt;/<span class="name">build_export_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>actionlib_msgs<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>actionlib<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改CMakeLists.txt文件，添加以下内容</li>
+</ul>
+<figure class="highlight python"><figcaption><span>CMakeLists.txt</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">find_package(catkin REQUIRED COMPONENTS</span><br><span class="line">  roscpp</span><br><span class="line">  rospy</span><br><span class="line">  std_msgs</span><br><span class="line">  message_generation</span><br><span class="line">  genmsg</span><br><span class="line">  actionlib_msgs</span><br><span class="line">  actionlib</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Generate actions in the &#x27;action&#x27; folder</span></span><br><span class="line"> add_action_files(</span><br><span class="line">   FILES</span><br><span class="line">   DoDishes.action</span><br><span class="line"> )</span><br><span class="line"></span><br><span class="line"><span class="comment">## Generate added messages and services with any dependencies listed here</span></span><br><span class="line"> generate_messages(</span><br><span class="line">   DEPENDENCIES</span><br><span class="line">   std_msgs</span><br><span class="line">   actionlib_msgs</span><br><span class="line"> )</span><br><span class="line"></span><br><span class="line">catkin_package(</span><br><span class="line"><span class="comment">#  INCLUDE_DIRS include</span></span><br><span class="line"><span class="comment">#  LIBRARIES ros_learning</span></span><br><span class="line">  CATKIN_DEPENDS roscpp rospy std_msgs message_generation actionlib_msgs actionlib</span><br><span class="line"><span class="comment">#  DEPENDS system_lib</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建动作客户端（Action-Client"><a href="#创建动作客户端（Action-Client" class="headerlink" title="创建动作客户端（Action Client)"></a>创建动作客户端（Action Client)</h3><p>可参考 <a target="_blank" rel="noopener" href="https://docs.ros.org/api/actionlib/html/classactionlib_1_1simple__action__client_1_1SimpleActionClient.html">Full API reference for the Python SimpleActionClient</a></p>
+<p>路径：<code>catkin_ws/src/ros_learning/script/dodishes_client.py</code></p>
+<figure class="highlight python"><figcaption><span>dodishes_client.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> roslib</span><br><span class="line">roslib.load_manifest(<span class="string">&#x27;ros_learning&#x27;</span>)</span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">import</span> actionlib</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> ros_learning.msg <span class="keyword">import</span> DoDishesAction, DoDishesGoal, DoDishesFeedback, DoDishesResult</span><br><span class="line"></span><br><span class="line"><span class="comment">#激活动作回调</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">active</span>():</span></span><br><span class="line">    rospy.loginfo(<span class="string">&quot;开始洗盘子....&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#动作服务完成回调</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">done</span>(<span class="params">d,result</span>):</span></span><br><span class="line">    rospy.loginfo(<span class="string">&quot;已经洗完[%d]个盘子&quot;</span>%result.dish_result)</span><br><span class="line"></span><br><span class="line"><span class="comment">#中间过程回调</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">feedback</span>(<span class="params">msg</span>):</span></span><br><span class="line">    rospy.loginfo(<span class="string">&quot;当前进度[%d]&quot;</span>%msg.dish_progress)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">client</span>():</span></span><br><span class="line">    rospy.init_node(<span class="string">&#x27;do_dishes_client&#x27;</span>)     <span class="comment"># 初始化节点</span></span><br><span class="line">    action_client = actionlib.SimpleActionClient(<span class="string">&#x27;do_dishes&#x27;</span>, DoDishesAction)   <span class="comment"># 初始化动作客户端</span></span><br><span class="line"></span><br><span class="line">    rospy.loginfo(<span class="string">&quot;连接洗盘子服务器&quot;</span>) </span><br><span class="line">    action_client.wait_for_server()     <span class="comment"># 等待动作服务</span></span><br><span class="line">    rospy.loginfo(<span class="string">&quot;已连接，发送任务目标&quot;</span>) </span><br><span class="line"></span><br><span class="line">    goal = DoDishesGoal()   <span class="comment"># 创建一个动作的任务目标</span></span><br><span class="line">    goal.dish_goal= <span class="number">100</span>   <span class="comment">#　设置任务目标</span></span><br><span class="line">    rospy.loginfo(<span class="string">&quot;任务目标[%d].&quot;</span>%goal.dish_goal)   <span class="comment">#打印任务目标</span></span><br><span class="line"></span><br><span class="line">    action_client.send_goal(goal,done,active,feedback)  <span class="comment">#申请服务</span></span><br><span class="line">    rospy.spin() <span class="comment">#循环等待</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        client()</span><br><span class="line">    <span class="keyword">except</span> rospy.ROSInterruptException:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>创建客户端完成后，使用命令<code>sudo chmod +x XXX.py</code>为Python文件添加可执行权限：</p>
+<pre><code>tao@ubuntu:~/catkin_ws/src/ros_learning/script$ sudo chmod +x dodishes_client.py</code></pre>
+<h3 id="创建动作服务器（Action-Server"><a href="#创建动作服务器（Action-Server" class="headerlink" title="创建动作服务器（Action Server)"></a>创建动作服务器（Action Server)</h3><p>可参考 <a target="_blank" rel="noopener" href="https://docs.ros.org/api/actionlib/html/classactionlib_1_1simple__action__server_1_1SimpleActionServer.html">Full API reference for the Python SimpleActionServer</a></p>
+<p>路径：<code>catkin_ws/src/ros_learning/script/dodishes_server.py</code></p>
+<figure class="highlight python"><figcaption><span>dodishes_server.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> roslib</span><br><span class="line">roslib.load_manifest(<span class="string">&#x27;ros_learning&#x27;</span>)</span><br><span class="line"><span class="keyword">import</span> rospy</span><br><span class="line"><span class="keyword">import</span> actionlib</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> ros_learning.msg <span class="keyword">import</span> DoDishesAction, DoDishesGoal, DoDishesFeedback, DoDishesResult</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">execute</span>(<span class="params">goal</span>):</span></span><br><span class="line">  feedback = DoDishesFeedback()   <span class="comment"># 反馈进度</span></span><br><span class="line">  result = DoDishesResult()       <span class="comment"># 最终结果</span></span><br><span class="line">  rospy.loginfo(<span class="string">&quot;已收到任务目标[%d].&quot;</span>%goal.dish_goal)   <span class="comment">#打印任务目标</span></span><br><span class="line"></span><br><span class="line">  rate = rospy.Rate(<span class="number">10</span>)           <span class="comment"># 10hz 每秒10次</span></span><br><span class="line">  num_goal = goal.dish_goal  	  <span class="comment">#　任务目标</span></span><br><span class="line">  num = <span class="number">0</span>                         <span class="comment">#　临时变量</span></span><br><span class="line">  num_add = <span class="number">5</span>                     <span class="comment">#　增量</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">True</span>):</span><br><span class="line">    time.sleep(<span class="number">0.2</span>)     <span class="comment">#　模拟耗时</span></span><br><span class="line">    num += num_add      <span class="comment">#　模拟进度</span></span><br><span class="line">    feedback.dish_progress = num   <span class="comment">#更新反馈进度</span></span><br><span class="line">    <span class="keyword">if</span> num == num_goal:</span><br><span class="line">      result.dish_result = num   <span class="comment">#给最终结果赋值</span></span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    action_server.publish_feedback(feedback)  <span class="comment">#反馈任务进度</span></span><br><span class="line"></span><br><span class="line">  rospy.loginfo(<span class="string">&quot;已经洗完[%d]个盘子&quot;</span>%result.dish_result) <span class="comment">#打印最终结果</span></span><br><span class="line">  action_server.set_succeeded(result)   <span class="comment">#反馈最终结果</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">  rospy.init_node(<span class="string">&#x27;do_dishes_server&#x27;</span>)   <span class="comment"># 初始化节点</span></span><br><span class="line">  action_server=actionlib.SimpleActionServer(<span class="string">&quot;do_dishes&quot;</span>,DoDishesAction,execute,auto_start=<span class="literal">False</span>) <span class="comment"># 初始化动作服务,动作名DoDishesAction,回调函数execute</span></span><br><span class="line">  action_server.start()   <span class="comment">#启动动作服务</span></span><br><span class="line">  rospy.spin()    <span class="comment">#循环等待</span></span><br></pre></td></tr></table></figure>
+
+<p>创建客户端完成后，使用命令<code>sudo chmod +x XXX.py</code>为Python文件添加可执行权限：</p>
+<pre><code>tao@ubuntu:~/catkin_ws/src/ros_learning/script$ sudo chmod +x dodishes_server.py</code></pre>
+<h2 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h2><ul>
+<li>打开新终端，编译功能包，启动ROS：</li>
+</ul>
+<pre><code>$ cm
+$ roscore</code></pre>
+<ul>
+<li>打开新终端，运行动作服务器，可以看出服务在等待动作客户端请求：</li>
+</ul>
+<pre><code>$ rosrun ros_learning dodishes_server.py</code></pre>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/%E5%8A%A8%E4%BD%9C/%E5%8A%A8%E4%BD%9C%E6%9C%8D%E5%8A%A1%E5%99%A8.PNG" width="600" hegiht="400">
+（图）动作服务器（Server)
+</center>
+
+<ul>
+<li>打开新终端，运行动作客户端，可以看出，当发出任务目标请求后，动作服务器周期反馈进度和任务结果：</li>
+</ul>
+<pre><code>$ rosrun ros_learning dodishes_client.py</code></pre>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/%E5%8A%A8%E4%BD%9C/%E5%8A%A8%E4%BD%9C%E5%AE%A2%E6%88%B7%E7%AB%AF.PNG" width="600" hegiht="800">
+（图）动作客户端（Server)
+</center>
+
+<ul>
+<li>查看话题列表<code>rostopic list</code>和节点列表<code>rosnode list</code></li>
+</ul>
+<pre><code>tao@ubuntu:~$ rostopic list
+/do_dishes/cancel
+/do_dishes/feedback
+/do_dishes/goal
+/do_dishes/result
+/do_dishes/status
+/rosout
+/rosout_agg
+tao@ubuntu:~$ rosnode list
+/do_dishes_client
+/do_dishes_server
+/rosout</code></pre>
+<ul>
+<li>查看节点关系<code>rqt_graph</code></li>
+</ul>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/ROS%E5%AD%A6%E4%B9%A0/%E5%8A%A8%E4%BD%9C/%E5%8A%A8%E4%BD%9C%E8%8A%82%E7%82%B9%E5%85%B3%E7%B3%BB.PNG" width="600" hegiht="400">
+（图）动作节点关系（Server)
+</center>
+
+<p>到此，已经简单了解一下动作的通信模式。</p>
+
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> ROS入门学习</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/04/05/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A06%EF%BC%9A%E7%90%86%E8%A7%A3%E6%9C%8D%E5%8A%A1%E4%B8%ADServer%E4%B8%8EClint(Python)/" rel="next" title="ROS入门学习6：理解服务中Server与Client(Python)">
+                  <i class="fa fa-chevron-left"></i> ROS入门学习6：理解服务中Server与Client(Python)
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/19/%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%90%AD%E5%BB%BA%E4%B8%8E%E8%B0%83%E8%AF%951%EF%BC%9A%E6%80%BB%E4%BD%93%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/" rel="prev" title="机器人搭建与调试1：总体框架介绍">
+                  机器人搭建与调试1：总体框架介绍 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">动作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%A8%E4%BD%9C"><span class="nav-number">1.1.</span> <span class="nav-text">新建自定义动作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9package-xml%E5%92%8CCMakeLists-txt"><span class="nav-number">1.2.</span> <span class="nav-text">修改package.xml和CMakeLists.txt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%8A%A8%E4%BD%9C%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%88Action-Client"><span class="nav-number">1.3.</span> <span class="nav-text">创建动作客户端（Action Client)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%8A%A8%E4%BD%9C%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%88Action-Server"><span class="nav-number">1.4.</span> <span class="nav-text">创建动作服务器（Action Server)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">2.</span> <span class="nav-text">运行测试</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

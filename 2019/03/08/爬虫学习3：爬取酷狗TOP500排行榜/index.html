@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta property="og:type" content="article">
+<meta property="og:title" content="爬虫学习3：爬取酷狗TOP500排行榜">
+<meta property="og:url" content="https://xxty847.github.io/2019/03/08/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A03%EF%BC%9A%E7%88%AC%E5%8F%96%E9%85%B7%E7%8B%97TOP500%E6%8E%92%E8%A1%8C%E6%A6%9C/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/3/%E9%85%B7%E7%8B%97TOP500.JPG">
+<meta property="article:published_time" content="2019-03-08T10:51:42.000Z">
+<meta property="article:modified_time" content="2020-03-01T06:51:31.472Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="爬虫学习">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/3/%E9%85%B7%E7%8B%97TOP500.JPG">
+
+<link rel="canonical" href="https://xxty847.github.io/2019/03/08/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A03%EF%BC%9A%E7%88%AC%E5%8F%96%E9%85%B7%E7%8B%97TOP500%E6%8E%92%E8%A1%8C%E6%A6%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>爬虫学习3：爬取酷狗TOP500排行榜 | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2019/03/08/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A03%EF%BC%9A%E7%88%AC%E5%8F%96%E9%85%B7%E7%8B%97TOP500%E6%8E%92%E8%A1%8C%E6%A6%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          爬虫学习3：爬取酷狗TOP500排行榜
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-08 18:51:42" itemprop="dateCreated datePublished" datetime="2019-03-08T18:51:42+08:00">2019-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-01 14:51:31" itemprop="dateModified" datetime="2020-03-01T14:51:31+08:00">2020-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫学习</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/08/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A03%EF%BC%9A%E7%88%AC%E5%8F%96%E9%85%B7%E7%8B%97TOP500%E6%8E%92%E8%A1%8C%E6%A6%9C/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/03/08/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A03%EF%BC%9A%E7%88%AC%E5%8F%96%E9%85%B7%E7%8B%97TOP500%E6%8E%92%E8%A1%8C%E6%A6%9C/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <img  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/3/%E9%85%B7%E7%8B%97TOP500.JPG" width="600" hegiht="400">
+
+<a id="more"></a>
+
+
+<h2 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h2><h3 id="查看网页HTML信息"><a href="#查看网页HTML信息" class="headerlink" title="查看网页HTML信息"></a>查看网页HTML信息</h3><p><a target="_blank" rel="noopener" href="https://www.kugou.com/yy/rank/home/1-8888.html">https://www.kugou.com/yy/rank/home/1-8888.html</a></p>
+<p>酷狗网页版不能翻页，通过观察，尝试更改数字1<br><a target="_blank" rel="noopener" href="https://www.kugou.com/yy/rank/home/2-8888.html">https://www.kugou.com/yy/rank/home/2-8888.html</a><br><a target="_blank" rel="noopener" href="https://www.kugou.com/yy/rank/home/3-8888.html">https://www.kugou.com/yy/rank/home/3-8888.html</a><br>发现可以实现翻页效果，因此更改home/后面数字即可。</p>
+<h3 id="获取爬取目标"><a href="#获取爬取目标" class="headerlink" title="获取爬取目标"></a>获取爬取目标</h3><figure class="highlight html"><figcaption><span>网页源代码</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;pc_temp_songlist &quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">		  <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot; &quot;</span> <span class="attr">title</span>=<span class="string">&quot;陈雪凝 - 绿色&quot;</span> <span class="attr">data-index</span>=<span class="string">&quot;0&quot;</span>&gt;</span></span><br><span class="line">			...</span><br><span class="line">				<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;pc_temp_num&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>1<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.kugou.com/song/txskm8f.html&quot;</span> <span class="attr">data-active</span>=<span class="string">&quot;playDwn&quot;</span> <span class="attr">data-index</span>=<span class="string">&quot;0&quot;</span> <span class="attr">class</span>=<span class="string">&quot;pc_temp_songname&quot;</span> <span class="attr">title</span>=<span class="string">&quot;陈雪凝 - 绿色&quot;</span> <span class="attr">hidefocus</span>=<span class="string">&quot;true&quot;</span>&gt;</span>陈雪凝 - 绿色<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;pc_temp_tips_r&quot;</span>&gt;</span></span><br><span class="line">			...</span><br><span class="line">					<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;pc_temp_time&quot;</span>&gt;</span>4:29<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot; &quot;</span> <span class="attr">title</span>=<span class="string">&quot;孤独诗人 - 渡我不渡她&quot;</span> <span class="attr">data-index</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line">			...</span><br><span class="line">				<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;pc_temp_num&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>2<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.kugou.com/song/th6cka5.html&quot;</span> <span class="attr">data-active</span>=<span class="string">&quot;playDwn&quot;</span> <span class="attr">data-index</span>=<span class="string">&quot;1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;pc_temp_songname&quot;</span> <span class="attr">title</span>=<span class="string">&quot;孤独诗人 - 渡我不渡她&quot;</span> <span class="attr">hidefocus</span>=<span class="string">&quot;true&quot;</span>&gt;</span>孤独诗人 - 渡我不渡她<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;pc_temp_tips_r&quot;</span>&gt;</span></span><br><span class="line">			...</span><br><span class="line">					<span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;pc_temp_time&quot;</span>&gt;</span>3:02<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>要爬取的信息：排名、歌手-歌曲名、歌曲时长：</strong></p>
+<pre><code> 排名: ranks = soup.select(&#39;span.pc_temp_num&#39;)
+ 歌手-歌曲名: titles = soup.select(&#39;div.pc_temp_songlist &gt; ul &gt; li &gt; a&#39;)
+ 歌曲时长: times = soup.select(&#39;span.pc_temp_tips_r &gt; span&#39;)</code></pre>
+<h2 id="实例操作"><a href="#实例操作" class="headerlink" title="实例操作"></a>实例操作</h2><h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入库</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加入请求头</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取信息</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_info</span>(<span class="params">url</span>):</span></span><br><span class="line">    wb_data = requests.get(url,headers=headers)</span><br><span class="line">    soup = BeautifulSoup(wb_data.text,<span class="string">&#x27;lxml&#x27;</span>)</span><br><span class="line">    ranks = soup.select(<span class="string">&#x27;span.pc_temp_num&#x27;</span>)  <span class="comment"># 排行</span></span><br><span class="line">    titles = soup.select(<span class="string">&#x27;div.pc_temp_songlist &gt; ul &gt; li &gt; a&#x27;</span>) <span class="comment"># 歌手-歌曲名</span></span><br><span class="line">    times = soup.select(<span class="string">&#x27;span.pc_temp_tips_r &gt; span&#x27;</span>) <span class="comment"># 歌曲时长</span></span><br><span class="line">    <span class="keyword">for</span> rank,title,time <span class="keyword">in</span> zip(ranks,titles,times):</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&#x27;rank&#x27;</span>:rank.get_text().strip(),</span><br><span class="line">            <span class="string">&#x27;singer&#x27;</span>:title.get_text().split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">0</span>],</span><br><span class="line">            <span class="string">&#x27;song&#x27;</span>:title.get_text().split(<span class="string">&#x27;-&#x27;</span>)[<span class="number">1</span>],</span><br><span class="line">            <span class="string">&#x27;time&#x27;</span>:time.get_text().strip()  </span><br><span class="line">        &#125;</span><br><span class="line">        print(data)  <span class="comment"># 字典格式打印输出</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    urls = [<span class="string">&#x27;http://www.kugou.com/yy/rank/home/&#123;&#125;-8888.html&#x27;</span>.format(str(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">24</span>)]</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls: <span class="comment"># 构造url</span></span><br><span class="line">        get_info(url)</span><br><span class="line">        time.sleep(<span class="number">1</span>) <span class="comment">#睡眠1秒</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="运行结果-部分"><a href="#运行结果-部分" class="headerlink" title="运行结果(部分)"></a>运行结果(部分)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#39;rank&#39;: &#39;1&#39;, &#39;singer&#39;: &#39;陈雪凝 &#39;, &#39;song&#39;: &#39; 绿色&#39;, &#39;time&#39;: &#39;4:29&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;2&#39;, &#39;singer&#39;: &#39;孤独诗人 &#39;, &#39;song&#39;: &#39; 渡我不渡她&#39;, &#39;time&#39;: &#39;3:02&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;3&#39;, &#39;singer&#39;: &#39;花姐 &#39;, &#39;song&#39;: &#39; 狂浪&#39;, &#39;time&#39;: &#39;3:01&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;4&#39;, &#39;singer&#39;: &#39;张敬轩 &#39;, &#39;song&#39;: &#39; 只是太爱你&#39;, &#39;time&#39;: &#39;4:14&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;5&#39;, &#39;singer&#39;: &#39;王琪 &#39;, &#39;song&#39;: &#39; 站着等你三千年&#39;, &#39;time&#39;: &#39;6:21&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;6&#39;, &#39;singer&#39;: &#39;陈柯宇 &#39;, &#39;song&#39;: &#39; 生僻字&#39;, &#39;time&#39;: &#39;3:36&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;7&#39;, &#39;singer&#39;: &#39;周杰伦 &#39;, &#39;song&#39;: &#39; 告白气球&#39;, &#39;time&#39;: &#39;3:35&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;8&#39;, &#39;singer&#39;: &#39;鱼大仙儿 &#39;, &#39;song&#39;: &#39; 我曾&#39;, &#39;time&#39;: &#39;4:46&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;9&#39;, &#39;singer&#39;: &#39;张紫豪 &#39;, &#39;song&#39;: &#39; 可不可以&#39;, &#39;time&#39;: &#39;4:00&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;10&#39;, &#39;singer&#39;: &#39;胡夏、郁可唯 &#39;, &#39;song&#39;: &#39; 知否知否&#39;, &#39;time&#39;: &#39;4:36&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;11&#39;, &#39;singer&#39;: &#39;半阳 &#39;, &#39;song&#39;: &#39; 一曲相思&#39;, &#39;time&#39;: &#39;2:48&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;12&#39;, &#39;singer&#39;: &#39;郭聪明 &#39;, &#39;song&#39;: &#39; 你会遇见更好的人&#39;, &#39;time&#39;: &#39;3:46&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;13&#39;, &#39;singer&#39;: &#39;陈雪凝 &#39;, &#39;song&#39;: &#39; 你的酒馆对我打了烊&#39;, &#39;time&#39;: &#39;4:11&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;14&#39;, &#39;singer&#39;: &#39;Jennie &#39;, &#39;song&#39;: &#39; SOLO&#39;, &#39;time&#39;: &#39;2:49&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;15&#39;, &#39;singer&#39;: &#39;展展与罗罗 &#39;, &#39;song&#39;: &#39; 沙漠骆驼&#39;, &#39;time&#39;: &#39;5:38&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;16&#39;, &#39;singer&#39;: &#39;奇然liya、沈谧仁 &#39;, &#39;song&#39;: &#39; 琵琶行&#39;, &#39;time&#39;: &#39;5:35&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;17&#39;, &#39;singer&#39;: &#39;SHAUN &#39;, &#39;song&#39;: &#39; Way Back Home&#39;, &#39;time&#39;: &#39;3:34&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;18&#39;, &#39;singer&#39;: &#39;小倩 &#39;, &#39;song&#39;: &#39; 比悲伤更悲伤的故事&#39;, &#39;time&#39;: &#39;4:36&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;19&#39;, &#39;singer&#39;: &#39;于文文 &#39;, &#39;song&#39;: &#39; 体面&#39;, &#39;time&#39;: &#39;4:42&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;20&#39;, &#39;singer&#39;: &#39;花姐 &#39;, &#39;song&#39;: &#39; 夜之光&#39;, &#39;time&#39;: &#39;3:10&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;21&#39;, &#39;singer&#39;: &#39;苏谭谭 &#39;, &#39;song&#39;: &#39; 渡我不渡她 (正式版)&#39;, &#39;time&#39;: &#39;2:18&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;22&#39;, &#39;singer&#39;: &#39;CORSAK、马吟吟 &#39;, &#39;song&#39;: &#39; 溯 (Reverse)&#39;, &#39;time&#39;: &#39;3:12&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;23&#39;, &#39;singer&#39;: &#39;贺一航 &#39;, &#39;song&#39;: &#39; 原来占据你内心的人不是我&#39;, &#39;time&#39;: &#39;4:33&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;24&#39;, &#39;singer&#39;: &#39;许佳慧 &#39;, &#39;song&#39;: &#39; 预谋&#39;, &#39;time&#39;: &#39;4:09&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;25&#39;, &#39;singer&#39;: &#39;广东雨神、许华升 &#39;, &#39;song&#39;: &#39; 陪你到底&#39;, &#39;time&#39;: &#39;4:00&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;26&#39;, &#39;singer&#39;: &#39;火箭少女101 &#39;, &#39;song&#39;: &#39; 卡路里&#39;, &#39;time&#39;: &#39;3:52&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;27&#39;, &#39;singer&#39;: &#39;李玉刚 &#39;, &#39;song&#39;: &#39; 清明上河图&#39;, &#39;time&#39;: &#39;5:08&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;28&#39;, &#39;singer&#39;: &#39;大壮 &#39;, &#39;song&#39;: &#39; 伪装&#39;, &#39;time&#39;: &#39;5:01&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;29&#39;, &#39;singer&#39;: &#39;廖晶 &#39;, &#39;song&#39;: &#39; 爱情小丑&#39;, &#39;time&#39;: &#39;4:57&#39;&#125;</span><br><span class="line">&#123;&#39;rank&#39;: &#39;30&#39;, &#39;singer&#39;: &#39;G.E.M.邓紫棋 &#39;, &#39;song&#39;: &#39; 倒数&#39;, &#39;time&#39;: &#39;3:49&#39;&#125;</span><br><span class="line">	......</span><br></pre></td></tr></table></figure>
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 爬虫学习</a>
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/03/07/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A02%EF%BC%9A%E7%88%AC%E5%8F%96%E5%8C%97%E4%BA%AC%E5%9C%B0%E5%8C%BA%E7%9F%AD%E7%A7%9F%E6%88%BF%E4%BF%A1%E6%81%AF/" rel="next" title="爬虫学习2：爬取北京地区短租房信息">
+                  <i class="fa fa-chevron-left"></i> 爬虫学习2：爬取北京地区短租房信息
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/03/09/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A04%EF%BC%9AMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/" rel="prev" title="爬虫学习4：MySQL数据库使用">
+                  爬虫学习4：MySQL数据库使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E5%88%86%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">思路分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E9%A1%B5HTML%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">查看网页HTML信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%88%AC%E5%8F%96%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.</span> <span class="nav-text">获取爬取目标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">实例操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C-%E9%83%A8%E5%88%86"><span class="nav-number">2.2.</span> <span class="nav-text">运行结果(部分)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="启动网站(账号：51aspx 密码：1)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="土管项目总结4：VS 2013编译发布web项目">
+<meta property="og:url" content="https://xxty847.github.io/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%934%EF%BC%9AVS%202013%E7%BC%96%E8%AF%91%E5%8F%91%E5%B8%83web%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="启动网站(账号：51aspx 密码：1)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%90%AF%E5%8A%A8%E7%BD%91%E7%AB%99.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%AF%BC%E5%85%A5%E9%A1%B9%E7%9B%AE.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%8F%91%E5%B8%83web%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%8F%91%E5%B8%83web%20%E8%BF%9E%E6%8E%A5.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%8F%91%E5%B8%83web%20%E8%AE%BE%E7%BD%AE.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%8F%91%E5%B8%83web%20%E9%A2%84%E8%A7%88.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%B7%BB%E5%8A%A0%E7%BD%91%E7%AB%99.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E7%89%B9%E5%AE%9A%E7%94%A8%E6%88%B7.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E7%89%B9%E5%AE%9A%E7%94%A8%E6%88%B72.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%B5%8B%E8%AF%95%E9%93%BE%E6%8E%A5.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%B7%BB%E5%8A%A0%E7%BD%91%E7%AB%992.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%90%AF%E5%8A%A8%E7%BD%91%E7%AB%99.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E8%BF%9B%E5%85%A5%E5%9C%9F%E7%AE%A1%E7%BD%91%E7%AB%99.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E7%BD%91%E7%AB%99%E8%BF%9E%E6%8E%A5sql%E5%87%BA%E9%94%99.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%BC%80%E5%90%AFsql%E6%9C%8D%E5%8A%A1.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%BC%80%E5%90%AFsql%E6%9C%8D%E5%8A%A12.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E4%BF%AE%E6%94%B9TCP.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%96%B0%E5%BB%BA%E5%87%BA%E7%AB%99%E8%A7%84%E5%88%99.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E9%80%89%E6%8B%A9%E7%89%B9%E5%AE%9A%E7%AB%AF%E5%8F%A3.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%85%81%E8%AE%B8%E9%93%BE%E6%8E%A5.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%87%BA%E7%AB%99%E7%AB%AF%E5%8F%A3%E5%90%8D%E7%A7%B0.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%89%93%E5%BC%80%E5%AE%89%E5%85%A8%E7%BB%84.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%94%BE%E9%80%9A%E7%AB%AF%E5%8F%A3.png">
+<meta property="article:published_time" content="2020-04-24T12:50:50.000Z">
+<meta property="article:modified_time" content="2020-04-25T02:03:32.450Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="土管项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%90%AF%E5%8A%A8%E7%BD%91%E7%AB%99.PNG">
+
+<link rel="canonical" href="https://xxty847.github.io/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%934%EF%BC%9AVS%202013%E7%BC%96%E8%AF%91%E5%8F%91%E5%B8%83web%E9%A1%B9%E7%9B%AE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>土管项目总结4：VS 2013编译发布web项目 | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%934%EF%BC%9AVS%202013%E7%BC%96%E8%AF%91%E5%8F%91%E5%B8%83web%E9%A1%B9%E7%9B%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          土管项目总结4：VS 2013编译发布web项目
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-24 20:50:50" itemprop="dateCreated datePublished" datetime="2020-04-24T20:50:50+08:00">2020-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-25 10:03:32" itemprop="dateModified" datetime="2020-04-25T10:03:32+08:00">2020-04-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">土管项目</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%934%EF%BC%9AVS%202013%E7%BC%96%E8%AF%91%E5%8F%91%E5%B8%83web%E9%A1%B9%E7%9B%AE/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%934%EF%BC%9AVS%202013%E7%BC%96%E8%AF%91%E5%8F%91%E5%B8%83web%E9%A1%B9%E7%9B%AE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%90%AF%E5%8A%A8%E7%BD%91%E7%AB%99.PNG" width="600" hegiht="460">
+启动网站(账号：51aspx 密码：1)
+</center>
+<a id="more"></a>
+
+
+<h2 id="安装Visual-Studio-2013"><a href="#安装Visual-Studio-2013" class="headerlink" title="安装Visual Studio 2013"></a>安装Visual Studio 2013</h2><h2 id="打开项目"><a href="#打开项目" class="headerlink" title="打开项目"></a>打开项目</h2><ul>
+<li>Visual Studio 2013选择<code>文件</code> →  <code>打开</code> →  <code>项目/解决方案</code> →  选择 <code>Kangsoft.HRMS.sln</code></li>
+</ul>
+<pre><code>文件路径: `夏老师-土地管理项目源码\OA\OA\Kangsoft.HRMS.sln`</code></pre>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%AF%BC%E5%85%A5%E9%A1%B9%E7%9B%AE.png" width="600" hegiht="460">
+打开项目
+</center>
+
+<ul>
+<li>修改数据库连接地址</li>
+</ul>
+<figure class="highlight xml"><figcaption><span>Web.config</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">connectionStrings</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--服务器IP地址，数据库连接为混合模式的账号密码--&gt;</span></span><br><span class="line">-   <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">&quot;default&quot;</span> <span class="attr">connectionString</span>=<span class="string">&quot;Data Source=00.000.000.000;database=Kangsoft.HRMS;uid=sa;pwd=Ahau306306306;&quot;</span>/&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--本地IP地址，数据库连接为混合模式的账号密码--&gt;</span></span><br><span class="line">+  <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">&quot;default&quot;</span> <span class="attr">connectionString</span>=<span class="string">&quot;Data Source=.;database=Kangsoft.HRMS;uid=sa;pwd=1213;&quot;</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">connectionStrings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>选择<code>WeiTe.Web</code>，然后<code>右键</code>，先<code>生成</code>，后<code>发布</code>。、</li>
+</ul>
+<div class="tabs" id="发布web"><ul class="nav-tabs"><li class="tab active"><a href="#发布web-1">发布web：配置文件</a></li><li class="tab"><a href="#发布web-2">发布web：连接</a></li><li class="tab"><a href="#发布web-3">发布web：设置</a></li><li class="tab"><a href="#发布web-4">发布web：预览</a></li></ul><div class="tab-content"><div class="tab-pane active" id="发布web-1"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%8F%91%E5%B8%83web%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.PNG" width="400" hegiht="400" ></div><div class="tab-pane" id="发布web-2"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%8F%91%E5%B8%83web%20%E8%BF%9E%E6%8E%A5.PNG" width="400" hegiht="400" ></div><div class="tab-pane" id="发布web-3"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%8F%91%E5%B8%83web%20%E8%AE%BE%E7%BD%AE.PNG" width="400" hegiht="400" ></div><div class="tab-pane" id="发布web-4"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%8F%91%E5%B8%83web%20%E9%A2%84%E8%A7%88.PNG" width="400" hegiht="400" ></div></div></div>
+
+<h2 id="IIS添加网站并部署"><a href="#IIS添加网站并部署" class="headerlink" title="IIS添加网站并部署"></a>IIS添加网站并部署</h2><ul>
+<li>打开<code>Internet Information Services (IIS)管理器</code>，右键<code>添加网站</code></li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%B7%BB%E5%8A%A0%E7%BD%91%E7%AB%99.png" width="600" hegiht="460">
+打开IIS
+</center>
+
+
+<ul>
+<li>添加网站配置</li>
+</ul>
+<div class="tabs" id="添加网站"><ul class="nav-tabs"><li class="tab active"><a href="#添加网站-1">网站名称和物理路径</a></li><li class="tab"><a href="#添加网站-2">设置特定用户</a></li><li class="tab"><a href="#添加网站-3">连接测试</a></li><li class="tab"><a href="#添加网站-4">选择端口</a></li></ul><div class="tab-content"><div class="tab-pane active" id="添加网站-1"><center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E7%89%B9%E5%AE%9A%E7%94%A8%E6%88%B7.PNG" width="400" hegiht="460">
+</center>
+
+<div class="note warning">
+            <p>网站名称：可以随便填写<br>物理路径：为VS2013发布的路径</p>
+          </div></div><div class="tab-pane" id="添加网站-2"><p> <code>连接为</code>添加<code>特定用户</code>，windows系统用户和密码</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E7%89%B9%E5%AE%9A%E7%94%A8%E6%88%B72.PNG" width="400" hegiht="460">
+</center></div><div class="tab-pane" id="添加网站-3"><p>选择测试设置，看看是否已授权</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%B5%8B%E8%AF%95%E9%93%BE%E6%8E%A5.PNG" width="400" hegiht="460">
+</center></div><div class="tab-pane" id="添加网站-4"><p> 这里选择<code>8088端口</code></p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%B7%BB%E5%8A%A0%E7%BD%91%E7%AB%992.PNG" width="400" hegiht="460">
+添加网站
+</center></div></div></div>
+
+
+
+<ul>
+<li>端口设置好后，启动网站<a target="_blank" rel="noopener" href="http://localhost:8088/">http://localhost:8088/</a></li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%90%AF%E5%8A%A8%E7%BD%91%E7%AB%99.PNG" width="600" hegiht="460">
+启动网站(账号：51aspx 密码：1)
+</center>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E8%BF%9B%E5%85%A5%E5%9C%9F%E7%AE%A1%E7%BD%91%E7%AB%99.PNG" width="600" hegiht="460">
+进入网站
+</center>
+
+
+<h2 id="容易出现的错误"><a href="#容易出现的错误" class="headerlink" title="容易出现的错误"></a>容易出现的错误</h2><h3 id="网站连接SQL出错"><a href="#网站连接SQL出错" class="headerlink" title="网站连接SQL出错"></a>网站连接SQL出错</h3><center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E7%BD%91%E7%AB%99%E8%BF%9E%E6%8E%A5sql%E5%87%BA%E9%94%99.PNG" width="600" hegiht="460">
+网站连接SQL
+</center>
+
+<p>这是因为SQL server 未启动，<strong>解决方法：</strong></p>
+<p>&emsp;&emsp;启动<code>SQL Server 配置管理器</code>，主要是下面这两项，查看是否都<code>正在运行</code>：</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%BC%80%E5%90%AFsql%E6%9C%8D%E5%8A%A1.PNG" width="400" hegiht="460">
+</center>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%BC%80%E5%90%AFsql%E6%9C%8D%E5%8A%A12.PNG" width="400" hegiht="460">
+</center>
+
+<p>如果使用的是服务器，还需要配置防火墙端口和腾讯云服务器安全组</p>
+<p><strong>配置防火墙端口</strong></p>
+<p>查看腾讯云文档<a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/215/37891">服务器常用端口</a>，可以看到以下内容：</p>
+<blockquote>
+<p>1433端口，是 SQL Server 默认的端口，SQL Server 服务使用两个端口：TCP-1433、UDP-1434。其中1433用于供 SQL Server 对外提供服务，1434用于向请求者返回 SQL Server 使用了哪个 TCP/IP 端口。</p>
+</blockquote>
+<ul>
+<li>启动<code>SQL Server 配置管理器</code></li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E4%BF%AE%E6%94%B9TCP.PNG" width="600" hegiht="460">
+修改TCP端口
+</center>
+
+<ul>
+<li>控制面板 → 系统和安全 → windows防火墙 → 高级设置</li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%96%B0%E5%BB%BA%E5%87%BA%E7%AB%99%E8%A7%84%E5%88%99.PNG" width="600" hegiht="460">
+新建出站规则
+</center>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E9%80%89%E6%8B%A9%E7%89%B9%E5%AE%9A%E7%AB%AF%E5%8F%A3.PNG" width="600" hegiht="460">
+选择特定端口1433
+</center>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%85%81%E8%AE%B8%E9%93%BE%E6%8E%A5.PNG" width="600" hegiht="460">
+允许链接
+</center>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6.PNG" width="600" hegiht="460">
+配置文件
+</center>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E5%87%BA%E7%AB%99%E7%AB%AF%E5%8F%A3%E5%90%8D%E7%A7%B0.PNG" width="600" hegiht="460">
+出站端口名称
+</center>
+
+<p><strong>腾讯云服务器安全组</strong></p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%89%93%E5%BC%80%E5%AE%89%E5%85%A8%E7%BB%84.png" width="600" hegiht="460">
+打开安全组
+</center>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%8F%91%E5%B8%83web/%E6%94%BE%E9%80%9A%E7%AB%AF%E5%8F%A3.png" width="600" hegiht="460">
+放通端口
+</center>
+
+
+
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/" rel="tag"><i class="fa fa-tag"></i> 土管项目</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%933%EF%BC%9A%E5%AE%89%E8%A3%85Microsoft%20SQL%20Server%202012/" rel="next" title="土管项目总结3：安装Microsoft SQL Server 2012">
+                  <i class="fa fa-chevron-left"></i> 土管项目总结3：安装Microsoft SQL Server 2012
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/05/04/%E5%AE%9E%E4%B9%A0%E9%A1%B9%E7%9B%AE%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%931%EF%BC%9A%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0%E5%92%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" rel="prev" title="实习项目经验总结1：函数参数和数据类型">
+                  实习项目经验总结1：函数参数和数据类型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Visual-Studio-2013"><span class="nav-number">1.</span> <span class="nav-text">安装Visual Studio 2013</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">打开项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IIS%E6%B7%BB%E5%8A%A0%E7%BD%91%E7%AB%99%E5%B9%B6%E9%83%A8%E7%BD%B2"><span class="nav-number">3.</span> <span class="nav-text">IIS添加网站并部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E6%98%93%E5%87%BA%E7%8E%B0%E7%9A%84%E9%94%99%E8%AF%AF"><span class="nav-number">4.</span> <span class="nav-text">容易出现的错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E8%BF%9E%E6%8E%A5SQL%E5%87%BA%E9%94%99"><span class="nav-number">4.1.</span> <span class="nav-text">网站连接SQL出错</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

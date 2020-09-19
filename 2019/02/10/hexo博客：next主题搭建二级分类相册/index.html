@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;今天突然想给博客搭建相册，浏览了不少关于hexo搭建相册教程，发现很多下面这样子的，还是很漂亮的。自己尝试了一番，相册需要缩略图和原图两个文件夹，其中缩略图都是裁剪好后的正方形，感觉不是自己想要的。 http:&#x2F;&#x2F;www.lawlite.me&#x2F;photos&#x2F;  （图）不带分类的相册   &amp;emsp;&amp;emsp;后来发现给hexo静态博客添加动态相册功能和hexo博客添加一级">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo博客：next主题搭建二级分类相册">
+<meta property="og:url" content="https://xxty847.github.io/2019/02/10/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9Anext%E4%B8%BB%E9%A2%98%E6%90%AD%E5%BB%BA%E4%BA%8C%E7%BA%A7%E5%88%86%E7%B1%BB%E7%9B%B8%E5%86%8C/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;今天突然想给博客搭建相册，浏览了不少关于hexo搭建相册教程，发现很多下面这样子的，还是很漂亮的。自己尝试了一番，相册需要缩略图和原图两个文件夹，其中缩略图都是裁剪好后的正方形，感觉不是自己想要的。 http:&#x2F;&#x2F;www.lawlite.me&#x2F;photos&#x2F;  （图）不带分类的相册   &amp;emsp;&amp;emsp;后来发现给hexo静态博客添加动态相册功能和hexo博客添加一级">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E4%B8%8D%E5%B8%A6%E5%88%86%E7%B1%BB%E7%9A%84%E7%9B%B8%E5%86%8C.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E4%B8%80%E7%BA%A7%E7%9B%B8%E5%86%8C.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E4%BA%8C%E7%BA%A7%E7%9B%B8%E5%86%8C.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E6%89%BE%E5%88%B0%E5%AD%98%E5%82%A8%E6%A1%B6.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E6%89%BE%E5%88%B0cors%E8%AE%BE%E7%BD%AE.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E4%BF%AE%E6%94%B9cors%E8%A7%84%E5%88%99.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E8%AF%BB%E5%86%99%E6%9D%83%E9%99%90.png">
+<meta property="article:published_time" content="2019-02-10T08:50:24.000Z">
+<meta property="article:modified_time" content="2020-03-12T09:45:52.942Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="hexo博客">
+<meta property="article:tag" content="next主题优化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E4%B8%8D%E5%B8%A6%E5%88%86%E7%B1%BB%E7%9A%84%E7%9B%B8%E5%86%8C.jpg">
+
+<link rel="canonical" href="https://xxty847.github.io/2019/02/10/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9Anext%E4%B8%BB%E9%A2%98%E6%90%AD%E5%BB%BA%E4%BA%8C%E7%BA%A7%E5%88%86%E7%B1%BB%E7%9B%B8%E5%86%8C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>hexo博客：next主题搭建二级分类相册 | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2019/02/10/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9Anext%E4%B8%BB%E9%A2%98%E6%90%AD%E5%BB%BA%E4%BA%8C%E7%BA%A7%E5%88%86%E7%B1%BB%E7%9B%B8%E5%86%8C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hexo博客：next主题搭建二级分类相册
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-02-10 16:50:24" itemprop="dateCreated datePublished" datetime="2019-02-10T16:50:24+08:00">2019-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-12 17:45:52" itemprop="dateModified" datetime="2020-03-12T17:45:52+08:00">2020-03-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo%E5%8D%9A%E5%AE%A2/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo博客</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo%E5%8D%9A%E5%AE%A2/next%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96/" itemprop="url" rel="index">
+                    <span itemprop="name">next主题优化</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/02/10/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9Anext%E4%B8%BB%E9%A2%98%E6%90%AD%E5%BB%BA%E4%BA%8C%E7%BA%A7%E5%88%86%E7%B1%BB%E7%9B%B8%E5%86%8C/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/02/10/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9Anext%E4%B8%BB%E9%A2%98%E6%90%AD%E5%BB%BA%E4%BA%8C%E7%BA%A7%E5%88%86%E7%B1%BB%E7%9B%B8%E5%86%8C/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;今天突然想给博客搭建相册，浏览了不少关于hexo搭建相册教程，发现很多下面这样子的，还是很漂亮的。自己尝试了一番，相册需要缩略图和原图两个文件夹，其中缩略图都是裁剪好后的正方形，感觉不是自己想要的。</p>
+<p><a target="_blank" rel="noopener" href="http://www.lawlite.me/photos/">http://www.lawlite.me/photos/</a></p>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E4%B8%8D%E5%B8%A6%E5%88%86%E7%B1%BB%E7%9A%84%E7%9B%B8%E5%86%8C.jpg" width="600" hegiht="400" >
+（图）不带分类的相册 </center>
+
+<p>&emsp;&emsp;后来发现<a target="_blank" rel="noopener" href="https://me.idealli.com/post/73ad4183.html">给hexo静态博客添加动态相册功能</a>和<a target="_blank" rel="noopener" href="https://liyangzone.com/2019/07/22/hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E4%B8%80%E7%BA%A7%E5%88%86%E7%B1%BB%E7%9B%B8%E5%86%8C/">hexo博客添加一级分类相册功能</a>两位大佬的博客相册为两级结构，不用一下子加载整个网页的图片，很喜欢这种布局。于是花费两天时间，参考<a target="_blank" rel="noopener" href="https://houmin.cc/posts/d487dd02/">Hexo NexT主题添加多级相册功能</a>，搭建了属于自己的相册。</p>
+<div class="tabs" id="相册"><ul class="nav-tabs"><li class="tab active"><a href="#相册-1">一级相册</a></li><li class="tab"><a href="#相册-2">二级相册</a></li></ul><div class="tab-content"><div class="tab-pane active" id="相册-1"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E4%B8%80%E7%BA%A7%E7%9B%B8%E5%86%8C.jpg" width="600" hegiht="400" ></div><div class="tab-pane" id="相册-2"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E4%BA%8C%E7%BA%A7%E7%9B%B8%E5%86%8C.jpg" width="600" hegiht="400" ></div></div></div>
+
+<a id="more"></a>
+
+
+
+<h2 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h2><p>&emsp;&emsp;本文相册是根据腾讯COS实现的，先创建相册一级目录和相册模板，    运行编写好的blog_cos.py文件，自动将下载的图片数据存放到galleries.yaml文件中，并根据腾讯COS相册文件结构创建对应的的二级相册目录。</p>
+<pre><code>- /blog/source_data/galleries.yaml  存放所有图片数据
+- /blog/source/photos    相册一级目录
+    - /blog/source/photos/index.md        相册一级目录对应的index.md
+    - /blog/source/photos/WLOP            相册二级目录
+    - /blog/source/photos/尼尔机械纪元    相册二级目录
+    - ...
+    - /blog/source/photos/blog_cos.py    从腾讯COS下载图片数据并创建相册二级目录
+- /blog/themes/next/layout/photos.swig    一级相册模板
+- /blog/themes/next/layout/photo.swig    二级相册模板</code></pre>
+<div class="note info">
+            <p>腾讯COS相册存储为两级结构，如我的腾讯COS在galleries文件夹下创建WLOP、尼尔机械纪元、大学生活等子文件夹。</p>
+          </div>
+
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li>打开<code>/blog/themes/next/languages/zh-CN.yml</code>文档，menu下添加中文相册</li>
+</ul>
+<figure class="highlight yml"><figcaption><span>zh-CN.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">photos:</span> <span class="string">相册</span></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>修改主题配置文件<code>/blog/themes/next/config.yaml</code></li>
+</ul>
+<figure class="highlight c"><figcaption><span>config.yaml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># 添加相册css风格,如果已有则不需要创建</span><br><span class="line"># Define custom file paths.</span><br><span class="line"># Create your custom files in site directory `source/_data` <span class="keyword">and</span> uncomment needed files below.</span><br><span class="line">custom_file_path:</span><br><span class="line">  head: source/_data/head.swig</span><br><span class="line">  <span class="meta">#header: source/_data/header.swig</span></span><br><span class="line">  sidebar: source/_data/sidebar.swig</span><br><span class="line">  #postMeta: source/_data/post-meta.swig</span><br><span class="line">  #postBodyEnd: source/_data/post-body-end.swig</span><br><span class="line">  <span class="meta">#footer: source/_data/footer.swig</span></span><br><span class="line">  #bodyEnd: source/_data/body-end.swig</span><br><span class="line">  <span class="meta">#variable: source/_data/variables.styl</span></span><br><span class="line">  <span class="meta">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  style: source/_data/styles.styl</span><br><span class="line"></span><br><span class="line"># 腾讯COS相册链接</span><br><span class="line">photos_info:</span><br><span class="line">  cos_url: https:<span class="comment">//hexo-1257031621.cos.ap-chengdu.myqcloud.com/galleries/</span></span><br><span class="line"></span><br><span class="line"># 添加相册</span><br><span class="line">menu:</span><br><span class="line">  home: / || home</span><br><span class="line">  <span class="meta">#about: /about/ || user</span></span><br><span class="line">  tags: /tags/ || tags</span><br><span class="line">  categories: /categories/ || th</span><br><span class="line">  archives: /archives/ || archive</span><br><span class="line">  photos: /photos/ || image</span><br><span class="line">  <span class="meta">#schedule: /schedule/ || calendar</span></span><br><span class="line">  <span class="meta">#sitemap: /sitemap.xml || sitemap</span></span><br><span class="line">  <span class="meta">#commonweal: /404/ || heartbeat</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在<code>source/_data/styles.styl</code>文件末尾添加相册css风格</li>
+</ul>
+<figure class="highlight styl"><figcaption><span>styles.styl</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//相册风格</span></span><br><span class="line">.gallery-wrapper&#123;</span><br><span class="line">  <span class="attribute">padding-top</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">padding-left</span>: <span class="number">5%</span>;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.gallery-wrapper</span> .gallery-box&#123;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span> !important;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.gallery-box&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">30%</span>;</span><br><span class="line">  <span class="attribute">margin-left</span>: auto;</span><br><span class="line">  <span class="attribute">left</span>: auto;</span><br><span class="line">  <span class="attribute">right</span>: auto;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.gallery-wrapper</span> <span class="selector-class">.gallery-item</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">padding-bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  -moz-<span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">3px</span> <span class="number">0</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.22</span>);</span><br><span class="line">  -webkit-<span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">3px</span> <span class="number">0</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.22</span>);</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">3px</span> <span class="number">0</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.22</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.gallery-cover-box&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">padding-top</span>: <span class="number">60%</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">background</span>: center center no-repeat;</span><br><span class="line">  -webkit-<span class="attribute">background-size</span>: cover;</span><br><span class="line">  <span class="attribute">background-size</span>: cover;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.gallery-cover-box</span> <span class="selector-class">.gallery-cover-img</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: inline-block;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">top</span>: <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">transform</span>: translate(-<span class="number">50%</span>,-<span class="number">50%</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.gallery-item</span> .gallery-name&#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">24px</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#666</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">5px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.waterfall</span> &#123;</span><br><span class="line">  <span class="attribute">column-count</span>: <span class="number">4</span>;</span><br><span class="line">  <span class="attribute">column-gap</span>: <span class="number">1em</span>;</span><br><span class="line">&#125;</span><br><span class="line">.photo-wrapper&#123;</span><br><span class="line">  <span class="attribute">padding-top</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.photo-item</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">padding-bottom</span>: <span class="number">0px</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">14px</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">0</span>;</span><br><span class="line">  -moz-<span class="attribute">page-break-inside</span>: avoid;</span><br><span class="line">  -webkit-column-<span class="attribute">break-inside</span>: avoid;</span><br><span class="line">  <span class="attribute">break-inside</span>: avoid;</span><br><span class="line">  <span class="attribute">background</span>: white;</span><br><span class="line">  -moz-<span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">3px</span> <span class="number">0</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.22</span>);</span><br><span class="line">  -webkit-<span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">3px</span> <span class="number">0</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.22</span>);</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">1px</span> <span class="number">3px</span> <span class="number">0</span> rgba(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.22</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.photo-item</span> <span class="selector-tag">img</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.photo-item</span> .photo-name&#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">14px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">30px</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">margin-top</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">border-top</span>: <span class="number">1px</span> solid <span class="number">#dddddd</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.gallery-header&#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">25px</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding-top</span>: <span class="number">35px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="attribute">padding-bottom</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.95</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">10px</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*适配移动端布局*/</span></span><br><span class="line">@media only screen and (<span class="attribute">max-width</span>: <span class="number">601px</span>) &#123;</span><br><span class="line">  <span class="selector-class">.waterfall</span> &#123;</span><br><span class="line">    <span class="attribute">column-count</span>: <span class="number">2</span>;</span><br><span class="line">    <span class="attribute">column-gap</span>: <span class="number">1em</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="建立相册目录和模板"><a href="#建立相册目录和模板" class="headerlink" title="建立相册目录和模板"></a>建立相册目录和模板</h2><ul>
+<li>创建相册目录<code>/blog/source/photos</code></li>
+</ul>
+<pre><code>$ hexo new page photos</code></pre>
+<figure class="highlight c"><figcaption><span>index.md</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: photos</span><br><span class="line">date: <span class="number">2020</span><span class="number">-03</span><span class="number">-01</span> <span class="number">22</span>:<span class="number">43</span>:<span class="number">35</span></span><br><span class="line">layout: <span class="string">&quot;photos&quot;</span></span><br><span class="line">comments: <span class="literal">false</span></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建一级相册模板<code>/blog/themes/next/layout/photos.swig</code></li>
+</ul>
+<figure class="highlight c"><figcaption><span>photos.swig</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&#123;% extends &#x27;_layout.swig&#x27; %&#125;</span><br><span class="line">&#123;% import &#x27;_macro/post-collapse.swig&#x27; as post_template with context %&#125;</span><br><span class="line">&#123;% import &#x27;_macro/sidebar.swig&#x27; as sidebar_template with context %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">posts</span>-<span class="title">expand</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;div class=&quot;gallery-header&quot; lang=&quot;&#123;&#123; page.lang or page.language or config.language &#125;&#125;&quot;&gt;</span></span><br><span class="line">            &#123;% include &#x27;_partials/page/page-header.swig&#x27; %&#125;</span><br><span class="line">		&lt;/div&gt;		 </span><br><span class="line">		&lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">gallery</span>-<span class="title">wrapper</span>&quot;&gt;</span></span><br><span class="line"><span class="class">			&#123;</span>% <span class="keyword">for</span> galleries in site.data.galleries %&#125;</span><br><span class="line">			&lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">gallery</span>-<span class="title">box</span>&quot;&gt;		</span></span><br><span class="line"><span class="class">				&lt;a href=&quot;./&#123;&#123; galleries.name &#125;&#125;&quot; class=&quot;gallery-item&quot; data-aos=&quot;zoom-in-up&quot;&gt;</span></span><br><span class="line"><span class="class">					&lt;div class=&quot;gallery-cover-box&quot; style=&quot;background-image: url(&#123;&#123;theme.photos_info.cos_url&#125;&#125;/&#123;&#123; galleries.name &#125;&#125;/&#123;&#123; galleries.cover &#125;&#125;)&quot;&gt;</span></span><br><span class="line"><span class="class">					&lt;/div&gt;</span></span><br><span class="line"><span class="class">					&lt;p class=&quot;gallery-name&quot;&gt;</span></span><br><span class="line"><span class="class">						&#123;</span>&#123; galleries.name &#125;&#125;</span><br><span class="line">					&lt;/p&gt;</span><br><span class="line">				&lt;/a&gt;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">			&#123;% endfor %&#125;</span><br><span class="line">		&lt;/div&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block sidebar %&#125;</span><br><span class="line">  &#123;&#123; sidebar_template.render(<span class="literal">true</span>) &#125;&#125;</span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>创建二级相册模板<code>/blog/themes/next/layout/photo.swig</code></li>
+</ul>
+<figure class="highlight"><figcaption><span>photo.swig</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta charset=&#x27;utf-8&#x27;&gt;</span><br><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> href=<span class="string">&quot;/css/gallery.css&quot;</span>&gt;</span><br><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> type=<span class="string">&quot;text/css&quot;</span> href=<span class="string">&quot;https://cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/css/jquery.fancybox.css&quot;</span>&gt;</span><br><span class="line">&lt;link rel=<span class="string">&quot;stylesheet&quot;</span> type=<span class="string">&quot;text/css&quot;</span> href=<span class="string">&quot;https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&#123;% extends &#x27;_layout.swig&#x27; %&#125;</span><br><span class="line">&#123;% import &#x27;_macro/post-collapse.swig&#x27; as post_template with context %&#125;</span><br><span class="line">&#123;% import &#x27;_macro/sidebar.swig&#x27; as sidebar_template with context %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">posts</span>-<span class="title">expand</span>&quot;&gt;</span></span><br><span class="line"><span class="class">        &lt;div class=&quot;post-block&quot; lang=&quot;&#123;&#123; page.lang or page.language or config.language &#125;&#125;&quot;&gt;</span></span><br><span class="line">            &#123;% include &#x27;_partials/page/page-header.swig&#x27; %&#125;</span><br><span class="line">			&lt;div <span class="class"><span class="keyword">class</span>=&quot;<span class="title">container</span>&quot;&gt;</span></span><br><span class="line"><span class="class">				&lt;div class=&quot;photo-wrapper&quot;&gt;</span></span><br><span class="line"><span class="class">					&lt;div class=&quot;waterfall&quot; id=&quot;mygallery&quot;&gt;</span></span><br><span class="line">						&#123;% for i in range(site.data.galleries.length) %&#125;	</span><br><span class="line">							&#123;% <span class="keyword">if</span> site.data.galleries[i].name == page.title %&#125;</span><br><span class="line">								&#123;% <span class="keyword">for</span> photo in site.data.galleries[i].photos  %&#125;</span><br><span class="line">									&lt;a class=<span class="string">&quot;photo-item&quot;</span> rel=<span class="string">&quot;example_group&quot;</span> data-fancybox=<span class="string">&quot;images&quot;</span> href=<span class="string">&quot;&#123;&#123;theme.photos_info.cos_url&#125;&#125;/&#123;&#123;page.title&#125;&#125;/&#123;&#123;photo&#125;&#125;&quot;</span> &gt;&lt;img alt=<span class="string">&quot;&#123;&#123;photo&#125;&#125;&quot;</span> src=<span class="string">&quot;&#123;&#123;theme.photos_info.cos_url&#125;&#125;/&#123;&#123;page.title&#125;&#125;/&#123;&#123;photo&#125;&#125;&quot;</span> /&gt; &lt;/a&gt;		</span><br><span class="line">								&#123;%- endfor %&#125;		</span><br><span class="line">							&#123;% endif %&#125;</span><br><span class="line">						&#123;%- endfor %&#125;</span><br><span class="line"></span><br><span class="line">					&lt;/div&gt;	</span><br><span class="line">				&lt;/div&gt;</span><br><span class="line">			&lt;/div&gt;</span><br><span class="line">		&lt;/div&gt;	</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% block sidebar %&#125;</span><br><span class="line">  &#123;&#123; sidebar_template.render(<span class="literal">true</span>) &#125;&#125;</span><br><span class="line">&#123;% endblock %&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&lt;script src=<span class="string">&quot;https://cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/js/jquery.fancybox.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"></span><br><span class="line">  $(<span class="string">&quot;a[rel=example_group]&quot;</span>).fancybox();</span><br><span class="line">  $(<span class="string">&quot;#mygallery&quot;</span>).justifiedGallery(&#123;margins: <span class="number">5</span>, rowHeight: <span class="number">100</span>&#125;);</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载图片数据并创建相应二级相册目录"><a href="#下载图片数据并创建相应二级相册目录" class="headerlink" title="下载图片数据并创建相应二级相册目录"></a>下载图片数据并创建相应二级相册目录</h2><p>&emsp;&emsp;首先在腾讯COS创建两级相册目录，并上传图片。再运行<code>/blog/source/photos/blog_cos.py</code>文件，会自动将下载的图片数据存放到 galleries.yaml 文件中，并根据腾讯COS相册文件结构创建对应的的二级相册目录。</p>
+<figure class="highlight python"><figcaption><span>blog_cos.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding=utf-8</span></span><br><span class="line"><span class="keyword">from</span> qcloud_cos <span class="keyword">import</span> CosConfig</span><br><span class="line"><span class="keyword">from</span> qcloud_cos <span class="keyword">import</span> CosS3Client</span><br><span class="line"><span class="keyword">from</span> qcloud_cos <span class="keyword">import</span> CosServiceError</span><br><span class="line"><span class="keyword">from</span> qcloud_cos <span class="keyword">import</span> CosClientError</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> shutil</span><br><span class="line"></span><br><span class="line"><span class="comment"># 腾讯云COSV5Python SDK, 目前可以支持Python2.6与Python2.7以及Python3.x</span></span><br><span class="line"><span class="comment"># pip安装指南:pip install -U cos-python-sdk-v5</span></span><br><span class="line"><span class="comment"># cos最新可用地域,参照https://www.qcloud.com/document/product/436/6224</span></span><br><span class="line"></span><br><span class="line">logging.basicConfig(level=logging.INFO, stream=sys.stdout)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置用户属性, 包括secret_id, secret_key, region</span></span><br><span class="line"><span class="comment"># appid已在配置中移除,请在参数Bucket中带上appid。Bucket由bucketname-appid组成</span></span><br><span class="line">secret_id = <span class="string">&#x27;*******************&#x27;</span>     <span class="comment"># 替换为用户的secret_id</span></span><br><span class="line">secret_key = <span class="string">&#x27;*******************&#x27;</span>     <span class="comment"># 替换为用户的secret_key</span></span><br><span class="line">region = <span class="string">&#x27;ap-chengdu&#x27;</span>    <span class="comment"># 替换为用户的region</span></span><br><span class="line">token = <span class="literal">None</span>               <span class="comment"># 使用临时密钥需要传入Token，默认为空,可不填</span></span><br><span class="line">config = CosConfig(Region=region, SecretId=secret_id, SecretKey=secret_key, Token=token)  <span class="comment"># 获取配置对象</span></span><br><span class="line">client = CosS3Client(config)</span><br><span class="line">print(<span class="string">&quot;已连接腾讯COS&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">galleries = []</span><br><span class="line">json_name = <span class="string">&quot;galleries.yaml&quot;</span>    <span class="comment"># 图片数据文件名称</span></span><br><span class="line">bucket_name = <span class="string">&quot;hexo-1257031621&quot;</span>      <span class="comment"># 腾讯COS存储桶名称</span></span><br><span class="line">photos_name = <span class="string">&quot;galleries/&quot;</span>      <span class="comment"># 腾讯COS一级相册目录</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># json文件保存路径 例：D://blog/source/_data/galleries.json</span></span><br><span class="line">cwd = os.getcwd().replace(<span class="string">&quot;photos&quot;</span>, <span class="string">&quot;_data&quot;</span>)</span><br><span class="line">json_cwd = os.path.join(cwd, json_name).replace(<span class="string">&#x27;\\&#x27;</span>, <span class="string">&#x27;/&#x27;</span>).replace(<span class="string">&#x27;:&#x27;</span>, <span class="string">&#x27;:/&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 json 文件是否已存在</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">json_file_exists</span>():</span></span><br><span class="line">    <span class="keyword">if</span> os.path.exists(json_cwd):</span><br><span class="line">        os.remove(json_cwd)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取相册数据信息</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_galleries_data</span>():</span></span><br><span class="line">    <span class="keyword">global</span> galleries_name</span><br><span class="line">    galleries_name = []</span><br><span class="line">    <span class="comment"># 查询相册目录下所有内容</span></span><br><span class="line">    response = client.list_objects(</span><br><span class="line">        Bucket= bucket_name,</span><br><span class="line">        Prefix= photos_name,</span><br><span class="line">        Delimiter=<span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">    )</span><br><span class="line">    CommonPrefixes = response[<span class="string">&#x27;CommonPrefixes&#x27;</span>]</span><br><span class="line">    <span class="keyword">for</span> Prefixes <span class="keyword">in</span> CommonPrefixes:</span><br><span class="line">        Prefix = Prefixes[<span class="string">&#x27;Prefix&#x27;</span>]</span><br><span class="line">        gallery_name = Prefix.split(<span class="string">&quot;/&quot;</span>)[<span class="number">1</span>]</span><br><span class="line">        galleries_name.append(gallery_name)</span><br><span class="line">        <span class="comment"># 查询相册目录下所有子文件夹内容</span></span><br><span class="line">        response = client.list_objects(</span><br><span class="line">            Bucket= bucket_name,</span><br><span class="line">            Prefix= photos_name + gallery_name + <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">            Delimiter=<span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">        )</span><br><span class="line">        contents = response[<span class="string">&#x27;Contents&#x27;</span>]</span><br><span class="line">        <span class="comment"># 子文件夹所有照片添加到 photos_list 列表</span></span><br><span class="line">        photos_list = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(contents)):</span><br><span class="line">            content = contents[i][<span class="string">&#x27;Key&#x27;</span>].split(<span class="string">&quot;/&quot;</span>)[<span class="number">2</span>]</span><br><span class="line">            photos_list.append(content)</span><br><span class="line">        <span class="keyword">del</span> photos_list[<span class="number">0</span>]</span><br><span class="line">        <span class="comment"># 相册添加到 gallery_dict 字典中</span></span><br><span class="line">        gallery_dict = dict(name=<span class="number">1</span>, cover=<span class="number">1</span>, description=<span class="number">1</span>, photos=<span class="number">1</span>)</span><br><span class="line">        gallery_dict.update(name = gallery_name)</span><br><span class="line">        gallery_dict.update(cover = photos_list[<span class="number">0</span>])</span><br><span class="line">        gallery_dict.update(photos = photos_list[<span class="number">0</span>:])</span><br><span class="line">        photos_list.clear()</span><br><span class="line">        <span class="comment"># 所有相册添加到 galleries 列表中</span></span><br><span class="line">        galleries.append(gallery_dict)</span><br><span class="line">    print(<span class="string">&quot;生成相册数据完成&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据写入</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">galleries_data_write</span>():</span></span><br><span class="line">    <span class="keyword">with</span> open(json_cwd, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">        <span class="comment"># 修整数据格式</span></span><br><span class="line">        data0 = str(galleries).replace(<span class="string">&quot;&#125;, &#123;&quot;</span> , <span class="string">&quot;&#125;,\n &#123;&quot;</span>)</span><br><span class="line">        data1 = data0.replace(<span class="string">&quot;[&#123;&quot;</span>, <span class="string">&quot;[\n &#123;&quot;</span>)</span><br><span class="line">        data = data1.replace(<span class="string">&quot;&#125;]&quot;</span>, <span class="string">&quot;&#125;\n]&quot;</span>)</span><br><span class="line">        file.write(data)</span><br><span class="line">        print(<span class="string">&quot;数据写入完成&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建文件夹</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mkdir_galleries</span>(<span class="params">file</span>):</span></span><br><span class="line">    <span class="keyword">if</span> os.path.exists(file):</span><br><span class="line">        shutil.rmtree(file)</span><br><span class="line">    os.mkdir(file)</span><br><span class="line"></span><br><span class="line"><span class="comment"># # 创建二级相册目录和对应的index.md文件</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">galleries_index</span>():</span></span><br><span class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> galleries_name:</span><br><span class="line">        gallery_index_dict= dict(title = name, layout = <span class="string">&#x27;photo&#x27;</span>, comments = <span class="string">&quot;false&quot;</span>)</span><br><span class="line">        mkdir_galleries(name)</span><br><span class="line">        gallery_index_cwd = os.path.join(os.getcwd(), name , <span class="string">&quot;index.md&quot;</span>).replace(<span class="string">&#x27;\\&#x27;</span>, <span class="string">&#x27;/&#x27;</span>).replace(<span class="string">&#x27;:&#x27;</span>, <span class="string">&#x27;:/&#x27;</span>)</span><br><span class="line">        <span class="keyword">with</span> open(gallery_index_cwd, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">            data0 = str(gallery_index_dict)</span><br><span class="line">            data1 = data0.replace(<span class="string">&quot;&#123;&quot;</span>, <span class="string">&quot;---\n&quot;</span>).replace(<span class="string">&quot;,&quot;</span>,<span class="string">&quot;\n&quot;</span>).replace(<span class="string">&quot;&#125;&quot;</span>, <span class="string">&quot;\n---&quot;</span>)</span><br><span class="line">            data = data1.replace(<span class="string">&quot;&#x27;&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;photo&quot;</span>,<span class="string">&#x27;&#x27;&#x27;&quot;photo&quot;&#x27;&#x27;&#x27;</span>).replace(<span class="string">&quot; layout&quot;</span>,<span class="string">&quot;layout&quot;</span>).replace(<span class="string">&quot; comments&quot;</span>,<span class="string">&quot;comments&quot;</span>)</span><br><span class="line">            file.write(data)</span><br><span class="line">    print(<span class="string">&quot;index数据写入完成&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    json_file_exists()      <span class="comment"># 查看 json 文件是否已存在</span></span><br><span class="line">    get_galleries_data()    <span class="comment"># 获取相册数据信息</span></span><br><span class="line">    galleries_data_write()    <span class="comment"># 图像数据写入</span></span><br><span class="line">    galleries_index()         <span class="comment"># 创建二级相册目录和对应的index.md文件</span></span><br></pre></td></tr></table></figure>
+
+<div class="note warning">
+            <ol><li>blog_cos.py必须放在<code>/blog/source/photos/</code>文件夹下。</li><li>运行blog_cos.py前需要安装 <code>pip install -U cos-python-sdk-v5</code></li><li>设置用户属性, 包括secret_id, secret_key, region</li><li>可修改腾讯COS存储桶名称bucket_name、腾讯COS一级相册目录photos_name、图片数据文件名称json_name</li></ol>
+          </div>
+
+<h2 id="腾讯COS跨域访问cors设置"><a href="#腾讯COS跨域访问cors设置" class="headerlink" title="腾讯COS跨域访问cors设置"></a>腾讯COS跨域访问cors设置</h2><div class="tabs" id="tab标签列表"><ul class="nav-tabs"><li class="tab active"><a href="#tab标签列表-1">1.找到存储桶</a></li><li class="tab"><a href="#tab标签列表-2">2.找到cors设置</a></li><li class="tab"><a href="#tab标签列表-3">3.修改cors规则</a></li><li class="tab"><a href="#tab标签列表-4">4.修改访问权限</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab标签列表-1"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E6%89%BE%E5%88%B0%E5%AD%98%E5%82%A8%E6%A1%B6.jpg" width="600" hegiht="400" ></div><div class="tab-pane" id="tab标签列表-2"><p>   在基础配置中找到cors设置<br><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E6%89%BE%E5%88%B0cors%E8%AE%BE%E7%BD%AE.jpg" width="600" hegiht="400" ></p></div><div class="tab-pane" id="tab标签列表-3"><p>   操作选择GET，其他默认都填成*，如下图：<br><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E4%BF%AE%E6%94%B9cors%E8%A7%84%E5%88%99.jpg" width="600" hegiht="400" ></p></div><div class="tab-pane" id="tab标签列表-4"><p>   一般情况下默认是共有读私有写，policy权限就不要设置了<br><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/next%E6%B7%BB%E5%8A%A0%E7%9B%B8%E5%86%8C/%E8%AF%BB%E5%86%99%E6%9D%83%E9%99%90.png" width="600" hegiht="400" ></p></div></div></div>
+
+
+
+
+
+
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/hexo%E5%8D%9A%E5%AE%A2/" rel="tag"><i class="fa fa-tag"></i> hexo博客</a>
+              <a href="/tags/next%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> next主题优化</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/02/08/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9Anext%E4%B8%BB%E9%A2%98%E4%BC%98%E5%8C%96/" rel="next" title="hexo博客：next主题优化">
+                  <i class="fa fa-chevron-left"></i> hexo博客：next主题优化
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/02/11/hexo%E5%8D%9A%E5%AE%A2%EF%BC%9A%E4%B8%80%E4%BA%9B%E5%A5%BD%E7%9C%8B%E7%9A%84Hexo%E4%B8%BB%E9%A2%98/" rel="prev" title="hexo博客：一些好用的Hexo主题和插件">
+                  hexo博客：一些好用的Hexo主题和插件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">整体结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%9B%B8%E5%86%8C%E7%9B%AE%E5%BD%95%E5%92%8C%E6%A8%A1%E6%9D%BF"><span class="nav-number">3.</span> <span class="nav-text">建立相册目录和模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87%E6%95%B0%E6%8D%AE%E5%B9%B6%E5%88%9B%E5%BB%BA%E7%9B%B8%E5%BA%94%E4%BA%8C%E7%BA%A7%E7%9B%B8%E5%86%8C%E7%9B%AE%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">下载图片数据并创建相应二级相册目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%85%BE%E8%AE%AFCOS%E8%B7%A8%E5%9F%9F%E8%AE%BF%E9%97%AEcors%E8%AE%BE%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">腾讯COS跨域访问cors设置</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

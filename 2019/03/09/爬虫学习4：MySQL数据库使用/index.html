@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="MySQL数据库使用需要以下软件：  MySQL  pyMySQL SQLyog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫学习4：MySQL数据库使用">
+<meta property="og:url" content="https://xxty847.github.io/2019/03/09/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A04%EF%BC%9AMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="MySQL数据库使用需要以下软件：  MySQL  pyMySQL SQLyog">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/sql%20%E4%B8%8B%E8%BD%BD.JPG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E5%AE%89%E8%A3%85%20PyMySQL.JPG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/SQLyog%20%E8%BF%9E%E6%8E%A5.JPG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E8%B5%B7%E7%82%B9%E6%94%B6%E8%97%8F%E6%A6%9C.JPG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E7%88%AC%E5%8F%96%E7%9B%AE%E6%A0%87.JPG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93.JPG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/mysql%20table.JPG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E6%95%B0%E6%8D%AE%E5%BA%93.JPG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/mysql%20submmit.JPG">
+<meta property="article:published_time" content="2019-03-09T00:46:20.000Z">
+<meta property="article:modified_time" content="2020-03-01T07:18:20.644Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="爬虫学习">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/sql%20%E4%B8%8B%E8%BD%BD.JPG">
+
+<link rel="canonical" href="https://xxty847.github.io/2019/03/09/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A04%EF%BC%9AMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>爬虫学习4：MySQL数据库使用 | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
+<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
+<script src="\assets\js\Meting.min.js" class="meting-script-marker"></script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2019/03/09/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A04%EF%BC%9AMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          爬虫学习4：MySQL数据库使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-09 08:46:20" itemprop="dateCreated datePublished" datetime="2019-03-09T08:46:20+08:00">2019-03-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-01 15:18:20" itemprop="dateModified" datetime="2020-03-01T15:18:20+08:00">2020-03-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫学习</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/09/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A04%EF%BC%9AMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/03/09/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A04%EF%BC%9AMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>MySQL数据库使用需要以下软件：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.mysql.com/](https://www.mysql.com/">MySQL</a> </li>
+<li>pyMySQL</li>
+<li>SQLyog</li>
+</ul>
+
+    <div id="aplayer-izftDURr" class="aplayer aplayer-tag-marker meting-tag-marker"
+         data-id="1386873694" data-server="netease" data-type="song" data-mode="circulation" data-autoplay="false" data-mutex="true" data-listmaxheight="340px" data-preload="auto" data-theme="#555"
+    ></div>
+
+<a id="more"></a>
+
+<h2 id="MySQL数据库-安装"><a href="#MySQL数据库-安装" class="headerlink" title="MySQL数据库 安装"></a>MySQL数据库 安装</h2><h3 id="下载-MySQL-windows-版本"><a href="#下载-MySQL-windows-版本" class="headerlink" title="下载 MySQL windows 版本"></a>下载 MySQL windows 版本</h3><p>MySQL 官网：<a target="_blank" rel="noopener" href="https://www.mysql.com/">https://www.mysql.com/</a><br>打开<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/installer/">MySQL windows 下载界面</a> ，选择第二个文件下载</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/sql%20%E4%B8%8B%E8%BD%BD.JPG" width="500" hegiht="400">
+（图）MySQL windows 下载</center>
+
+
+
+<h3 id="安装-pysql"><a href="#安装-pysql" class="headerlink" title="安装 pysql"></a>安装 pysql</h3><p><strong>方法一：</strong> 命令安装 pyMySQL</p>
+<pre><code>$ pip install PyMySQL</code></pre>
+<p><strong>方法二：</strong> Pycharm 安装 pyMySQL</p>
+<p>(1) 工具栏 <code>File</code>  →  <code>Setting</code>  →  <code>Project interpreter</code><br>(2) 点击“+”号  →  搜索 <code>pyMySQL</code>  →  点击左下角 <code>Install Package</code> 按钮，安装成功后，如下图所示:</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E5%AE%89%E8%A3%85%20PyMySQL.JPG" width="500" hegiht="400">
+（图）Pycharm 安装 pyMySQL</center>
+
+<h3 id="安装-SQLyog"><a href="#安装-SQLyog" class="headerlink" title="安装 SQLyog"></a>安装 SQLyog</h3><p>（1）SQLyog 下载  </p>
+<blockquote>
+<p><strong><a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1V5asuo83MYqWDA840jRa-g">百度云盘</a></strong> 提取码：e9c6</p>
+</blockquote>
+<p>（2）安装成功后，连接 MySQL</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/SQLyog%20%E8%BF%9E%E6%8E%A5.JPG" width="500" hegiht="400">
+（图）连接 MySQL</center>
+
+
+
+<h2 id="实例-爬取起点中文网VIP收藏榜数据"><a href="#实例-爬取起点中文网VIP收藏榜数据" class="headerlink" title="实例 爬取起点中文网VIP收藏榜数据"></a>实例 爬取起点中文网VIP收藏榜数据</h2><p>起点中文网VIP收藏榜网站：<a target="_blank" rel="noopener" href="https://www.qidian.com/rank/vipcollect?style=1">https://www.qidian.com/rank/vipcollect?style=1</a></p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E8%B5%B7%E7%82%B9%E6%94%B6%E8%97%8F%E6%A6%9C.JPG" width="600" hegiht="400">
+（图）VIP收藏榜</center>
+
+
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>(1)网站地址构造。起点中文网VIP收藏榜共五页，每页25条数据。</p>
+<p>第一页：<a target="_blank" rel="noopener" href="https://www.qidian.com/rank/vipcollect?style=1">https://www.qidian.com/rank/vipcollect?style=1</a><br>第二页：<a target="_blank" rel="noopener" href="https://www.qidian.com/rank/vipcollect?style=1&page=2">https://www.qidian.com/rank/vipcollect?style=1&amp;page=2</a><br>第三页：<a target="_blank" rel="noopener" href="https://www.qidian.com/rank/vipcollect?style=1&page=3">https://www.qidian.com/rank/vipcollect?style=1&amp;page=3</a><br>……</p>
+<p>经测试，第一页也可使用<a target="_blank" rel="noopener" href="https://www.qidian.com/rank/vipcollect?style=1&page=1">https://www.qidian.com/rank/vipcollect?style=1&amp;page=1</a>进行访问。</p>
+<p>如此，网页访问可构造为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">urls = [<span class="string">&#x27;https://www.qidian.com/rank/vipcollect?style=1&amp;page=&#123;&#125;&#x27;</span>.format(str(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>)]</span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">	......</span><br></pre></td></tr></table></figure>
+
+<p>（2）爬取目标</p>
+<pre><code>小说的排名 book_rank 
+小说的名字 book_name 
+小说的作者 book_author 
+小说的分类 book_category 
+小说的状态 book_status 
+小说的封面地址 book_img 
+小说的链接地址 book_url </code></pre>
+<p>（3）爬取目标数据提取</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E7%88%AC%E5%8F%96%E7%9B%AE%E6%A0%87.JPG" width="800" hegiht="600">
+（图）爬取目标</center>
+
+
+<p>本次提取采用 BeautifulSoup，点击谷歌浏览器右键<code>检查</code>选项，可查找爬取目标数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入相应的库</span></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到爬取目标数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_books_url</span>(<span class="params">url</span>):</span></span><br><span class="line">    qd_html = requests.get(url, headers=headers)</span><br><span class="line">    soup = BeautifulSoup(qd_html.text, <span class="string">&#x27;lxml&#x27;</span>)  <span class="comment"># 解析数据</span></span><br><span class="line">    ranks = soup.select(<span class="string">&#x27;div.book-img-box &gt; span &#x27;</span>)</span><br><span class="line">    links = soup.select(<span class="string">&#x27;div.book-img-box &gt; a&#x27;</span>)</span><br><span class="line">    names = soup.select(<span class="string">&#x27;div.book-mid-info &gt; h4 &gt;a &#x27;</span>)</span><br><span class="line">    authors = soup.select(<span class="string">&#x27;div.book-mid-info &gt; p.author  &#x27;</span>)</span><br><span class="line">    imgs = soup.select(<span class="string">&#x27;div.book-img-box &gt; a &gt; img &#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> rank, name, author, link, img <span class="keyword">in</span> zip(ranks, names, authors, links, imgs):</span><br><span class="line">        book_rank = rank.get_text()</span><br><span class="line">        book_name = name.get_text()</span><br><span class="line">        book_author = author.get_text().split(<span class="string">&#x27;|&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">        book_category = author.get_text().split(<span class="string">&#x27;|&#x27;</span>)[<span class="number">1</span>]</span><br><span class="line">        book_status = author.get_text().split(<span class="string">&#x27;|&#x27;</span>)[<span class="number">2</span>]</span><br><span class="line">        book_url = link.get(<span class="string">&quot;href&quot;</span>)</span><br><span class="line">        book_img = img.get(<span class="string">&quot;src&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建-MySQL-数据库和表"><a href="#创建-MySQL-数据库和表" class="headerlink" title="创建 MySQL 数据库和表"></a>创建 MySQL 数据库和表</h3><h4 id="创建-MySQL-数据库和表-1"><a href="#创建-MySQL-数据库和表-1" class="headerlink" title="创建 MySQL 数据库和表"></a>创建 MySQL 数据库和表</h4><div class="tabs" id="tab标签列表"><ul class="nav-tabs"><li class="tab active"><a href="#tab标签列表-1">创建数据库</a></li><li class="tab"><a href="#tab标签列表-2">创建表</a></li><li class="tab"><a href="#tab标签列表-3">创建结果</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab标签列表-1"><ul>
+<li>右键 <code>root@localhost</code>  →  <code>创建数据库 </code></li>
+<li>输入数据库名称 <code>mydb</code></li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93.JPG" width="400" hegiht="300">
+（图）创建数据库</center></div><div class="tab-pane" id="tab标签列表-2"><ul>
+<li>右键 <code>mydb</code>  →  <code>表</code>  →  <code>创建表</code></li>
+<li>输入表名称 <code>qidian_book</code>，引擎 <code>InnoDB</code>，字符集 <code>utf8</code>，其它默认。</li>
+<li>输入表的列表名称和数据类型，如下所示，其他默认。</li>
+</ul>
+<pre><code>book_rank  text
+book_name  text
+book_author  text
+book_category  text
+book_status  text
+book_img  text
+book_url  text</code></pre>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/mysql%20table.JPG" width="800" hegiht="600">
+（图）创建数据表</center></div><div class="tab-pane" id="tab标签列表-3"><center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/%E6%95%B0%E6%8D%AE%E5%BA%93.JPG" width="400" hegiht="600">
+（图）数据库</center></div></div></div>
+
+
+<h4 id="数据提交"><a href="#数据提交" class="headerlink" title="数据提交"></a>数据提交</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 引入相应的库</span></span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接MySQL数据库 mydb</span></span><br><span class="line">conn = pymysql.connect(host=<span class="string">&#x27;localhost&#x27;</span>, user=<span class="string">&#x27;root&#x27;</span>, passwd=<span class="string">&#x27;1213&#x27;</span>, db=<span class="string">&#x27;mydb&#x27;</span>, port=<span class="number">3306</span>, charset=<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">cursor = conn.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提交数据到 qidian_book 表中</span></span><br><span class="line">cursor.execute(</span><br><span class="line"><span class="string">&quot;insert into qidian_book (book_rank, book_name, book_author, book_category, book_status, book_url, book_img) values(%s, %s, %s, %s, %s, %s, %s)&quot;</span>, (str(book_rank), str(book_name), str(book_author), str(book_category), str(book_status), str(book_url), str(book_img)))</span><br><span class="line">conn.commit()</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h2><h3 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h3><figure class="highlight python"><figcaption><span>qidian_vipbook.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 –*-</span></span><br><span class="line"><span class="comment"># 采用 Request 和 BeautifulSoup 实现</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入相应的库</span></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接MySQL数据库 mydb</span></span><br><span class="line">conn = pymysql.connect(host=<span class="string">&#x27;localhost&#x27;</span>, user=<span class="string">&#x27;root&#x27;</span>, passwd=<span class="string">&#x27;1213&#x27;</span>, db=<span class="string">&#x27;mydb&#x27;</span>, port=<span class="number">3306</span>, charset=<span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">cursor = conn.cursor()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加入请求头</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Mobile Safari/537.36&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 得到爬取目标数据</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_books_url</span>(<span class="params">url</span>):</span></span><br><span class="line">    qd_html = requests.get(url, headers=headers)</span><br><span class="line">    soup = BeautifulSoup(qd_html.text, <span class="string">&#x27;lxml&#x27;</span>)  <span class="comment"># 解析数据</span></span><br><span class="line">    ranks = soup.select(<span class="string">&#x27;div.book-img-box &gt; span &#x27;</span>)</span><br><span class="line">    links = soup.select(<span class="string">&#x27;div.book-img-box &gt; a&#x27;</span>)</span><br><span class="line">    names = soup.select(<span class="string">&#x27;div.book-mid-info &gt; h4 &gt;a &#x27;</span>)</span><br><span class="line">    authors = soup.select(<span class="string">&#x27;div.book-mid-info &gt; p.author  &#x27;</span>)</span><br><span class="line">    imgs = soup.select(<span class="string">&#x27;div.book-img-box &gt; a &gt; img &#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> rank, name, author, link, img <span class="keyword">in</span> zip(ranks, names, authors, links, imgs):</span><br><span class="line">        book_rank = rank.get_text()</span><br><span class="line">        book_name = name.get_text()</span><br><span class="line">        book_author = author.get_text().split(<span class="string">&#x27;|&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">        book_category = author.get_text().split(<span class="string">&#x27;|&#x27;</span>)[<span class="number">1</span>]</span><br><span class="line">        book_status = author.get_text().split(<span class="string">&#x27;|&#x27;</span>)[<span class="number">2</span>]</span><br><span class="line">        book_url = link.get(<span class="string">&quot;href&quot;</span>)</span><br><span class="line">        book_img = img.get(<span class="string">&quot;src&quot;</span>)</span><br><span class="line">        <span class="comment"># 提交数据到 qidian_book 表中</span></span><br><span class="line">        cursor.execute(</span><br><span class="line">            <span class="string">&quot;insert into qidian_book (book_rank, book_name, book_author, book_category, book_status, book_url, book_img) values(%s, %s, %s, %s, %s, %s, %s)&quot;</span>, (str(book_rank), str(book_name), str(book_author), str(book_category), str(book_status), str(book_url), str(book_img)))</span><br><span class="line">        conn.commit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    urls = [<span class="string">&#x27;https://www.qidian.com/rank/vipcollect?style=1&amp;page=&#123;&#125;&#x27;</span>.format(str(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>)]</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        get_books_url(url)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="测试结果"><a href="#测试结果" class="headerlink" title="测试结果"></a>测试结果</h3><center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/mysql%20submmit.JPG" width="800" hegiht="600">
+（图）测试结果</center>
+
+<div class="note warning">
+            <p>如果SQLyog连接MySQL时出现的2058错误。。。</p><p><strong>具体参考：</strong><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hualalalala/p/9344772.html">SQLyog连接MySQL时出现的2058错误解决方法</a></p><p><strong>解决方法：</strong><br>（1）windows 下cmd 登录 mysql -u root -p 登录你的 mysql 数据库，<br>（2）然后执行这条SQL命令：</p><pre><code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;password&#39;;其中 #password 是你自己设置的root密码，注意别忘了分号；</code></pre><p>（3）然后重新配置SQLyog的连接，则可连接成功了，就OK了。</p>
+          </div>
+
+
+
+
+
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" rel="tag"><i class="fa fa-tag"></i> 爬虫学习</a>
+              <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/03/08/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A03%EF%BC%9A%E7%88%AC%E5%8F%96%E9%85%B7%E7%8B%97TOP500%E6%8E%92%E8%A1%8C%E6%A6%9C/" rel="next" title="爬虫学习3：爬取酷狗TOP500排行榜">
+                  <i class="fa fa-chevron-left"></i> 爬虫学习3：爬取酷狗TOP500排行榜
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/04/05/ROS%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A05%EF%BC%9A%E7%90%86%E8%A7%A3%E8%AF%9D%E9%A2%98%E4%B8%ADPublier%E4%B8%8ESubscriber(Python)/" rel="prev" title="ROS入门学习5：理解话题中Publier与Subscriber(Python)">
+                  ROS入门学习5：理解话题中Publier与Subscriber(Python) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E6%95%B0%E6%8D%AE%E5%BA%93-%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">MySQL数据库 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-MySQL-windows-%E7%89%88%E6%9C%AC"><span class="nav-number">1.1.</span> <span class="nav-text">下载 MySQL windows 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-pysql"><span class="nav-number">1.2.</span> <span class="nav-text">安装 pysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-SQLyog"><span class="nav-number">1.3.</span> <span class="nav-text">安装 SQLyog</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-%E7%88%AC%E5%8F%96%E8%B5%B7%E7%82%B9%E4%B8%AD%E6%96%87%E7%BD%91VIP%E6%94%B6%E8%97%8F%E6%A6%9C%E6%95%B0%E6%8D%AE"><span class="nav-number">2.</span> <span class="nav-text">实例 爬取起点中文网VIP收藏榜数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-MySQL-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8"><span class="nav-number">2.2.</span> <span class="nav-text">创建 MySQL 数据库和表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-MySQL-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E8%A1%A8-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">创建 MySQL 数据库和表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8F%90%E4%BA%A4"><span class="nav-number">2.2.2.</span> <span class="nav-text">数据提交</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">运行测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E4%BB%A3%E7%A0%81"><span class="nav-number">3.1.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C"><span class="nav-number">3.2.</span> <span class="nav-text">测试结果</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;Microsoft SQL Server 数据库引擎为关系型数据和结构化数据提供了更安全可靠的存储功能。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="土管项目总结3：安装Microsoft SQL Server 2012">
+<meta property="og:url" content="https://xxty847.github.io/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%933%EF%BC%9A%E5%AE%89%E8%A3%85Microsoft%20SQL%20Server%202012/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;Microsoft SQL Server 数据库引擎为关系型数据和结构化数据提供了更安全可靠的存储功能。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%99%84%E5%8A%A0%E6%88%90%E5%8A%9F.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E5%AE%89%E8%A3%85sql%202012.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%80%89%E6%8B%A9%E4%B8%8B%E8%BD%BD%E7%A8%8B%E5%BA%8F.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/1%20%E5%AE%89%E8%A3%85%E4%B8%AD%E5%BF%83.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/2%20%E4%BA%A7%E5%93%81%E6%9B%B4%E6%96%B0.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/3%20%E5%8A%9F%E8%83%BD%E9%80%89%E6%8B%A9.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/4%20%E5%AE%9E%E4%BE%8B%E9%85%8D%E7%BD%AE.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/5%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/6%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%95%E6%93%8E%E9%85%8D%E7%BD%AE.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/7%20%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%80%89%E6%8B%A9SQL.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/sql%E8%BF%9E%E6%8E%A5.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%80%89%E6%8B%A9%E9%99%84%E5%8A%A0%E6%95%B0%E6%8D%AE%E5%BA%93.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%99%84%E5%8A%A0%E6%95%B0%E6%8D%AE%E5%BA%932.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%99%84%E5%8A%A0%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BA%E9%94%99.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/mdf%E6%96%87%E4%BB%B6.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%99%84%E5%8A%A0%E6%88%90%E5%8A%9F.PNG">
+<meta property="article:published_time" content="2020-04-24T04:54:32.000Z">
+<meta property="article:modified_time" content="2020-04-25T01:17:26.226Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="土管项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%99%84%E5%8A%A0%E6%88%90%E5%8A%9F.PNG">
+
+<link rel="canonical" href="https://xxty847.github.io/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%933%EF%BC%9A%E5%AE%89%E8%A3%85Microsoft%20SQL%20Server%202012/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>土管项目总结3：安装Microsoft SQL Server 2012 | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%933%EF%BC%9A%E5%AE%89%E8%A3%85Microsoft%20SQL%20Server%202012/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          土管项目总结3：安装Microsoft SQL Server 2012
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-24 12:54:32" itemprop="dateCreated datePublished" datetime="2020-04-24T12:54:32+08:00">2020-04-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-25 09:17:26" itemprop="dateModified" datetime="2020-04-25T09:17:26+08:00">2020-04-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">土管项目</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%933%EF%BC%9A%E5%AE%89%E8%A3%85Microsoft%20SQL%20Server%202012/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%933%EF%BC%9A%E5%AE%89%E8%A3%85Microsoft%20SQL%20Server%202012/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;Microsoft SQL Server 数据库引擎为关系型数据和结构化数据提供了更安全可靠的存储功能。</p>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%99%84%E5%8A%A0%E6%88%90%E5%8A%9F.PNG" width="600" hegiht="400" >
+
+<a id="more"></a>
+
+
+<h2 id="下载-microsoft-sql-server-2012"><a href="#下载-microsoft-sql-server-2012" class="headerlink" title="下载 microsoft sql server 2012"></a>下载 microsoft sql server 2012</h2><p>&emsp;&emsp;打开<a target="_blank" rel="noopener" href="https://www.microsoft.com/zh-cn/download/details.aspx?id=29062">Microsoft® SQL Server® 2012 Express</a>官网，一般选择<a target="_blank" rel="noopener" href="https://download.microsoft.com/download/3/6/E/36E9CA26-CC2C-4600-8D25-A152F9498FA1/CHS/x64/SQLEXPRADV_x64_CHS.exe">64位</a>下载</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E5%AE%89%E8%A3%85sql%202012.PNG" width="600" hegiht="460">
+</center>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%80%89%E6%8B%A9%E4%B8%8B%E8%BD%BD%E7%A8%8B%E5%BA%8F.PNG" width="600" hegiht="460">
+</center>
+
+<div class="note info">
+            <p>下载工具建议使用<code>破解版IDM</code><br>如果下载缓慢，也可到<a target="_blank" rel="noopener" href="https://msdn.itellyou.cn/">MSDN, 我告诉你</a>下载</p>
+          </div>
+
+<h2 id="安装-microsoft-sql-server-2012"><a href="#安装-microsoft-sql-server-2012" class="headerlink" title="安装 microsoft sql server 2012"></a>安装 microsoft sql server 2012</h2><div class="tabs" id="安装-microsoft-sql-server-2012"><ul class="nav-tabs"><li class="tab active"><a href="#安装-microsoft-sql-server-2012-1">产品更新</a></li><li class="tab"><a href="#安装-microsoft-sql-server-2012-2">功能选择</a></li><li class="tab"><a href="#安装-microsoft-sql-server-2012-3">★数据库引擎配置★</a></li></ul><div class="tab-content"><div class="tab-pane active" id="安装-microsoft-sql-server-2012-1"><ul>
+<li>选择全新安装</li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/1%20%E5%AE%89%E8%A3%85%E4%B8%AD%E5%BF%83.PNG" width="400" hegiht="400" >
+
+<ul>
+<li>可选择产品更新<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/2%20%E4%BA%A7%E5%93%81%E6%9B%B4%E6%96%B0.PNG" width="400" hegiht="400" >
+
+</li>
+</ul></div><div class="tab-pane" id="安装-microsoft-sql-server-2012-2"><ul>
+<li>一般默认设置即可</li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/3%20%E5%8A%9F%E8%83%BD%E9%80%89%E6%8B%A9.png" width="600" hegiht="400" >
+
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/4%20%E5%AE%9E%E4%BE%8B%E9%85%8D%E7%BD%AE.png" width="600" hegiht="400" >
+
+<div class="note info">
+            <p><strong>注意：</strong>此处应选择默认实例</p>
+          </div>
+
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/5%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE.png" width="600" hegiht="400" ></div><div class="tab-pane" id="安装-microsoft-sql-server-2012-3"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/6%20%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%95%E6%93%8E%E9%85%8D%E7%BD%AE.png" width="600" hegiht="400" >
+
+<div class="note info">
+            <p><strong>注意：</strong>此处应选择混合模式<br>    账号：sa (默认)<br>    密码：1213 (自定义设置)</p>
+          </div>
+
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/7%20%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F.png" width="600" hegiht="400" ></div></div></div>
+
+
+<h2 id="Microsoft-SQL-Server-2012-附加数据库"><a href="#Microsoft-SQL-Server-2012-附加数据库" class="headerlink" title="Microsoft SQL Server 2012 附加数据库"></a>Microsoft SQL Server 2012 附加数据库</h2><ul>
+<li>打开 <code>SQL Server Management Studio</code></li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%80%89%E6%8B%A9SQL.png" width="600" hegiht="400" >
+
+<ul>
+<li>连接sql，此时可使用<code>账号：sa 密码：1213</code>进行登录</li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/sql%E8%BF%9E%E6%8E%A5.PNG" width="600" hegiht="400" >
+
+<ul>
+<li>数据库附加</li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%80%89%E6%8B%A9%E9%99%84%E5%8A%A0%E6%95%B0%E6%8D%AE%E5%BA%93.png" width="600" hegiht="400" >
+
+<p>MDF文件路径：<code>夏老师-土地管理项目源码\hanshandb\Kangsoft.HRMS</code></p>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%99%84%E5%8A%A0%E6%95%B0%E6%8D%AE%E5%BA%932.PNG" width="600" hegiht="400" >
+
+<p>此时可能出现以下错误：</p>
+<div class="tabs" id="附加数据库出错"><ul class="nav-tabs"><li class="tab active"><a href="#附加数据库出错-1">附加数据库出错</a></li><li class="tab"><a href="#附加数据库出错-2">修改权限</a></li><li class="tab"><a href="#附加数据库出错-3">附加数据库</a></li></ul><div class="tab-content"><div class="tab-pane active" id="附加数据库出错-1"><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E9%99%84%E5%8A%A0%E6%95%B0%E6%8D%AE%E5%BA%93%E5%87%BA%E9%94%99.PNG" width="600" hegiht="400" >
+
+<p><strong>解决方法：</strong></p>
+<p>&emsp;&emsp;修改目录下两个文件的权限</p>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/mdf%E6%96%87%E4%BB%B6.PNG" width="600" hegiht="400" ></div><div class="tab-pane" id="附加数据库出错-2"><ul>
+<li><p>找到要添加数据库的<code>Kangsoft.HRMS.mdf</code>文件，点击右键，选择<code>属性</code>；</p>
+</li>
+<li><p>在<code>属性</code>页面点击<code>安全</code>，单击<code>编辑</code>，选择<code>Authenticated　Users</code>；</p>
+</li>
+<li><p><code>Authenticated　Users</code>权限中选择<code>完全控制</code>，一路点击<code>确定</code>即可。</p>
+</li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E4%BF%AE%E6%94%B9%E6%9D%83%E9%99%90.PNG" width="600" hegiht="400" >
+
+
+<p>按照上述步骤，对<code>Kangsoft.HRMS_log.ldf</code>文件同样修改权限</p></div><div class="tab-pane" id="附加数据库出错-3"><p>再一次附加数据库，可以看到Kangsoft.HRMS数据库附加成功</p>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E5%AE%89%E8%A3%85SQL/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%99%84%E5%8A%A0%E6%88%90%E5%8A%9F.PNG" width="600" hegiht="400" ></div></div></div>
+
+
+
+
+
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/" rel="tag"><i class="fa fa-tag"></i> 土管项目</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%932%EF%BC%9A%E5%AE%89%E8%A3%85%20IIS%EF%BC%88%E4%BA%92%E8%81%94%E7%BD%91%E4%BF%A1%E6%81%AF%E6%9C%8D%E5%8A%A1%EF%BC%89/" rel="next" title="土管项目总结2：安装 IIS（互联网信息服务）">
+                  <i class="fa fa-chevron-left"></i> 土管项目总结2：安装 IIS（互联网信息服务）
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/04/24/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%934%EF%BC%9AVS%202013%E7%BC%96%E8%AF%91%E5%8F%91%E5%B8%83web%E9%A1%B9%E7%9B%AE/" rel="prev" title="土管项目总结4：VS 2013编译发布web项目">
+                  土管项目总结4：VS 2013编译发布web项目 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-microsoft-sql-server-2012"><span class="nav-number">1.</span> <span class="nav-text">下载 microsoft sql server 2012</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-microsoft-sql-server-2012"><span class="nav-number">2.</span> <span class="nav-text">安装 microsoft sql server 2012</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Microsoft-SQL-Server-2012-%E9%99%84%E5%8A%A0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">Microsoft SQL Server 2012 附加数据库</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

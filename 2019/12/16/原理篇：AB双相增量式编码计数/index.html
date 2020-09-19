@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;编码器是一种将角位移或者角速度转换成一连串电数字脉冲的旋转式传感 器，我们可以通过编码器测量到底位移或者速度信息。编码器从输出数据类型上 分，可以分为增量式编码器和绝对式编码器。从编码器检测原理上来分，还可以分为光学式、磁式、感应式、电容式。常见的是光电编码器（光学式）和霍尔编码器（磁式）。 &amp;emsp;&amp;emsp;光电编码器是一种通过光电转换将输出轴上的机械几何位移量转换">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原理篇：AB双相增量式编码器计数与测速">
+<meta property="og:url" content="https://xxty847.github.io/2019/12/16/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9AAB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;编码器是一种将角位移或者角速度转换成一连串电数字脉冲的旋转式传感 器，我们可以通过编码器测量到底位移或者速度信息。编码器从输出数据类型上 分，可以分为增量式编码器和绝对式编码器。从编码器检测原理上来分，还可以分为光学式、磁式、感应式、电容式。常见的是光电编码器（光学式）和霍尔编码器（磁式）。 &amp;emsp;&amp;emsp;光电编码器是一种通过光电转换将输出轴上的机械几何位移量转换">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/AB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/20181027173309283.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/AB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/520%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/AB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.gif">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/AB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/AB%E7%9B%B8%E8%BE%93%E5%87%BA.jpg">
+<meta property="article:published_time" content="2019-12-16T10:50:08.000Z">
+<meta property="article:modified_time" content="2020-03-10T12:42:44.944Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="ROS小车">
+<meta property="article:tag" content="原理篇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/AB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/20181027173309283.png">
+
+<link rel="canonical" href="https://xxty847.github.io/2019/12/16/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9AAB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>原理篇：AB双相增量式编码器计数与测速 | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2019/12/16/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9AAB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          原理篇：AB双相增量式编码器计数与测速
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-16 18:50:08" itemprop="dateCreated datePublished" datetime="2019-12-16T18:50:08+08:00">2019-12-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-10 20:42:44" itemprop="dateModified" datetime="2020-03-10T20:42:44+08:00">2020-03-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8E%9F%E7%90%86%E7%AF%87/" itemprop="url" rel="index">
+                    <span itemprop="name">原理篇</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/12/16/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9AAB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/12/16/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9AAB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;编码器是一种将角位移或者角速度转换成一连串电数字脉冲的旋转式传感 器，我们可以通过编码器测量到底位移或者速度信息。编码器从输出数据类型上 分，可以分为增量式编码器和绝对式编码器。从编码器检测原理上来分，还可以分为光学式、磁式、感应式、电容式。常见的是光电编码器（光学式）和霍尔编码器（磁式）。</p>
+<p>&emsp;&emsp;光电编码器是一种通过光电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。光电编码器是由光码盘和光电检测装置组成。光码盘是在一 定直径的圆板上等分地开通若干个长方形孔。由于光电码盘与电动机同轴，电动机旋转时，检测装置检测输出若干脉冲信号，为判断转向，一般输出两组存在一 定相位差的方波信号。</p>
+<p>&emsp;&emsp;霍尔编码器是一种通过磁电转换将输出轴上的机械几何位移量转换成脉冲或数字量的传感器。霍尔编码器是由霍尔码盘和霍尔元件组成。霍尔码盘是在一 定直径的圆板上等分地布置有不同的磁极。霍尔码盘与电动机同轴，电动机旋转时，霍尔元件检测输出若干脉冲信号，为判断转向，一般输出两组存在一定相位差的方波信号。</p>
+<p>&emsp;&emsp;可以看到两种原理的编码器目的都是获取 AB 相输出的方波信号，其使用方法也是一样，下面是一个简单的示意图。</p>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/AB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/20181027173309283.png" width="400" hegiht="600" >
+（图）编码器工作原理示意图</center>
+
+<a id="more"></a>
+
+<h2 id="编码计数原理"><a href="#编码计数原理" class="headerlink" title="编码计数原理"></a>编码计数原理</h2><center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/AB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/520%E5%87%8F%E9%80%9F%E7%94%B5%E6%9C%BA.jpg" width="400" hegiht="400" >
+（图）520减速电机</center>
+
+<p>&emsp;&emsp;该电机自带的编码器为A/B相霍尔计数编码器，它包含一个磁栅和磁敏检测电路，输出两个通道正交相位角为90度的方波。</p>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/AB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.gif" width="400" hegiht="600" >
+（图）编码器工作原理</center>
+
+<p>&emsp;&emsp;上图中 A 和 B 分别连接到两个传感器单元上，黑白相间的圆环称之为栅格。如果两个信号相位相差90度，则这两个信号称为正交。由于两个信号相位相差90度，因此可以根据两个信号哪个先哪个后来判断方向。</p>
+<p>&emsp;&emsp;<strong>正转</strong>：A相超前B相90度；<br>&emsp;&emsp;<strong>反转</strong>：A相滞后B相90度。</p>
+<p>&emsp;&emsp;在单片机中可通过外部中断判断编码器转向，比如把编码器A相输出到单片机的外部中断输入口，这样就可以通过跳变沿触发中断，然后在对应的外部中断服务函数里面，通过B相的电平来确定正反转。若正向旋转，每个脉冲使计数器+1，若反向旋转，每个脉冲使计数器-1。</p>
+<p>&emsp;&emsp;<strong>正转</strong>：A下降沿触发中断且B为高电平，或者A为上升沿触发中断且B为低电平；<br>&emsp;&emsp;<strong>反转</strong>：A下降沿触发中断且B为低电平，或者A为上升沿触发中断且B为高电平。</p>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/AB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/AB%E7%9B%B8%E8%BE%93%E5%87%BA.jpg" width="400" hegiht="600" >
+（图）编码计数原理</center>
+
+<p>&emsp;&emsp;编码器单相每圈脉冲13CPR(Counts Per Revolution，每转脉冲的个数)。再考虑减速比1:30，也就是说编码器旋转30圈，小车的轮子才转一圈。</p>
+<p>（1）单相作用下：小车轮子转一圈，可以计数13×30=390次。<br>（2）双相作用下：小车轮子转一圈，可以计数13×30×2=780次。<br>（3）双相作用下，再考虑上升沿和下降沿变化（四倍频）：小车轮子转一圈，可以计数13×30×2×2=1560次。</p>
+<h2 id="测速原理"><a href="#测速原理" class="headerlink" title="测速原理"></a>测速原理</h2><p>&emsp;&emsp;实际应用中，单片机根据脉冲计数来测量转速的方法有以下三种：</p>
+<p>（1）在规定时间内测量所产生的脉冲个数来获得被测速度，称为M法测速；</p>
+<p>&emsp;&emsp;M法是测量单位时间内的脉数换算成频率，因存在测量时间内首尾的半个脉冲问题，可能会有2个脉的误差。速度较低时，因测量时间内的脉冲数变少，误差所占的比例会变大，所以M法宜测量高速。如要降低测量的速度下限，可以提高编码器线数或加大测量的单位时间，使用一次采集的脉冲数尽可能多。</p>
+<p>（2）测量相邻两个脉冲的时间来测量速度，称为T法测速；</p>
+<p>&emsp;&emsp;T法是测量两个脉冲之间的时间换算成周期，从而得到频率。因存在半个时间单位的问题，可能会有1个时间单位的误差。速度较高时，测得的周期较小，误差所占的比例变大，所以T法宜测量低速。如要增加速度测量的上限，可以减小编码器的脉冲数，或使用更小更精确的计时单位，使一次测量的时间值尽可能大。</p>
+<p>（3）同时测量检测时间和在此时间内脉冲发生器发出的脉冲个数来测量速度，称为M/T法测速。</p>
+<p>&emsp;&emsp;M法、T法各且优劣和适应范围，编码器线数不能无限增加、测量时间也不能太长(得考虑实时性)、计时单位也不能无限小，所以往往候M法、T法都无法胜任全速度范围内的测量。因此产生了M法、T法结合的 M/T 测速法：表现为低速时测周期、高速时测频率。</p>
+<p>&emsp;&emsp;M/T法，在脉冲上升沿开启定时时间计数，在定时时间Tg到达后，继续等待一个上升沿脉冲,时间为Td; 记录在此期间的脉冲数，由脉冲数除以时间，得到准确的频率（速度）。</p>
+<p>&emsp;&emsp;以上三中测速方法中，M法适合于测量较高的速度，能获得较高分辨率（最容易想到）；T法适合于测量较低的速度，这时能获得较高的分辨率；而M/T法则无论高速低速都适合测量。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.ncnynl.com/archives/201612/1204.html">搭建ROS小车底盘-第一篇硬件</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/yx1302317313/article/details/80381001">AB相编码器与正交解码，绝对值编码器</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/20268680">正交编码器的原理与使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hiram-zhang/p/10403600.html">SLAM+语音机器人DIY系列：（四）差分底盘设计——1.stm32主控硬件设计</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Terrys0518/article/details/89931546">M/T测速实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42795251/article/details/90057308">Arduino、AB相增量式光电编码器测位移和速度方向</a></li>
+</ul>
+
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/ROS%E5%B0%8F%E8%BD%A6/" rel="tag"><i class="fa fa-tag"></i> ROS小车</a>
+              <a href="/tags/%E5%8E%9F%E7%90%86%E7%AF%87/" rel="tag"><i class="fa fa-tag"></i> 原理篇</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/12/15/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9A%E5%8F%8CL298N%E7%94%B5%E6%9C%BA%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9D%97/" rel="next" title="原理篇：双L298N电机驱动模块">
+                  <i class="fa fa-chevron-left"></i> 原理篇：双L298N电机驱动模块
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/02/02/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B8%B8%E8%A7%81%E5%BA%95%E7%9B%98%E8%BF%90%E5%8A%A8%E5%AD%A6%E5%88%86%E6%9E%90/" rel="prev" title="原理篇：机器人常见底盘运动学分析">
+                  原理篇：机器人常见底盘运动学分析 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">编码计数原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E9%80%9F%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">测速原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;通常移动机器人依赖电机驱动车轮实现行走功能。机器人底盘结构不同，其运动学也完全不同。根据不同类型车轮，常见的底盘结构差速运动模型、滑移运动模型、阿克曼运动模型、全向轮运动模型等等。  差速运动模型：2wd、4wd、6wd 全向轮运动模型：omni_3、omni_4、mecanum 阿克曼运动模型：ackermann   （图）机器人常见底盘结构  &amp;emsp;&amp;emsp;本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原理篇：机器人常见底盘运动学分析">
+<meta property="og:url" content="https://xxty847.github.io/2020/02/02/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B8%B8%E8%A7%81%E5%BA%95%E7%9B%98%E8%BF%90%E5%8A%A8%E5%AD%A6%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;通常移动机器人依赖电机驱动车轮实现行走功能。机器人底盘结构不同，其运动学也完全不同。根据不同类型车轮，常见的底盘结构差速运动模型、滑移运动模型、阿克曼运动模型、全向轮运动模型等等。  差速运动模型：2wd、4wd、6wd 全向轮运动模型：omni_3、omni_4、mecanum 阿克曼运动模型：ackermann   （图）机器人常见底盘结构  &amp;emsp;&amp;emsp;本">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98%E7%B1%BB%E5%9E%8B.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E5%85%A8%E5%90%91%E8%BD%AE.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E4%B8%A4%E8%BD%AE%E5%B7%AE%E9%80%9F%E9%A9%B1%E5%8A%A8%E8%BF%90%E5%8A%A8%E6%A8%A1%E5%9E%8B_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E4%B8%A4%E8%BD%AE%E5%B7%AE%E9%80%9F%E6%96%B9%E7%A8%8B.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E4%B8%89%E8%BD%AE%E5%85%A8%E5%90%91%E8%BF%90%E5%8A%A8%E5%AD%A6%E5%88%86%E6%9E%90.jpg">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E4%B8%89%E8%BD%AE%E5%85%A8%E5%90%91%E6%96%B9%E7%A8%8B.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/Coordinate_System.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E9%BA%A6%E5%85%8B%E7%BA%B3%E5%A7%86%E8%BD%AE%E6%96%B9%E7%A8%8B.PNG">
+<meta property="article:published_time" content="2020-02-02T01:47:57.000Z">
+<meta property="article:modified_time" content="2020-03-10T12:44:20.283Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="ROS小车">
+<meta property="article:tag" content="原理篇">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98%E7%B1%BB%E5%9E%8B.PNG">
+
+<link rel="canonical" href="https://xxty847.github.io/2020/02/02/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B8%B8%E8%A7%81%E5%BA%95%E7%9B%98%E8%BF%90%E5%8A%A8%E5%AD%A6%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>原理篇：机器人常见底盘运动学分析 | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/02/02/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B8%B8%E8%A7%81%E5%BA%95%E7%9B%98%E8%BF%90%E5%8A%A8%E5%AD%A6%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          原理篇：机器人常见底盘运动学分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-02 09:47:57" itemprop="dateCreated datePublished" datetime="2020-02-02T09:47:57+08:00">2020-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-10 20:44:20" itemprop="dateModified" datetime="2020-03-10T20:44:20+08:00">2020-03-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8E%9F%E7%90%86%E7%AF%87/" itemprop="url" rel="index">
+                    <span itemprop="name">原理篇</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/02/02/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B8%B8%E8%A7%81%E5%BA%95%E7%9B%98%E8%BF%90%E5%8A%A8%E5%AD%A6%E5%88%86%E6%9E%90/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/02/02/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9A%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B8%B8%E8%A7%81%E5%BA%95%E7%9B%98%E8%BF%90%E5%8A%A8%E5%AD%A6%E5%88%86%E6%9E%90/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;通常移动机器人依赖电机驱动车轮实现行走功能。机器人底盘结构不同，其运动学也完全不同。根据不同类型车轮，常见的底盘结构差速运动模型、滑移运动模型、阿克曼运动模型、全向轮运动模型等等。</p>
+<ul>
+<li>差速运动模型：2wd、4wd、6wd</li>
+<li>全向轮运动模型：omni_3、omni_4、mecanum</li>
+<li>阿克曼运动模型：ackermann</li>
+</ul>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98%E7%B1%BB%E5%9E%8B.PNG" width="600" hegiht="600" >
+（图）机器人常见底盘结构</center>
+
+<p>&emsp;&emsp;本文仅对两轮差速运动模型、三轮全向运动模型、四轮麦克纳姆轮运动模型三种底盘结构运动学分析。<br>&emsp;&emsp;ROS中运动学分析为正解（Forward kinematics）和逆解（Inverse Kinematics）两种。<strong>正解</strong>是将获得的机器人底盘速度指令/cmd_vel转化为每个车轮的实际速度。<strong>逆解</strong>是根据电机编码器获得的每个车轮速度计算出机器人底盘速度，从而实现航迹推算。</p>
+<a id="more"></a>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>&emsp;&emsp;两轮差速运动模型如<a target="_blank" rel="noopener" href="http://www.pirobot.org/">Pirobot</a>、<a target="_blank" rel="noopener" href="https://www.turtlebot.com/">Turtlebot</a>等机器人，两个动力轮分别位于底盘左右两侧，通过给定不同速度来实现转向控制，一般会加一到两个的辅助支撑轮。</p>
+<p>&emsp;&emsp;全向轮的独特之处在于其特殊的轮胎。全向轮并不仅仅是一个轮毂，而是由很多轮胎的组合体。其主体为一个大型中心轮，在中心轮周边为中心轴方向垂直于中心轮的小型轮子。根据小型轮子角度不同，常见的主要有麦克纳姆（Mecanum ）轮和连续切换轮两种。</p>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E5%85%A8%E5%90%91%E8%BD%AE.PNG" width="600" hegiht="600" >
+（图）全向轮结构</center>
+
+<p>&emsp;&emsp;麦克纳姆轮由轮辐和固定在外周的许多小滚子构成，轮子和滚子之间的夹角通常为45°。典型布置方式为“米”型布置。</p>
+<p>&emsp;&emsp;连续切换轮由一个轮盘和固定在轮盘外周的滚子构成。轮盘轴心同滚子轴心垂直，轮盘绕轴心由电机驱动转动，滚子依次与地面接触，并可绕自身轴心自由转动。典型布置方式为三角形布置和“X”字形布置。</p>
+<h2 id="两轮差速运动模型"><a href="#两轮差速运动模型" class="headerlink" title="两轮差速运动模型"></a>两轮差速运动模型</h2><center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E4%B8%A4%E8%BD%AE%E5%B7%AE%E9%80%9F%E9%A9%B1%E5%8A%A8%E8%BF%90%E5%8A%A8%E6%A8%A1%E5%9E%8B_%E7%9C%8B%E5%9B%BE%E7%8E%8B.jpg" width="400" hegiht="400" >
+两轮差速运动模型</center>
+
+<p>参考1：<a target="_blank" rel="noopener" href="https://blog.csdn.net/xingdou520/article/details/83691951">两轮差速底盘的运动模型分析：运动控制与里程计解算</a><br>参考2：<a target="_blank" rel="noopener" href="https://blog.csdn.net/heyijia0327/article/details/47021861">航迹推演（Odometry）</a><br>参考3：<a target="_blank" rel="noopener" href="https://blog.csdn.net/heyijia0327/article/details/44983551">机器人局部避障的动态窗口法 (dynamic window approach)</a></p>
+<p><strong>运动学方程</strong></p>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E4%B8%A4%E8%BD%AE%E5%B7%AE%E9%80%9F%E6%96%B9%E7%A8%8B.PNG" width="400" hegiht="400" >
+</center>
+
+
+<h2 id="三轮全向运动学模型"><a href="#三轮全向运动学模型" class="headerlink" title="三轮全向运动学模型"></a>三轮全向运动学模型</h2><center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E4%B8%89%E8%BD%AE%E5%85%A8%E5%90%91%E8%BF%90%E5%8A%A8%E5%AD%A6%E5%88%86%E6%9E%90.jpg" width="400" hegiht="400" >
+三轮全向运动学模型</center>
+
+<p>参考1：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?src=3&timestamp=1580622174&ver=1&signature=mUYir5xCcV45GICjXRzD94x1hP2UOmQzFJtGoosiCFr1zIwftUr975xBmIVMOGaK2e9T1hL5uU5TN5UOhZ1rT8XrPqMRwzaAqvjXp6OWKgV-Y4RXRCaknqd4E0V3l1TshMi5vYQxLE-mlb6D-LU3uC8GdYcSDj6dO1g45UzghnU=">三轮全向移动底盘的运动学建模和分析</a><br>参考2：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zxouxuewei/p/5871470.html">3轮全向轮正解—41</a></p>
+<p><strong>运动学方程</strong></p>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E4%B8%89%E8%BD%AE%E5%85%A8%E5%90%91%E6%96%B9%E7%A8%8B.PNG" width="400" hegiht="400" >
+</center>
+
+<h2 id="四轮麦克纳姆轮运动模型"><a href="#四轮麦克纳姆轮运动模型" class="headerlink" title="四轮麦克纳姆轮运动模型"></a>四轮麦克纳姆轮运动模型</h2><center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/Coordinate_System.png" width="600" hegiht="400" >
+四轮麦克纳姆轮运动模型 </center>
+
+<p>参考1：<a target="_blank" rel="noopener" href="https://seeeddoc.github.io/4WD_Mecanum_Wheel_Robot_Kit_Series/?utm_source=rb-community&utm_medium=robots&utm_campaign=autonomous-navigation-mecanum-wheel-robot">4WD Mecanum Wheel Robot Kit Series</a><br>参考2：<a target="_blank" rel="noopener" href="http://robotsforroboticists.com/drive-kinematics/">Drive Kinematics: Skid Steer &amp; Mecanum (ROS Twist included)</a></p>
+<p><strong>运动学方程</strong></p>
+<center><img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%8E%9F%E7%90%86%E7%AF%87/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BA%95%E7%9B%98/%E9%BA%A6%E5%85%8B%E7%BA%B3%E5%A7%86%E8%BD%AE%E6%96%B9%E7%A8%8B.PNG" width="400" hegiht="400" >
+</center>
+
+
+
+
+
+
+
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/ROS%E5%B0%8F%E8%BD%A6/" rel="tag"><i class="fa fa-tag"></i> ROS小车</a>
+              <a href="/tags/%E5%8E%9F%E7%90%86%E7%AF%87/" rel="tag"><i class="fa fa-tag"></i> 原理篇</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/12/16/%E5%8E%9F%E7%90%86%E7%AF%87%EF%BC%9AAB%E5%8F%8C%E7%9B%B8%E5%A2%9E%E9%87%8F%E5%BC%8F%E7%BC%96%E7%A0%81%E8%AE%A1%E6%95%B0/" rel="next" title="原理篇：AB双相增量式编码器计数与测速">
+                  <i class="fa fa-chevron-left"></i> 原理篇：AB双相增量式编码器计数与测速
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/02/19/%E4%BD%BF%E7%94%A8Clash%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="prev" title="使用Clash科学上网">
+                  使用Clash科学上网 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E8%BD%AE%E5%B7%AE%E9%80%9F%E8%BF%90%E5%8A%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">两轮差速运动模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E8%BD%AE%E5%85%A8%E5%90%91%E8%BF%90%E5%8A%A8%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">三轮全向运动学模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E8%BD%AE%E9%BA%A6%E5%85%8B%E7%BA%B3%E5%A7%86%E8%BD%AE%E8%BF%90%E5%8A%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">四轮麦克纳姆轮运动模型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+

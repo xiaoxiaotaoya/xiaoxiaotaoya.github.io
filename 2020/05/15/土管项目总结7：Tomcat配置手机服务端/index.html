@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="小小涛呀" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.proxy.ustclug.org/css?family=Arial:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","width":300,"display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;emsp;&amp;emsp;IDEA 全称 IntelliJ IDEA，是java编程语言开发的集成环境。Tomcat服务器是一个免费的开放源代码的Web应用服务器，属于轻量级应用服务器。 &amp;emsp;&amp;emsp;手机服务端的配置，需要IDEA软件将服务端项目编译出war包，然后放到服务器中通过Tomcat部署，这样手机端才能连接服务器上的数据库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="土管项目总结7：IDEA和Tomcat配置手机服务端">
+<meta property="og:url" content="https://xxty847.github.io/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/index.html">
+<meta property="og:site_name" content="小小涛呀">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;IDEA 全称 IntelliJ IDEA，是java编程语言开发的集成环境。Tomcat服务器是一个免费的开放源代码的Web应用服务器，属于轻量级应用服务器。 &amp;emsp;&amp;emsp;手机服务端的配置，需要IDEA软件将服务端项目编译出war包，然后放到服务器中通过Tomcat部署，这样手机端才能连接服务器上的数据库。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/idea%E7%89%88%E6%9C%AC%E9%80%89%E6%8B%A9.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%AE%89%E8%A3%85idea.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E4%B8%8B%E8%BD%BDtomcat7.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%A7%A3%E5%8E%8B%E5%90%8Etomcat7.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%90%AF%E5%8A%A8tomcat.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%90%AF%E5%8A%A8tomcat2.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%88%9B%E5%BB%BA%E6%96%B0web%E9%A1%B9%E7%9B%AE.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%88%9B%E5%BB%BA%E6%96%B0web%E9%A1%B9%E7%9B%AE2.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9classes%E5%92%8Clib.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E4%BF%AE%E6%94%B9path.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E4%BF%AE%E6%94%B9lib.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E7%BC%96%E8%AF%91%E8%AD%A6%E5%91%8A.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/war%20exploded.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/war%20archive.png">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/tomcat%20webapps.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%90%AF%E5%8A%A8.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E9%80%89%E6%8B%A9%E7%9B%98.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%98%BE%E7%A4%BA.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/out%E6%96%87%E4%BB%B6%E5%A4%B9war.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/tomcat%20webapps.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/tomcat%20%E5%90%AF%E5%8A%A8.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95%20%E7%BD%91%E9%A1%B5.PNG">
+<meta property="og:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95%20%E6%89%8B%E6%9C%BA%E7%AB%AF.jpg">
+<meta property="article:published_time" content="2020-05-15T14:09:27.000Z">
+<meta property="article:modified_time" content="2020-05-16T07:41:48.879Z">
+<meta property="article:author" content="XiaoXiaoTao">
+<meta property="article:tag" content="土管项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/idea%E7%89%88%E6%9C%AC%E9%80%89%E6%8B%A9.PNG">
+
+<link rel="canonical" href="https://xxty847.github.io/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+<link href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css" rel="stylesheet">
+
+  <title>土管项目总结7：IDEA和Tomcat配置手机服务端 | 小小涛呀</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小小涛呀</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">时光荏苒，珍惜当下</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-photos">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-image"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-fw fa-leaf"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xxty847.github.io/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg">
+      <meta itemprop="name" content="XiaoXiaoTao">
+      <meta itemprop="description" content="坚持 坚持 再坚持">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小小涛呀">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          土管项目总结7：IDEA和Tomcat配置手机服务端
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-15 22:09:27" itemprop="dateCreated datePublished" datetime="2020-05-15T22:09:27+08:00">2020-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-16 15:41:48" itemprop="dateModified" datetime="2020-05-16T15:41:48+08:00">2020-05-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index">
+                    <span itemprop="name">土管项目</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%937%EF%BC%9ATomcat%E9%85%8D%E7%BD%AE%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/">IDEA</a> 全称 IntelliJ IDEA，是java编程语言开发的集成环境。<a target="_blank" rel="noopener" href="http://tomcat.apache.org/">Tomcat</a>服务器是一个免费的开放源代码的Web应用服务器，属于轻量级应用服务器。</p>
+<p>&emsp;&emsp;手机服务端的配置，需要IDEA软件将服务端项目编译出war包，然后放到服务器中通过Tomcat部署，这样手机端才能连接服务器上的数据库。</p>
+<a id="more"></a>
+
+<h2 id="安装IDEA和Tomcat"><a href="#安装IDEA和Tomcat" class="headerlink" title="安装IDEA和Tomcat"></a>安装IDEA和Tomcat</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jetbrains.com/idea/download/#section=windows">IntelliJ IDEA</a></li>
+<li><a target="_blank" rel="noopener" href="https://tomcat.apache.org/download-70.cgi">Apache Tomcat 7.0.103 Released</a></li>
+</ul>
+<h3 id="安装IntelliJ-IDEA-2020-1-1"><a href="#安装IntelliJ-IDEA-2020-1-1" class="headerlink" title="安装IntelliJ IDEA 2020.1.1"></a>安装IntelliJ IDEA 2020.1.1</h3><p>（1）选择版本下载，使用旗舰版试用即可。</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/idea%E7%89%88%E6%9C%AC%E9%80%89%E6%8B%A9.PNG" width="600" hegiht="460">
+</center>
+
+
+<ul>
+<li><p><strong>Ultimate</strong>即为旗舰版，功能全面，插件丰富，但是收费，按年收费。如果非要比较的话类似于myEclipse。</p>
+</li>
+<li><p><strong>Community</strong>即为社区版，免费试用，功能相对而言不是很丰富，但是不影响开发使用。如果非要比较的话类似于eclipse。</p>
+</li>
+</ul>
+<p>（2）安装IDEA，安装界面选择如下：</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%AE%89%E8%A3%85idea.PNG" width="400" hegiht="460">
+</center>
+
+<h3 id="安装-Apache-Tomcat-7-0-103-Released"><a href="#安装-Apache-Tomcat-7-0-103-Released" class="headerlink" title="安装 Apache Tomcat 7.0.103 Released"></a>安装 Apache Tomcat 7.0.103 Released</h3><p>（1）下载 Apache Tomcat 7.0.103 Released，选择 <code>64-bit Windows zip (pgp, sha512)</code>。下载完成，将解压后的<code>apache-tomcat-7.0.103</code>文件夹放到合适位置（任意位置）。</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E4%B8%8B%E8%BD%BDtomcat7.PNG" width="500" hegiht="460">
+</center>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%A7%A3%E5%8E%8B%E5%90%8Etomcat7.PNG" width="500" hegiht="460">
+</center>
+
+<p>（2)进入<code>apache-tomcat-7.0.103/bin</code>文件夹，双击启动<code>startup.bat</code>文件。</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%90%AF%E5%8A%A8tomcat.PNG" width="500" hegiht="460">
+</center>
+
+<p>&emsp;&emsp;输入网址<code> http://localhost:8080/</code>，能看到运行成功的界面。当然这一步需要在服务器上进行，这里先演示启动tomcat7的流程。</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%90%AF%E5%8A%A8tomcat2.PNG" width="600" hegiht="460">
+</center>
+
+<h2 id="导入服务端项目"><a href="#导入服务端项目" class="headerlink" title="导入服务端项目"></a>导入服务端项目</h2><h3 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h3><p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/LJH_laura_li/article/details/103916804">在IDEA环境下创建Java Web项目:配置tomcat和war包的生成</a></p>
+<p>（1）新建web项目<br>&emsp;&emsp;IDEA安装完成后，选择<code>Creat New Project</code>新建项目</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%88%9B%E5%BB%BA%E6%96%B0web%E9%A1%B9%E7%9B%AE.PNG" width="500" hegiht="460">
+</center>
+
+<div class="note warning">
+            <p>注意：要跟我选的一样。</p>
+          </div>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E5%88%9B%E5%BB%BA%E6%96%B0web%E9%A1%B9%E7%9B%AE2.PNG" width="500" hegiht="460">
+</center>
+
+<p>(2) 创建classes和lib文件夹</p>
+<ul>
+<li>打开项目中选择在<code>WEB-INF</code>文件夹下创建两个文件夹(右键<code>New</code>  → <code>Directory</code>)：</li>
+</ul>
+<pre><code>classes文件夹：用来存放编译后的java文件；
+lib文件夹：用来存放java类库文件(*.jar)</code></pre>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9classes%E5%92%8Clib.PNG" width="600" hegiht="460">
+</center>
+
+<ul>
+<li>打开<code>File</code> → <code>Project Settings</code> → <code>Modules</code>，修改Path路径，选择新创建的classes文件夹。</li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E4%BF%AE%E6%94%B9path.PNG" width="600" hegiht="460">
+</center>
+
+<ul>
+<li>打开<code>File</code> → <code>Project Settings</code> → <code>Modules</code>，修改Dependencies路径。点击右侧<code>+</code>号，选择<code>1 JARS...</code>,选择新创建的lib文件夹。</li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E4%BF%AE%E6%94%B9lib.PNG" width="600" hegiht="460">
+</center>
+
+<ul>
+<li>配置完成，点击<code>Apply</code>进行应用，再点击<code>OK</code>。</li>
+</ul>
+<p>（3）导入手机服务端项目</p>
+<pre><code>- 将手机服务端下`src`文件夹，复制到新的项目同样路径下。
+- 将手机服务端下`WEB-INF/lib`文件夹，复制到新的项目同样路径下。
+- 将手机服务端下`WEB-INF/web.xml`文件夹，复制到新的项目同样路径下。</code></pre>
+<h3 id="修改服务器连接"><a href="#修改服务器连接" class="headerlink" title="修改服务器连接"></a>修改服务器连接</h3><p>&emsp;&emsp;导入项目后，不要直接进行编译，还需要修改服务器连接地址。选择手机服务端项目下<code>src\com.LandMS</code>文件夹，分别修改<code>DButils.java</code>文件、<code>Loginservlet.java</code>文件和<code>SqltestServlet.java</code>文件。</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%93%BE%E6%8E%A5%E5%9C%B0%E5%9D%80.PNG" width="800" hegiht="460">
+</center>
+
+<p>&emsp;&emsp;将三个文件的相关内容，修改为当前的服务器数据库地址和密码，如下所示：</p>
+<pre><code>String dbURL = &quot;jdbc:sqlserver://62.234.214.152:1433; DatabaseName=Kangsoft.HRMS&quot;;  
+String userName = &quot;sa&quot;;  
+String userPwd = &quot;Ahau306306306&quot;;  </code></pre>
+<h3 id="重新编译"><a href="#重新编译" class="headerlink" title="重新编译"></a>重新编译</h3><p>&emsp;&emsp;选择工具栏<code>Build</code> → <code>Rebuild Project</code>,重新编译整个项目。没有错误提示，但会出现年份获取函数过时警告（我没有进行处理，可能需要你来完成）：</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E7%BC%96%E8%AF%91%E8%AD%A6%E5%91%8A.PNG" width="400" hegiht="460">
+</center>
+
+<p>解决方法可参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Janson_Lin/article/details/99410519">Java Date日期类中的getMonth()与getYear()提示过时警告</a></p>
+<p>此外注意查看WEB-INF/classes文件夹是否生成对应的class文件。如果没问题，可以进行下一步。</p>
+<h2 id="IDEA生成war包"><a href="#IDEA生成war包" class="headerlink" title="IDEA生成war包"></a>IDEA生成war包</h2><h3 id="进行相关配置"><a href="#进行相关配置" class="headerlink" title="进行相关配置"></a>进行相关配置</h3><p>&emsp;&emsp;首先打开<code>File</code> → <code>Project Settings</code> → <code>Artifacts</code>进行配置。<br>（1）可以看到<code>Web Application:Exploded</code>已经创建了。右下角如果出现提示，则<code>Fix</code>选择第一个。</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/war%20exploded.png" width="600" hegiht="460">
+</center>
+
+<p>(2)选择中间<code>+</code>号 → <code>Web Application:Archive</code> → <code>For LandMsystem:war exploded</code>，Name改为LandMsystem，其它默认设置即可。</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/war%20archive.png" width="600" hegiht="460">
+</center>
+
+<p>配置完成，点击<code>Apply</code>进行应用，再点击<code>OK</code>。</p>
+<h3 id="生成war包"><a href="#生成war包" class="headerlink" title="生成war包"></a>生成war包</h3><p>&emsp;&emsp;选择工具栏<code>Build</code> → <code>Build Artifacts</code>→ <code>All Artifacts</code>→ <code>Build </code>。可以看到默认的<code>\LandMsystem\out\artifacts\LandMsystem</code>文件夹下已经创建<code>LandMsystem.war</code>包。</p>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/tomcat%20webapps.PNG" hegiht="460">
+</center>
+
+<h2 id="Tomcat部署-war包"><a href="#Tomcat部署-war包" class="headerlink" title="Tomcat部署 war包"></a>Tomcat部署 war包</h2><h3 id="前提准备"><a href="#前提准备" class="headerlink" title="前提准备"></a>前提准备</h3><p>（1）服务器上先安装以下两个软件，这在前面都有介绍。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">jdk-8u251-windows-x64</a> (别忘了JDK环境变量配置)</li>
+<li><a target="_blank" rel="noopener" href="https://tomcat.apache.org/download-70.cgi">Apache Tomcat 7.0.103 Released</a></li>
+</ul>
+<p>（2）如何将本地文件上传到服务器，下面通过远程桌面进行配置：</p>
+<div class="tabs" id="上传到服务器"><ul class="nav-tabs"><li class="tab active"><a href="#上传到服务器-1">启动远程桌面</a></li><li class="tab"><a href="#上传到服务器-2">本地资源</a></li><li class="tab"><a href="#上传到服务器-3">选择盘符</a></li><li class="tab"><a href="#上传到服务器-4">服务器显示</a></li></ul><div class="tab-content"><div class="tab-pane active" id="上传到服务器-1"><ul>
+<li>选择<code>显示选项</code></li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E5%90%AF%E5%8A%A8.PNG" width="400" hegiht="400" ></div><div class="tab-pane" id="上传到服务器-2"><ul>
+<li>选择<code>本地资源</code></li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E6%9C%AC%E5%9C%B0%E8%B5%84%E6%BA%90.PNG" width="400" hegiht="400" ></div><div class="tab-pane" id="上传到服务器-3"><ul>
+<li>选择<code>本地资源</code>，选择本地电脑上的一个驱动盘，如我的D盘。</li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E9%80%89%E6%8B%A9%E7%9B%98.PNG" width="400" hegiht="400" ></div><div class="tab-pane" id="上传到服务器-4"><ul>
+<li>启动远程桌面，可以看到已经出现本地的D盘，可以将里面的文件复制到服务器上。</li>
+</ul>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%98%BE%E7%A4%BA.PNG" width="600" hegiht="400" ></div></div></div>
+
+
+<h3 id="部署war包"><a href="#部署war包" class="headerlink" title="部署war包"></a>部署war包</h3><ul>
+<li>将war包 <code>landwar20200516 archive.war</code>复制到<code>\apache-tomcat-7\webapps</code>文件夹下。</li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/out%E6%96%87%E4%BB%B6%E5%A4%B9war.PNG" width="500" hegiht="460">
+</center>
+
+<ul>
+<li>进入<code>apache-tomcat-7.0.103/bin</code>文件夹，双击启动<code>startup.bat</code>文件，启动 Tomcat。会自动解压war包，部署Web应用。</li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/tomcat%20webapps.PNG" width="500" hegiht="460">
+</center>
+
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/tomcat%20%E5%90%AF%E5%8A%A8.PNG" width="500" hegiht="460">
+</center>
+
+
+<h2 id="连接测试"><a href="#连接测试" class="headerlink" title="连接测试"></a>连接测试</h2><ul>
+<li>本地电脑上访问 <a target="_blank" rel="noopener" href="http://62.234.214.152:8080/LandMsystem/loginServlet?user=admin&password=MQ==">http://62.234.214.152:8080/LandMsystem/loginServlet?user=admin&amp;password=MQ==</a>，如果看到以下内容，说明手机服务端与数据库连接没有问题。</li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95%20%E7%BD%91%E9%A1%B5.PNG" width="500" hegiht="460">
+</center>
+
+
+<ul>
+<li>打开手机端，输入账号密码。能看到以下界面，说明手机端已正常连接服务器。</li>
+</ul>
+<center>
+<img src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/%E5%8D%9A%E5%AE%A2%E9%85%8D%E5%9B%BE/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/%E6%89%8B%E6%9C%BA%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE/%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95%20%E6%89%8B%E6%9C%BA%E7%AB%AF.jpg" width="400" hegiht="460">
+</center>
+
+
+
+<p>&emsp;&emsp;到此，土地管理项目网页和手机端配置基本完成,都能够连接数据库修改数据。整个配置过程中学到新的知识不少,在此留个记录。</p>
+
+    </div>
+	
+    <div>
+		
+			<div>
+    
+		<footer class="article-over-footer">完</footer>
+    
+</div>
+		
+	</div>
+  
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE/" rel="tag"><i class="fa fa-tag"></i> 土管项目</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/05/15/%E5%9C%9F%E7%AE%A1%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%936%EF%BC%9A%E6%89%93%E5%8C%85APK/" rel="next" title="土管项目总结6：Eclipse 实现手机端APK打包">
+                  <i class="fa fa-chevron-left"></i> 土管项目总结6：Eclipse 实现手机端APK打包
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/05/15/Opencv%E5%AD%A6%E4%B9%A01%EF%BC%9AUbuntu%E4%B8%8B%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/" rel="prev" title="Opencv学习1：Ubuntu下安装与配置">
+                  Opencv学习1：Ubuntu下安装与配置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+  
+
+
+  </div>
+
+
+          </div>
+          
+    <div class="comments" id="comments"></div>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85IDEA%E5%92%8CTomcat"><span class="nav-number">1.</span> <span class="nav-text">安装IDEA和Tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85IntelliJ-IDEA-2020-1-1"><span class="nav-number">1.1.</span> <span class="nav-text">安装IntelliJ IDEA 2020.1.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Apache-Tomcat-7-0-103-Released"><span class="nav-number">1.2.</span> <span class="nav-text">安装 Apache Tomcat 7.0.103 Released</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">导入服务端项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.1.</span> <span class="nav-text">新建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.2.</span> <span class="nav-text">修改服务器连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E7%BC%96%E8%AF%91"><span class="nav-number">2.3.</span> <span class="nav-text">重新编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDEA%E7%94%9F%E6%88%90war%E5%8C%85"><span class="nav-number">3.</span> <span class="nav-text">IDEA生成war包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E8%A1%8C%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE"><span class="nav-number">3.1.</span> <span class="nav-text">进行相关配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%9F%E6%88%90war%E5%8C%85"><span class="nav-number">3.2.</span> <span class="nav-text">生成war包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat%E9%83%A8%E7%BD%B2-war%E5%8C%85"><span class="nav-number">4.</span> <span class="nav-text">Tomcat部署 war包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%8F%90%E5%87%86%E5%A4%87"><span class="nav-number">4.1.</span> <span class="nav-text">前提准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2war%E5%8C%85"><span class="nav-number">4.2.</span> <span class="nav-text">部署war包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">连接测试</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <a href="/" ><img class="site-author-image" itemprop="image" alt="XiaoXiaoTao"
+  src="https://hexo-1257031621.cos.ap-chengdu.myqcloud.com/next/0001.jpg"></a>
+  <p class="site-author-name" itemprop="name">XiaoXiaoTao</p>
+  <div class="site-description" itemprop="description">坚持 坚持 再坚持</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xxty847" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;xxty847" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+	
+
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">XiaoXiaoTao</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v5.1.1
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.getScript('https://cdn.jsdelivr.net/npm/valine@1.3.10/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'i8TtPgUgH7Wk2kaxYnyRJey7-gzGzoHsz',
+    appKey: '9cQ6Jqy7mB6H41sLftQ4Cmo8',
+    placeholder: "Just go go",
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+  
++  
+
+  
+	<script type="text/javascript" src="/js/cursor/fireworks.js"></script>
+  
+
+
+
+
+  <script src="/js/cursor/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+  <script>
+    var OriginTitile = document.title;
+    var titleTime;
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = '(つェ⊂)我藏好了哦~' + OriginTitile;
+        clearTimeout(titleTime);
+      } else {
+        document.title = '(*´∇｀*) 被你发现啦~' + OriginTitile;
+        titleTime = setTimeout(function() {
+          document.title = OriginTitile;
+        }, 2000);
+      }
+    });
+  </script>
+
+
+</body>
+</html>
+
+
